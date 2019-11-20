@@ -1,5 +1,10 @@
-p {
-  font-family: Lato;
+.title {
+  margin: 0;
+  color:rgba(8, 8, 8, 0.644);
+  text-align: center;
+}
+div,#login-href{
+  text-align: center;
 }
 
 /*
