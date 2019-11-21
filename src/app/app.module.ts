@@ -14,11 +14,13 @@ import { AccountManagerComponent } from './account-manager/account-manager.compo
 import { PatientManagerComponent } from './patient-manager/patient-manager.component';
 import { InstitutionManagerComponent } from './institution-manager/institution-manager.component';
 import { SharedInfoManagerComponent } from './shared-info-manager/shared-info-manager.component';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     MatGridListModule,
+    MatButtonModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'account', component:AccountManagerComponent},

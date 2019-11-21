@@ -6,10 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./institution-manager.component.css']
 })
 export class InstitutionManagerComponent implements OnInit {
-
+  times=1;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  add() {
+    this.times++;
+  }
+
+  sub() {
+    this.times--;
   }
 
 }
