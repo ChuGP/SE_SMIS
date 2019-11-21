@@ -3,7 +3,7 @@ export class FHIREntity {
 export interface PatientInfo{
    id:string,
    name:string,
-   birthDate:Date,
+   birthDate:string,
    gender:string,
    familyMedicalRecord:Map<string,MedicalRecord>|any,
    medicalRecord:MedicalRecord|any;

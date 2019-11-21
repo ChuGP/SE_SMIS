@@ -22,13 +22,14 @@ describe('FHIRProxyService', () => {
     let verify=(resp:PatientInfo)=>{
       expect(resp.id).toEqual(patientId);
       expect(resp.gender).toEqual('male');
-      expect(resp.birthDate).toEqual(undefined);
+      expect(resp.birthDate).toEqual('1990-11-21');
+      
     }
     service.getPatientByIdRequest(patientId,verify);
 
   });
 
-  it('should get patient 70466',()=>{
+  it('should get institution 70466',()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let institutionId='70466';
     let verify=(resp:InstitutionInfo)=>{
