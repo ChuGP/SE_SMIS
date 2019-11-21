@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { LoginComponent } from './login/login.component';
@@ -14,11 +13,13 @@ import { AccountManagerComponent } from './account-manager/account-manager.compo
 import { PatientManagerComponent } from './patient-manager/patient-manager.component';
 import { InstitutionManagerComponent } from './institution-manager/institution-manager.component';
 import { SharedInfoManagerComponent } from './shared-info-manager/shared-info-manager.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     MatGridListModule,
+    HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'account', component:AccountManagerComponent},

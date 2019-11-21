@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FHIRProxyService } from '../fhirproxy.service';
 @Component({
   selector: 'app-medical-resource-filter',
   templateUrl: './medical-resource-filter.component.html',
@@ -7,7 +6,7 @@ import { FHIRProxyService } from '../fhirproxy.service';
 })
 export class MedicalResourceFilterComponent implements OnInit {
 
-  constructor(private proxy:FHIRProxyService) { 
+  constructor() { 
     
   }
 
