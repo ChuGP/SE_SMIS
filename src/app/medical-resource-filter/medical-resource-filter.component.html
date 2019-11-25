@@ -1,20 +1,64 @@
-<div>
-        <h2>
-          Medical Institution Recommend System
-        </h2>
-          <h3>
-            Patient Requirement block
-          </h3>
-           <div>
+<h1>
+  <b><i>Medical Institution Recommend System</i></b>
+</h1>
+<hr color = "FFB7DD">
+<h3>
+  Patient Requirement block
+</h3>
+<table border="2" align="center" style="width: 100%;">
+  <tr>
+    <td align="center">Medical service</td><td><textarea style="width: 100%;" placeholder="the Medical service options"></textarea></td>
+  </tr>
+  <tr>
+    <td style="width: 20%;" align="center">Other options</td><td><textarea style="width: 100%;" placeholder="the other options"></textarea></td>
+  </tr>
+</table>
+<br/>
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Position Column -->
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef > No. </th>
+    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+  </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef > Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+  <!-- Weight Column -->
+  <ng-container matColumnDef="weight">
+    <th mat-header-cell *matHeaderCellDef > Weight </th>
+    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+  </ng-container>
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="symbol">
+    <th mat-header-cell *matHeaderCellDef > Symbol </th>
+    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<!-- Copyright 2019 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
+
+
+<!-- Copyright 2019 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
+           <!-- <div>
               <p>Medical service</p>
               <input size="50" placeholder="the Medical service options">
-              <p>other options</p>
+              <p>Other options</p>
               <input size="50" placeholder="the other options">
-          </div>
-          <h3>
+          </div> -->
+          <!-- <h3>
             The recommend institution results
-          </h3>
-           <div>
+          </h3> -->
+           <!-- <div>
              <table>
               <tr>
                 <th>Name</th>
@@ -28,5 +72,5 @@
                </tr>
              </table>
              to be continued.....
-            </div>
-        </div>
+            </div> -->
+                     
