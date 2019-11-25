@@ -1,24 +1,33 @@
-<h2>
-        Institution Information
-      </h2>
-      <mat-grid-list cols="2" rowHeight="15:8" align="center">
-        <mat-grid-tile style="background: #00FFFF">
-          <div width="20px">
-          Basic Info
-          <div>Institution Name: <input placeholder="this is name"></div>
-          <div>address: <input placeholder="this is address"></div>
-          <div>department: <input placeholder="this is department"></div>
-          <div>to be continued....</div> 
-          </div>
-      <br><br>
-        </mat-grid-tile>
-        <mat-grid-tile style="background: #F5F5">    
-      <div>
-        Medical Service
-        <div>Service1: <input placeholder="this is Service1"></div>
-        <div>Service2: <input placeholder="this is Service2"></div>
-        <div>to be continued....</div> 
-      </div>
-      <br><br>
-        </mat-grid-tile>
-       </mat-grid-list>
+<h1>
+  <b><i>Institution Information</i></b>
+</h1>
+<hr color = "FFB7DD">
+<p><font size="5">Basic&nbsp;Info</font></p>
+<table border="2" align="center" style="width: 100%;">
+      <tr>
+        <td align="center">Id</td><td><textarea style="width: 100%;" placeholder="this is your id"></textarea></td>
+      </tr>
+      <tr>
+          <td style="width: 20%;" align="center">Institution Name</td><td><textarea style="width: 100%;" placeholder="this is your name"></textarea></td>
+      </tr>
+      <tr>
+        <td align="center">Address</td><td><textarea style="width: 100%;" placeholder="this is your address"></textarea></td>
+      </tr>
+      <tr>
+        <td align="center">Telecom</td><td><textarea style="width: 100%;" placeholder="this is your telcom"></textarea></td>
+      </tr>
+      <tr>
+        <td align="center">Alias</td><td><textarea style="width: 100%;" placeholder="this is your alias"></textarea></td>
+      </tr>
+    </table>
+    <p><font size="5">Medical&nbsp;Service</font></p>
+      <button  (click)="add()" >Add Service</button>&nbsp;
+      <button  (click)="sub()" >Remove Service</button>
+      <table border="2" align="center" style="width: 100%;">
+        <i align="center" style="width: 100%;" *ngFor="let i of [].constructor(times)">
+            <tr><td align="center">Service</td><td><textarea style="width: 100%;" placeholder="this is your service"></textarea></tr>
+        </i>
+      </table>
+      <br/>
+      <button type="submit" >Submit</button>
+

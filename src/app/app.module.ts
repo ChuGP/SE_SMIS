@@ -14,12 +14,14 @@ import { PatientManagerComponent } from './patient-manager/patient-manager.compo
 import { InstitutionManagerComponent } from './institution-manager/institution-manager.component';
 import { SharedInfoManagerComponent } from './shared-info-manager/shared-info-manager.component';
 import { HttpClientModule } from '@angular/common/http';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     MatGridListModule,
     HttpClientModule,
+    MatButtonModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'account', component:AccountManagerComponent},
