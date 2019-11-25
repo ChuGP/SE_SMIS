@@ -1,45 +1,47 @@
 export class FHIREntity {
 }
-export interface PatientInfo{
-   id:string,
-   name:string,
-   birthDate:string,
-   gender:string,
-   familyMedicalRecord:Map<string,MedicalRecord>|any,
-   medicalRecord:MedicalRecord|any;
+export interface Patient{
+   resourceType:string,
+   active?:boolean,
+   id?:string,
+   name?:Name[],
+   telecom?:Telecom[],
+   birthDate?:string,
+   gender?:string,
+   address?:Address[],
+   extension?:Extension[],
 }
-
-export interface MedicalRecord{
-   medicationRecord: Map<string,number>,//<medication:string,dose:number>
-   diagnosisRecord:Map<string,string>,//<>
-   allergyMedication:string[],
-}
-export interface AccountInfo{
-   id:string,
-   role:string,
-   accountName:string,
-   password:string,
-   privateKey:string,
-   email:string
-}
-export interface InstitutionInfo{
-   id:string,
-   name:string,
-   address:Address[],
-   medicalServices:MedicalService[],
-   telecom:Array<{system:string,value:string}>,
-   alias:string[]
-}
-export interface MedicalService{
-   id:string,
-   name:string,
-   serviceType:string,
-   description:string,
+export interface Organization{
+   resourceType:string,
+   id?:string,
+   name?:string,
+   address?:Address[],
+   type?:string,
+   telecom?:Array<{system:string,value:string}>,
+   alias?:string[]
 }
 export interface Address{
     line:Array<string>,
+    use:string,
     city:string,
     state:string,
     postalCode:string,
     country:string
+ }
+
+ export interface Name{
+  use:string,
+  family:string,
+  given:string[]  
+ }
+
+ export interface Telecom{
+   system?: string,
+	value?: string,
+   use?: string,
+   rank?:number
+ }
+ export interface Extension{
+    url:string,
+    valueString:string
  }
