@@ -6,15 +6,17 @@ import {MatTableDataSource} from '@angular/material/table';
 
 export interface PeriodicElement {
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  alias:string[];
+  id: number;
+  address: string;
+  telecom: string;
+  medicalServices:string[];
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 2, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 3, symbol: 'Li'},
+  {id: 1, name: 'Hydrogen',alias:['Test1, Test2'], address: 'YC1...', telecom: 'H', medicalServices:['Service1, Service2']},
+  {id: 2, name: 'Helium',alias:['Test1, Test2'], address: 'YC2...', telecom: 'He', medicalServices:['Service1, Service2']},
+  {id: 3, name: 'Lithium',alias:['Test1, Test2'], address: 'YC3..', telecom: 'Li', medicalServices:['Service1, Service2']},
 ];
 
 @Component({
@@ -27,12 +29,10 @@ export class MedicalResourceFilterComponent implements OnInit {
   constructor() { 
     
   }
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['id', 'name', 'alias','address', 'telecom', 'medicalServices'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   // @ViewChild(MatSort, {static: true}) sort: MatSort;
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+
   ngOnInit() {
     // this.dataSource.sort = this.sort;
   }

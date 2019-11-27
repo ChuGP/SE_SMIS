@@ -16,6 +16,7 @@ import { SharedInfoManagerComponent } from './shared-info-manager/shared-info-ma
 import { HttpClientModule } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 
+// medical-resource-filter 用到
 import {A11yModule} from '@angular/cdk/a11y';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {PortalModule} from '@angular/cdk/portal';
@@ -72,8 +73,9 @@ import {MatTreeModule} from '@angular/material/tree';
       { path: 'medical-information-sharing', component:SharedInfoManagerComponent},
       { path: 'medical-institution-management', component:InstitutionManagerComponent},
       { path: 'medical-institution-recommend', component:MedicalResourceFilterComponent}]),
-
-      A11yModule,
+    
+    // medical-resource-filter 用到
+    A11yModule,
     CdkStepperModule,
     CdkTableModule,
     CdkTreeModule,

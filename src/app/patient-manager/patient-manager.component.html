@@ -1,30 +1,27 @@
 <h1>
         <b><i>Personal Information</i></b>
       </h1>
-      <hr color = "FFB7DD">
+      <hr color = "87CEEB">
       <p><font size="5">Social&nbsp;Info</font></p>
-      <table border="2" align="center" style="width: 100%;">
+      <table border="3" align="center" style="width: 100%;">
             <tr>
-              <td style="width: 20%;" align="center">Name</td><td><textarea style="width: 100%;" placeholder="this is your name"></textarea></td>
+              <td style="width: 20%;" align="center">Name</td><td><input class="tep" placeholder="this is your name"></td>
             </tr>
             <tr>
-              <td align="center">Id</td><td><textarea style="width: 100%;" placeholder="this is your id"></textarea></td>
-            </tr>
-            <tr>
-              <td align="center">Birth</td><td><textarea style="width: 100%;" placeholder="this is your birth"></textarea></td>
+              <td align="center">Birth</td><td><input type="date" class="tep" placeholder="this is your birth"></td>
             </tr>
           </table>
           <p><font size="5">Physical&nbsp;Info</font></p>
-            <table border="2" align="center" style="width: 100%;">
-              <tr><td style="width: 20%;" align="center">Height</td><td><textarea style="width: 100%;" placeholder="this is your height"></textarea></tr>
-              <tr><td align="center">Weight</td><td><textarea style="width: 100%;" placeholder="this is your weight"></textarea></tr>
-              <tr><td align="center">Blood type</td><td><textarea style="width: 100%;" placeholder="this is your blood type"></textarea></tr>
+            <table border="3" align="center" style="width: 100%;">
+              <tr><td style="width: 20%;" align="center">Height</td><td><input oninput="value=value.replace(/[^\d]/g,'')" maxlength="3" class="tep" placeholder="this is your height"></tr>
+              <tr><td align="center">Weight</td><td><input oninput="value=value.replace(/[^\d]/g,'')" maxlength="2" class="tep" placeholder="this is your weight"></tr>
+              <tr><td align="center">Blood type</td><td><input oninput="value=value.replace(/[^A-Z]/g,'')" maxlength="2" class="tep" placeholder="this is your blood type"></tr>
             </table>
           <p><font size="5">Personal&nbsp;Medical&nbsp;Record</font></p>
-            <table border="2" align="center" style="width: 100%;">
-              <tr><td style="width: 20%;" align="center">Drug allergy</td><td><textarea style="width: 100%;" placeholder="this is your Drug allergy"></textarea></tr>
-              <tr><td align="center">Immunization history</td><td><textarea style="width: 100%;" placeholder="this is your Immunization history"></textarea></tr>
-              <tr><td align="center">Family history</td><td><textarea style="width: 100%;" placeholder="this is your Family history"></textarea></tr>
+            <table border="3" align="center" style="width: 100%;">
+              <tr><td style="width: 20%;" align="center">Drug allergy</td><td><input class="tep" placeholder="this is your Drug allergy"></tr>
+              <tr><td align="center">Immunization history</td><td><input class="tep" placeholder="this is your Immunization history"></tr>
+              <tr><td align="center">Family history</td><td><input class="tep" placeholder="this is your Family history"></tr>
             </table>
             <br/>
             <button type="submit">Submit</button>
