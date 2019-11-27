@@ -10,6 +10,7 @@ export interface Patient{
    gender?:string,
    address?:Address[],
    extension?:Extension[],
+   link?:Array<{others:Reference}>,
 }
 export interface Organization{
    resourceType:string,
@@ -18,8 +19,29 @@ export interface Organization{
    address?:Address[],
    type?:string,
    telecom?:Array<{system:string,value:string}>,
-   alias?:string[]
+   alias?:string[],
+   extension?:Extension[]
 }
+
+export interface Encounter{
+   resourceType:string,
+   id?:string,
+   type?:CodeAbleConcept[] //use for store symptom
+   subject?:Reference, //use for patient referencce
+   period?:{ //time
+      start:string,
+      end:string
+   },
+   serviceProvider?:Reference, //use for save organization
+}
+
+export interface HealthcareService{
+   resourceType:string,
+   id?:string,
+   type:CodeAbleConcept[],
+   name:string,
+}
+
 export interface Address{
     line:Array<string>,
     use:string,
@@ -44,4 +66,25 @@ export interface Address{
  export interface Extension{
     url:string,
     valueString:string
+ }
+
+ export interface CodeAbleConcept{
+   coding:Coding[],
+   text:string
+ }
+
+ export interface Coding{
+    system:string,
+    code:string,
+    display:string
+ }
+
+ export interface Reference{
+    reference:string, //url
+    display:string //display content
+ }
+
+ export interface Resource{
+    resourceType:string,
+    id?:string
  }
