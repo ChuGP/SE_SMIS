@@ -77,12 +77,16 @@
     border-radius: 2px;
     font-size: 14px;
     cursor: pointer;
-    background-color: #e2e2e7;
+    /* background-color:  #4CAF50; */
     color: rgb(7, 7, 7);
     border: none;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
   }
   
   .button:hover, button:hover {
+    background-color: rgb(206, 35, 23); /* Green */
+    color: white;
     opacity: 0.8;
     font-weight: normal;
   }

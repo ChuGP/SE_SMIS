@@ -1,3 +1,8 @@
 :host(app-patient-manager){
     width:100%;
   }
+
+  .tep {
+    margin-bottom:0px;
+    width:100%;
+  }

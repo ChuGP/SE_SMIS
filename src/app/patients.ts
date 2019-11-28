@@ -1,5 +1,4 @@
-import {Patient} from './fhir-entity/fhirentity';
-const patients:Patient[]=[
+const patients=[
     {
         resourceType:"Patient",
         id:'99980',

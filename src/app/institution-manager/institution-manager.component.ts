@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+// import { AppModule } from './app/app.module';
 
 @Component({
   selector: 'app-institution-manager',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstitutionManagerComponent implements OnInit {
   times=1;
+  aliastimes=1;
   constructor() { }
 
   ngOnInit() {
@@ -14,6 +16,14 @@ export class InstitutionManagerComponent implements OnInit {
 
   add() {
     this.times++;
+  }
+
+  addAlias() {
+    this.aliastimes++;
+  }
+
+  subAlias() {
+    this.aliastimes--;
   }
 
   sub() {
