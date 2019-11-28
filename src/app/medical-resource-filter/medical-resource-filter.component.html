@@ -1,3 +1,4 @@
+<div >
 <h1>
   <b><i>Medical Resource Filter System</i></b>
 </h1>
@@ -20,12 +21,10 @@
 <button type="submit" >Submit</button>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <!-- Position Column -->
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef > Id. </th>
     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
   </ng-container>
-  <!-- Name Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef > Name </th>
     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -34,12 +33,10 @@
     <th mat-header-cell *matHeaderCellDef > Alias </th>
     <td mat-cell *matCellDef="let element"> {{element.alias}} </td>
   </ng-container>
-  <!-- Weight Column -->
   <ng-container matColumnDef="address">
     <th mat-header-cell *matHeaderCellDef > Address </th>
     <td mat-cell *matCellDef="let element"> {{element.address}} </td>
   </ng-container>
-  <!-- Symbol Column -->
   <ng-container matColumnDef="telecom">
     <th mat-header-cell *matHeaderCellDef > Telecom </th>
     <td mat-cell *matCellDef="let element"> {{element.telecom}} </td>
@@ -51,36 +48,5 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<!-- Copyright 2019 Google LLC. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->
-
-
-<!-- Copyright 2019 Google LLC. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->
-           <!-- <div>
-              <p>Medical service</p>
-              <input size="50" placeholder="the Medical service options">
-              <p>Other options</p>
-              <input size="50" placeholder="the other options">
-          </div> -->
-          <!-- <h3>
-            The recommend institution results
-          </h3> -->
-           <!-- <div>
-             <table>
-              <tr>
-                <th>Name</th>
-                <th>id</th>
-                <th>location</th>
-             </tr>
-             <tr>
-               <td>institution1</td>
-               <td>123131</td>
-               <td>taipei<td>
-               </tr>
-             </table>
-             to be continued.....
-            </div> -->
-                     
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+</div>    
