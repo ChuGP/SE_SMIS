@@ -10,36 +10,23 @@ export class FHIRProxyService {
     
   }
 
-  createResource(resourceName,info, lambda){
-    return this.http.post<Resource>(this.baseUrl+`${resourceName}`,info).subscribe(
-      (resp:Resource)=>{
-        lambda(resp);
-      }
-    );
+  createResource(resourceName,info){
+    return this.http.post<Resource>(this.baseUrl+`${resourceName}`,info).toPromise()
   }
 
-  getResource(resourceName, id:string, lambda){
-    return this.http.get<Resource>(this.baseUrl+`${resourceName}/${id}`).subscribe(
-      (resp:Resource)=>{
-        lambda(resp);
-        
-      }
-    );
+  async getResource(resourceName, id:string){
+    return this.http.get<Resource>(this.baseUrl+`${resourceName}/${id}`).toPromise();
   }
-  updateResource(resourceName, data, lambda){
-    return this.http.put<Resource>(this.baseUrl+`/${resourceName}/${data.id}`,data).subscribe(
-      (resp:Resource)=>{
-        lambda(resp);
-      }
-    );
+  async updateResource(resourceName, data){
+    return this.http.put<Resource>(this.baseUrl+`${resourceName}/${data.id}`,data).toPromise();
   }
 
-  getExtensionResource(extensionUrl, lambda){
-    return this.http.get<Resource>(this.baseUrl+extensionUrl).subscribe(
-      (resp:Resource)=>{
-        lambda(resp)
-      }
-    )
+  async getExtensionResource(extensionUrl){
+    return this.http.get<Resource>(this.baseUrl+extensionUrl).toPromise()
+  }
+
+  async getExtensionAsync(extensionUrl){
+    return this.http.get<Resource>(this.baseUrl+extensionUrl).toPromise()
   }
   
   

@@ -10,15 +10,17 @@ export interface PatientInfo{
    birthDate?:string,
    gender?:string,
    address?:Address[],
-   extension?:Extension[],
-   familyMedicalRecord?:Map<string,MedicalRecord>,
-   medicalRecord?:MedicalRecord;
+   family?:Map<string,PatientInfo>,
+   medicalRecord?:Map<string,MedicalRecord>;
 }
 
 export interface MedicalRecord{
-   medicationRecord: Map<string,number>,//<medication:string,dose:number>
-   diagnosisRecord:Map<string,string>,//<>
-   allergyMedication:string[],
+   diagnosis:string[],
+   organization:string,
+   time:string,
+   // medicationRecord: Map<string,number>,//<medication:string,dose:number>
+   // diagnosisRecord:Map<string,string>,//<>
+   // allergyMedication:string[],
 }
 export interface AccountInfo{
    id:string,

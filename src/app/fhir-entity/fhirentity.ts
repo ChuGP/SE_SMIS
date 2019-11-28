@@ -10,7 +10,7 @@ export interface Patient{
    gender?:string,
    address?:Address[],
    extension?:Extension[],
-   link?:Array<{others:Reference}>,
+   link?:Array<{other:Reference}>,
 }
 export interface Organization{
    resourceType:string,
@@ -80,7 +80,7 @@ export interface Address{
  }
 
  export interface Reference{
-    reference:string, //url
+    reference?:string, //url
     display:string //display content
  }
 

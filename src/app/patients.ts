@@ -37,6 +37,16 @@ const patients:Patient[]=[
                   postalCode: "6152",
                   country: "Australia"
             }
+        ],
+        extension:[
+            {
+                url:"Encounter/102869",
+                valueString:""
+            },
+            {
+                url:"Encounter/102870",
+                valueString:""
+            }
         ]
     },
 

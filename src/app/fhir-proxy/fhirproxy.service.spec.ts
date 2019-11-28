@@ -16,7 +16,7 @@ describe('FHIRProxyService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should create patient',()=>{
+  it('should create patient',async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Patient'
     let patient:Patient={
@@ -49,116 +49,96 @@ describe('FHIRProxyService', () => {
       birthDate:"2020-02-29",
       link:[
         {
-          others:{
+          other:{
             reference:`service.baseUrl/Patient/6`,
             display:"dad"
           }
         }
       ]
         }
-    let fakePatient:Patient={resourceType:"Patient"};
-    const verify=(resp:Patient)=>{
-      expect(resp.resourceType).toEqual("Patient");
-      expect(resp.resourceType).toEqual("Patient");
-    }
-
-    service.createResource(resourceType,fakePatient,verify);
-    service.createResource(resourceType,patient,(info:Patient)=>{
-      expect(patient.resourceType).toEqual(info.resourceType);
-    });
-
+    let info:Patient=await service.createResource(resourceType,patient)
+    expect(patient.resourceType).toEqual(info.resourceType);
   });
 
-  it('should update patient',()=>{
+  it('should update patient',async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Patient'
     let fakePatient:Patient={
       resourceType:"Patient",
       id:'6'
     };
-    service.updateResource(resourceType,fakePatient,(info:Patient)=>{
-      expect(info.resourceType).toEqual(resourceType)
-    });
+    const info:Patient=await service.updateResource(resourceType,fakePatient);
+    expect(info.resourceType).toEqual(resourceType)
   })
 
-  it('should get patient 6',()=>{
+  it('should get patient 6',async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Patient'
     let patientId='6';
-    let verify=(resp:Patient)=>{
-      expect(resp.resourceType).toEqual(resourceType)
-    }
-    service.getResource(resourceType,patientId,verify);
+    let patient:Patient=await service.getResource(resourceType,patientId);
+    expect(patient.resourceType).toEqual(resourceType)
 
   });
 
-  it('should create Organization',()=>{
+  it('should create Organization',async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Organization'
     let fakeOrganization:Organization = {
       'resourceType':"Organization"
     }
-    service.createResource(resourceType,fakeOrganization,(info:Organization)=>{
-      expect(fakeOrganization.resourceType).toEqual(resourceType)
-    })
+    let org:Organization=await service.createResource(resourceType,fakeOrganization)
+    expect(org.resourceType).toEqual(resourceType)
   });
 
-  it('should get Organization 70466',()=>{
+  it('should get Organization 70466',async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Organization'
     let OrganizationId='70466';
-    let verify=(resp:Organization)=>{
-      expect(resp.id).toEqual(OrganizationId);
-      expect(resp.telecom.length).toEqual(3);
-    }
-    service.getResource(resourceType,OrganizationId,verify);
-
+    let org:Organization=await service.getResource(resourceType,OrganizationId);
+    expect(org.id).toEqual(OrganizationId);
+    expect(org.telecom.length).toEqual(3);
   });
 
-  it('should update instituiton', ()=>{
+  it('should update instituiton', async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Organization'
     let fakeOrganization:Organization={
       resourceType:"Organization",
-      id:'6'
+      id:'104021'
     };
-    service.updateResource(resourceType,fakeOrganization,(info:Organization)=>{
-      expect(info.resourceType).toEqual(resourceType)
-    });
+    let info=await service.updateResource(resourceType,fakeOrganization)
+    expect(info.resourceType).toEqual(resourceType)
   })
 
-  it('should get Encounter', ()=>{
+  it('should get Encounter', async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Encounter'
-    service.getResource(resourceType,'101990',(info:Encounter)=>{
-      expect(info.resourceType).toEqual("Encounter")
-    });
+    let info:Encounter=await service.getResource(resourceType,'101990')
+    expect(info.resourceType).toEqual("Encounter")
   })
 
-  it('should get Resource', ()=>{
+  it('should get Resource', async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Encounter'
-    service.getResource(resourceType,'101990',(info:Resource)=>{
-      const encounter:Encounter=info
-      expect("Patient/101821").toEqual(encounter.subject.reference)
-    });
-
-    service.getResource('Organization','102604',(resource:Organization)=>{
-      expect(resource.extension[0].url).toEqual("http://hl7.org/fhir/12345")
-    })
+    const encounter:Encounter=await service.getResource(resourceType,'101990')
+    expect("Patient/101821").toEqual(encounter.subject.reference)
+    const org:Organization=await service.getResource('Organization','102604')
+    expect(org.extension[0].url).toEqual("http://hl7.org/fhir/12345")
   })
 
-  it('should get Extension', ()=>{
+  it('should get Extension', async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Encounter'
-    service.getResource(resourceType,'101990',(info:Resource)=>{
-      const encounter:Encounter=info
-      expect("Patient/101821").toEqual(encounter.subject.reference)
-      service.getExtensionResource(encounter.subject.reference,(patient:Patient)=>{
-        expect(patient.resourceType).toEqual('Patient')
-      })
-    });
-    
+    const encounter:Encounter=await service.getResource(resourceType,'101990');
+    expect("Patient/101821").toEqual(encounter.subject.reference)
+    const patient:Patient=await service.getExtensionResource(encounter.subject.reference)
+    expect(patient.resourceType).toEqual('Patient')
+  })
+
+  it('async getExtension should return',async ()=>{
+    const service: FHIRProxyService = TestBed.get(FHIRProxyService);
+    const encounter:Encounter=await service.getExtensionAsync('Encounter/102869');
+    expect(encounter.resourceType).toEqual('Encounter')
   })
 
 });
