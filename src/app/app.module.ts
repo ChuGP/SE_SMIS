@@ -59,8 +59,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { FHIRProxyService } from './fhir-proxy/fhirproxy.service';
 import {SMISEntityAdapter} from './smis-entity/smisentity'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     ReactiveFormsModule,
     MatGridListModule,
