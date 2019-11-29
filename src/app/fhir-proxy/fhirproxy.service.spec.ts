@@ -74,8 +74,8 @@ describe('FHIRProxyService', () => {
   it('should get patient 6',async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Patient'
-    let patientId='6';
-    let patient:Patient=await service.getResource(resourceType,patientId);
+    let patientId = '6';
+    let patient:Patient = await service.getResource(resourceType,patientId);
     expect(patient.resourceType).toEqual(resourceType)
 
   });
@@ -93,15 +93,15 @@ describe('FHIRProxyService', () => {
   it('should get Organization 70466',async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let resourceType='Organization'
-    let OrganizationId='70466';
+    let OrganizationId = '70466';
     let org:Organization=await service.getResource(resourceType,OrganizationId);
     expect(org.id).toEqual(OrganizationId);
     expect(org.telecom.length).toEqual(3);
   });
 
-  it('should update instituiton', async()=>{
+  it('should update Organization', async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
-    let resourceType='Organization'
+    let resourceType = 'Organization'
     let fakeOrganization:Organization={
       resourceType:"Organization",
       id:'104021'
@@ -112,15 +112,15 @@ describe('FHIRProxyService', () => {
 
   it('should get Encounter', async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
-    let resourceType='Encounter'
-    let info:Encounter=await service.getResource(resourceType,'101990')
+    let resourceType = 'Encounter'
+    let info:Encounter = await service.getResource(resourceType,'101990')
     expect(info.resourceType).toEqual("Encounter")
   })
 
   it('should get Resource', async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
-    let resourceType='Encounter'
-    const encounter:Encounter=await service.getResource(resourceType,'101990')
+    let resourceType = 'Encounter'
+    const encounter:Encounter = await service.getResource(resourceType,'101990')
     expect("Patient/101821").toEqual(encounter.subject.reference)
     const org:Organization=await service.getResource('Organization','102604')
     expect(org.extension[0].url).toEqual("http://hl7.org/fhir/12345")
@@ -128,8 +128,8 @@ describe('FHIRProxyService', () => {
 
   it('should get Extension', async()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
-    let resourceType='Encounter'
-    const encounter:Encounter=await service.getResource(resourceType,'101990');
+    let resourceType = 'Encounter'
+    const encounter:Encounter = await service.getResource(resourceType,'101990');
     expect("Patient/101821").toEqual(encounter.subject.reference)
     const patient:Patient=await service.getExtensionResource(encounter.subject.reference)
     expect(patient.resourceType).toEqual('Patient')
@@ -137,7 +137,7 @@ describe('FHIRProxyService', () => {
 
   it('async getExtension should return',async ()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
-    const encounter:Encounter=await service.getExtensionAsync('Encounter/102869');
+    const encounter:Encounter = await service.getExtensionAsync('Encounter/102869');
     expect(encounter.resourceType).toEqual('Encounter')
   })
 

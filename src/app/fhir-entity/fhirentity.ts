@@ -1,5 +1,10 @@
 export class FHIREntity {
 }
+
+export class FHIREntityAdapter{
+
+}
+
 export interface Patient{
    resourceType:string,
    active?:boolean,
@@ -38,8 +43,9 @@ export interface Encounter{
 export interface HealthcareService{
    resourceType:string,
    id?:string,
-   type:CodeAbleConcept[],
-   name:string,
+   type?:CodeAbleConcept[],
+   name?:string,
+   comment?:string
 }
 
 export interface Address{

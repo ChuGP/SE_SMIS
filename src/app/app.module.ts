@@ -58,6 +58,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { FHIRProxyService } from './fhir-proxy/fhirproxy.service';
+import {SMISEntityAdapter} from './smis-entity/smisentity'
 @NgModule({
   imports: [
     BrowserModule,
@@ -117,8 +118,6 @@ import { FHIRProxyService } from './fhir-proxy/fhirproxy.service';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
-    
-    
   ],
   declarations: [
     AppComponent,
@@ -133,7 +132,8 @@ import { FHIRProxyService } from './fhir-proxy/fhirproxy.service';
     SharedInfoManagerComponent,
   ],
   providers:[
-    FHIRProxyService
+    FHIRProxyService,
+    SMISEntityAdapter
   ],
   bootstrap: [ 
     AppComponent

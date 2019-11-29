@@ -19,7 +19,7 @@ export class PatientManagerComponent implements OnInit {
   }
 
   async parsePatient(patient:Patient){
-    let info:PatientInfo=patient;
+    let info:PatientInfo=patient
     info.medicalRecord=new Map<string,MedicalRecord>()
     for(let extension of patient.extension){
       let encounter:Encounter=await this.fhir.getExtensionResource(extension.url)

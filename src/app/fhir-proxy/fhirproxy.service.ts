@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Patient, Organization, Encounter, Resource} from '../fhir-entity/fhirentity';
+import {Resource} from '../fhir-entity/fhirentity';
 @Injectable({
   providedIn: 'root'
 })
