@@ -1,6 +1,7 @@
-import {Patient,Encounter, HealthcareService} from '../fhir-entity/fhirentity'
+import {Patient,Encounter, HealthcareService,Reference, Organization, CodeAbleConcept} from '../fhir-entity/fhirentity'
 import {FHIRProxyService} from '../fhir-proxy/fhirproxy.service'
 import { Injectable } from '@angular/core'
+
 export class SMISEntity {
 }
 
@@ -13,9 +14,9 @@ export class SMISEntityAdapter{
    }
 
    async parsePatient(FHIRPatient:Patient){
-      let patientInfo:PatientInfo = FHIRPatient
+      let patientInfo:PatientInfo = Object.assign({},FHIRPatient)
       patientInfo.medicalRecord = new Map<string,MedicalRecord>()
-      patientInfo.family = new Map<string,PatientInfo>()
+      patientInfo.family =[]
       if(FHIRPatient.extension){
          for(let extension of FHIRPatient.extension){
          let encounter:Encounter = await this.fhir.getExtensionResource(extension.url)
@@ -25,20 +26,25 @@ export class SMISEntityAdapter{
       if(FHIRPatient.link){
          for(let link of FHIRPatient.link){
             let family:Patient = await this.fhir.getExtensionResource(link.other.reference)
-            patientInfo.family.set(link.other.display, await this.parsePatient(family))
+            patientInfo.family.push({
+               relation:link.other.display, 
+               patient:await this.parsePatient(family)
+            })
          }
       }
       return patientInfo
     }
-  
+    
     parseEncounter(FHIREncounter:Encounter):MedicalRecord{
       let sympton=[]
       for(let code of FHIREncounter.type)
-        sympton.push(code)
+        sympton.push(code.text)
+      
       let medicalRecord:MedicalRecord={
-        diagnosis:sympton,
-        time:FHIREncounter.period.start,
-        organization:FHIREncounter.serviceProvider.display
+         id:FHIREncounter.id,
+         diagnosis:sympton,
+         time:FHIREncounter.period,
+         organization:FHIREncounter.serviceProvider
       };
       return medicalRecord
     }
@@ -51,11 +57,23 @@ export class SMISEntityAdapter{
          comment:healthCareService.comment,
          serviceType:[]
       };
-      for(let service of healthCareService.type)
-         medicalService.serviceType.push(service.text)
+      if (healthCareService.type){
+         for(let service of healthCareService.type){
+            if(service.coding){
+               for(let display of service.coding)
+                  medicalService.serviceType.push(display.display)
+            }
+         }
+      }
       return medicalService
     }
-  
+    
+    async parseOrganization(organization:Organization){
+       let institution:InstitutionInfo = Object.assign({medicalServices:[]},organization)
+      for(let extension of organization.extension)
+         institution.medicalServices.push(this.parseHealthCareService(await this.fhir.getExtensionResource(extension.url)))
+      return institution
+    }
 }
 
 export interface PatientInfo{
@@ -67,14 +85,18 @@ export interface PatientInfo{
    birthDate?:string,
    gender?:string,
    address?:Address[],
-   family?:Map<string,PatientInfo>,
+   family?:Array<{relation:string, patient:PatientInfo}>,
    medicalRecord?:Map<string,MedicalRecord>;
 }
 
 export interface MedicalRecord{
+   id?:string
    diagnosis:string[],
-   organization:string,
-   time:string,
+   organization:Reference
+   time:{
+      start:string,
+      end:string
+   }
 }
 export interface AccountInfo{
    id:string,
@@ -90,7 +112,7 @@ export interface InstitutionInfo{
    name?:string,
    address?:Address[],
    medicalServices?:MedicalService[],
-   type?:string,
+   type?:CodeAbleConcept[],
    telecom?:Array<{system:string,value:string}>,
    alias?:string[]
 }

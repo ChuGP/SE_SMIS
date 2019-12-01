@@ -1,10 +1,13 @@
-import { SMISEntity,SMISEntityAdapter, MedicalService } from './smisentity';
+import { SMISEntity,SMISEntityAdapter, MedicalService, MedicalRecord, InstitutionInfo } from './smisentity';
 import { HttpClientModule } from '@angular/common/http';
-import { Encounter,Patient,Reference, HealthcareService } from '../fhir-entity/fhirentity';
+import { Encounter,Patient, HealthcareService, Organization } from '../fhir-entity/fhirentity';
 import { PatientInfo } from '../smis-entity/smisentity';
 import { TestBed } from '@angular/core/testing';
 import {FHIRProxyService} from '../fhir-proxy/fhirproxy.service'
-
+import {encounters} from '../fhir-datas/encounters'
+import {patients} from '../fhir-datas/patients'
+import {healthCareServices} from '../fhir-datas/healthcareServices'
+import { organizations} from '../fhir-datas/organizations'
 describe('SMISEntity', () => {
   beforeEach(()=>{
     TestBed.configureTestingModule({
@@ -27,124 +30,57 @@ describe('SMISEntity', () => {
   
   it('parseEncounter should work',()=>{
     const adapter: SMISEntityAdapter = TestBed.get(SMISEntityAdapter);
-    let encounter:Encounter={
-      resourceType:"Encounter",
-      period:{
-        start:"2019-01-01T08:10:12",
-        end:"2019-01-01T09:10:12"
-      },
-      type:[
-        {
-          coding:[
-          ],
-          text:"allergy"
-        },
-        {
-          coding:[
-  
-          ],
-          text:"heart attack"
-        }
-    ],
-      serviceProvider:{
-        reference:"Organization/99887",
+    let encounter:Encounter=encounters[0]
+
+    let expectedMedicalRecord:MedicalRecord={
+      id:'102869',
+      diagnosis:['allergy','heart attack'],
+      organization:{
+        reference:"Organization/99776",
         display:"Ntut health center team"
+      },
+      time:{
+        start: "2015-09-09T08:10:21",
+        end: "2015-09-09T08:50:21"
       }
     }
     let medicalRecord=adapter.parseEncounter(encounter);
-    expect(medicalRecord.diagnosis.length).toEqual(2)
-    expect(medicalRecord.organization).toEqual(encounter.serviceProvider.display)
+    expect(medicalRecord).toEqual(expectedMedicalRecord)
   })
 
   it('should parse patient',async()=>{
     const adapter: SMISEntityAdapter = TestBed.get(SMISEntityAdapter);
-    let patient:Patient={
-      "resourceType": "Patient",
-      "id": "102873",
-      "extension": [
-          {
-              "url": "Encounter/102869",
-              "valueString": "fff"
-          },
-          {
-              "url": "Encounter/102870",
-              "valueString": "fff"
-          }
-      ],
-      "name": [
-          {
-            "use":"usual",
-              "family": "fff",
-              "given":["test"]
-          }
-      ],
-      "address":[
-        {
-            use: "home",
-            line: [
-                "Unit 7",
-                "76 Clydesdale St"
-              ],
-              city: "Como",
-              state: "WA",
-              postalCode: "6152",
-              country: "Australia"
-        }
-    ],
-      "link": [
-          {
-              "other": {
-                  "reference": "Patient/6",
-                  "display": "dad"
-              }
-          }
-      ]
-  }
-  
+    let patient:Patient = patients[0]
     let info:PatientInfo = await adapter.parsePatient(patient)
-    expect(info.medicalRecord.size).toEqual(2)
-    expect(info.medicalRecord.get("102869").time).toEqual("2015-09-09T08:10:21")
-    expect(info.family.size).toEqual(1)
-    expect(info.family.get('dad').id).toEqual('6')
-    expect(info.address).toEqual(patient.address)
+    let item=info.family.find(x=>(x.relation=='dad'))
+    expect(item.patient.resourceType).toEqual(patient.resourceType)
   })
 
   it('should parse HealthCareService to MedicalService',()=>{
     const adapter: SMISEntityAdapter = TestBed.get(SMISEntityAdapter);
-    const fakeService:HealthcareService={
-        "resourceType": "HealthcareService",
-        "id": "94148",
-        "type": [
-            {
-                "coding": [
-                    {
-                        "system": "http://snomed.info/sct",
-                        "code": "394913002",
-                        "display": "Psychotherapy"
-                    }
-                ],
-                "text":""
-            },
-            {
-                "coding": [
-                    {
-                        "system": "http://snomed.info/sct",
-                        "code": "394587001",
-                        "display": "Psychiatry"
-                    }
-                ],
-                "text":""
-            }
-        ],
-        "name":"Fake medical service",
-        "comment":"This Service is for SMIS demo"
-    }
+    const fakeService:HealthcareService = healthCareServices[0]
+
+    let expectedMedicalService:MedicalService = {
+      resourceType:"HealthcareService",
+      id:fakeService.id,
+      name:fakeService.name,
+      comment:fakeService.comment,
+      serviceType:['Psychotherapy','Psychiatry']
+    } 
     let medicalService:MedicalService = adapter.parseHealthCareService(fakeService)
-    expect(medicalService.name).toEqual(fakeService.name)
-    expect(medicalService.serviceType.length).toEqual(2)
-    expect(medicalService.comment).toEqual(fakeService.comment)
-    expect(medicalService.id).toEqual(fakeService.id)
-    expect(medicalService.resourceType).toEqual(fakeService.resourceType)
+    expect(medicalService).toEqual(expectedMedicalService)
+  })
+
+  it('should parse Organization to institution',async()=>{
+    const adapter: SMISEntityAdapter = TestBed.get(SMISEntityAdapter);
+    let organization:Organization = organizations[0]
+    let expectedInstitution:InstitutionInfo = organization
+    expectedInstitution.medicalServices = [
+      adapter.parseHealthCareService(healthCareServices[0]),
+      adapter.parseHealthCareService(healthCareServices[1])
+    ]
+    let actualInstitution:InstitutionInfo = await adapter.parseOrganization(organization)
+    expect(actualInstitution).toEqual(expectedInstitution)
   })
 
 });
