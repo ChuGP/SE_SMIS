@@ -49,7 +49,8 @@ export class SharedInfoManagerComponent implements OnInit {
   dataSource
   displayedColumns: string[] = ['id', 'name', 'alias','address', 'telecom', 'medicalServices'];
   displayedColumns2: string[] = ['time', 'organization', 'diagnosis'];
-  display=false
+  showPatient=false;
+  display=false;
   ngOnInit() {
     this.dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
 
@@ -60,8 +61,17 @@ export class SharedInfoManagerComponent implements OnInit {
     if(!this.display)
       this.dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
     else
-      this.dataSource=new MatTableDataSource<any>(ELEMENT_DATA2);
+      this.dataSource=new MatTableDataSource<any>(ELEMENT_DATA2);    
+  }
 
-    
+  window() {
+    let key = prompt("Please Enter Privacy key!", "Privacy key");
+    if (key == "GP") { // 記得用你的Privacy key把GP換掉!!!!!!!!!!!!!
+      this.showPatient=true;
+    }
+    else {
+      if (confirm ("Privacy key Error!\nDo you want to retry?"))
+        this.window();
+    }
   }
 }

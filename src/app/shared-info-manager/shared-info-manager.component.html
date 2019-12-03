@@ -42,27 +42,37 @@
         <b><i>Personal Information</i></b>
       </h1>
       <hr color = "87CEEB">
-      <table mat-table [dataSource]="dataSource" >
-          <!-- Position Column -->
-          <ng-container matColumnDef="time">
-            <th mat-header-cell *matHeaderCellDef > Time </th>
-            <td mat-cell *matCellDef="let element"> {{element.time}} </td>
-          </ng-container>
-          <!-- Name Column -->
-          <ng-container matColumnDef="organization">
-            <th mat-header-cell *matHeaderCellDef > Organization </th>
-            <td mat-cell *matCellDef="let element"> {{element.organization}} </td>
-          </ng-container>
-          <ng-container matColumnDef="diagnosis">
-            <th mat-header-cell *matHeaderCellDef > Diagnosis </th>
-            <td mat-cell *matCellDef="let element"> {{element.diagnosis}} </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+      <table  border="3" align="center" style="width: 100%;">
+          <tr>
+            <td align="center">ID</td><td><input class="tep" placeholder="the ID"></td>
+          </tr>
         </table>
+        <br/>
+        <button (click)="window()" type="submit" >Submit</button>
+
+      <div [hidden]="!showPatient">
+        <table mat-table [dataSource]="dataSource" >
+            <!-- Position Column -->
+            <ng-container matColumnDef="time">
+              <th mat-header-cell *matHeaderCellDef > Time </th>
+              <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="organization">
+              <th mat-header-cell *matHeaderCellDef > Organization </th>
+              <td mat-cell *matCellDef="let element"> {{element.organization}} </td>
+            </ng-container>
+            <ng-container matColumnDef="diagnosis">
+              <th mat-header-cell *matHeaderCellDef > Diagnosis </th>
+              <td mat-cell *matCellDef="let element"> {{element.diagnosis}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+          </table>
+        </div>
       
   </div>
 
  <br>
-  <button (click)="change()">Toggle Display</button>
-      
+  <button (click)="change()">Change Display</button>
+  <div>  

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule} from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -15,8 +15,6 @@ import { InstitutionManagerComponent } from './institution-manager/institution-m
 import { SharedInfoManagerComponent } from './shared-info-manager/shared-info-manager.component';
 import { HttpClientModule } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
-
-// medical-resource-filter ?�到
 import {A11yModule} from '@angular/cdk/a11y';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {PortalModule} from '@angular/cdk/portal';
@@ -60,6 +58,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import { FHIRProxyService } from './fhir-proxy/fhirproxy.service';
 import {SMISEntityAdapter} from './smis-entity/smisentity'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,

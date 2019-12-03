@@ -14,8 +14,16 @@
           <p><font size="5">Physical&nbsp;Info</font></p>
             <table border="3" align="center" style="width: 100%;">
               <tr><td style="width: 20%;" align="center">Height</td><td><input oninput="value=value.replace(/[^\d]/g,'')" maxlength="3" class="tep" placeholder="this is your height"></tr>
-              <tr><td align="center">Weight</td><td><input oninput="value=value.replace(/[^\d]/g,'')" maxlength="2" class="tep" placeholder="this is your weight"></tr>
-              <tr><td align="center">Blood type</td><td><input oninput="value=value.replace(/[^A-Z]/g,'')" maxlength="2" class="tep" placeholder="this is your blood type"></tr>
+              <tr><td align="center">Weight</td><td><input oninput="value=value.replace(/[^\d]/g,'')" maxlength="3" class="tep" placeholder="this is your weight"></tr>
+              <tr><td align="center">Blood type</td><td>
+                <!-- <input oninput="value=value.replace(/[^A-Z]/g,'')" maxlength="2" class="tep" placeholder="this is your blood type"> -->
+                <select style="width: 100%;">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="O">O</option>
+                    <option value="AB">AB</option>
+                </select>
+              </tr>
             </table>
           <p><font size="5">Personal&nbsp;Medical&nbsp;Record</font></p>
             <table border="3" align="center" style="width: 100%;">
@@ -24,4 +32,4 @@
               <tr><td align="center">Family history</td><td><input class="tep" placeholder="this is your Family history"></tr>
             </table>
             <br/>
-            <button type="submit">Submit</button>
+            <button type="submit" (click)="window()">Submit</button>

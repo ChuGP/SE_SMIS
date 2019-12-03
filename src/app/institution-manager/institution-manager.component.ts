@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { AppModule } from './app/app.module';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-institution-manager',
@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class InstitutionManagerComponent implements OnInit {
   times=1;
   aliastimes=1;
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
   }
@@ -29,5 +29,9 @@ export class InstitutionManagerComponent implements OnInit {
   sub() {
     this.times--;
   }
-
+  
+  window() {
+    if(confirm("Submit Success!"))
+      this.router.navigate([""]);
+  }
 }
