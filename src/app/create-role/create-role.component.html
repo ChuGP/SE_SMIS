@@ -7,7 +7,13 @@
             <mat-radio-button value="Organization">醫療機構</mat-radio-button>
             <mat-radio-button value="Patient">病患</mat-radio-button>
         </mat-radio-group>
-        <div>Your choice:{{role}}</div>
+        <div *ngIf = "role=='Organization'">
+            <app-institution-manager></app-institution-manager>
+        </div>
+        <div *ngIf="role=='Patient'">
+            <app-patient-manager></app-patient-manager>
+        </div>
     </div>
-
+    
 </div>
+

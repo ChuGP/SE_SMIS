@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-// import { MatGridListModule } from '@angular/material/grid-list';
 import { MedicalResourceFilterComponent } from './medical-resource-filter/medical-resource-filter.component';
 import { AccountManagerComponent } from './account-manager/account-manager.component';
 import { PatientManagerComponent } from './patient-manager/patient-manager.component';
@@ -146,8 +145,6 @@ export function provideConfig() {
     HomeComponent,
     MedicalResourceFilterComponent,
     AccountManagerComponent,
-    PatientManagerComponent,
-    InstitutionManagerComponent,
     SharedInfoManagerComponent,
   ],
   providers:[
@@ -161,7 +158,7 @@ export function provideConfig() {
   ],
   bootstrap: [ 
     AppComponent
-  ]
+  ],
     
 })
 export class AppModule { }

@@ -15,7 +15,7 @@ describe('CreateRoleComponent', () => {
         FormsModule,
         CreateRoleModule
       ],
-      declarations: [ CreateRoleComponent ]
+      declarations: [ ]
     })
     .compileComponents();
   }));
