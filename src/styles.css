@@ -84,12 +84,13 @@
     transition-duration: 0.4s;
   }
   
-  .button:hover, button:hover {
+   .button:hover, button:hover {
     background-color: rgb(206, 35, 23); /* Green */
     color: white;
     opacity: 0.8;
     font-weight: normal;
-  }
+  }  
+  
   
   .button:disabled, button:disabled {
     opacity: 0.5;

@@ -1,35 +1,59 @@
 <h1>
-        <b><i>Personal Information</i></b>
+        <b><i id="titleText">Personal Information</i></b>
       </h1>
       <hr color = "87CEEB">
-      <p><font size="5">Social&nbsp;Info</font></p>
-      <table border="3" align="center" style="width: 100%;">
+      <p><font id="subtitleText" size="5" >Social&nbsp;Info</font></p>
+      <table class="blueTable" border="3" align="center" style="width: 100%; border: 1px solid black;">
             <tr>
-              <td style="width: 20%;" align="center">Name</td><td><input class="tep" placeholder="this is your name"></td>
+              <td id="demoFont" style="width: 20%;" align="center">Fisrst Name</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your first name"></td>
             </tr>
             <tr>
-              <td align="center">Birth</td><td><input type="date" class="tep" placeholder="this is your birth"></td>
+                <td id="demoFont" style="width: 20%;" align="center">Last Name</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your last name"></td>
+            </tr>
+            <tr>
+              <td id="demoFont" align="center">Birth</td><td><input style="font-size:24px; color:#0a0a0a"  type="date" class="tep myMOUSEPoint" placeholder="this is your birth"></td>
             </tr>
           </table>
-          <p><font size="5">Physical&nbsp;Info</font></p>
-            <table border="3" align="center" style="width: 100%;">
-              <tr><td style="width: 20%;" align="center">Height</td><td><input oninput="value=value.replace(/[^\d]/g,'')" maxlength="3" class="tep" placeholder="this is your height"></tr>
-              <tr><td align="center">Weight</td><td><input oninput="value=value.replace(/[^\d]/g,'')" maxlength="3" class="tep" placeholder="this is your weight"></tr>
-              <tr><td align="center">Blood type</td><td>
+          <p><font id="subtitleText" size="5">Physical&nbsp;Info</font></p>
+            <table class="blueTable" border="3" align="center" style="width: 100%;">
+              <tr><td id="demoFont" style="width: 20%;" align="center">Height</td><td><input style="font-size:24px; color:#0a0a0a"  oninput="value=value.replace(/[^\d]/g,'')" maxlength="3" class="tep myMOUSE" placeholder="this is your height"> </tr> 
+              <tr><td id="demoFont" align="center">Weight</td><td><input style="font-size:24px; color:#0a0a0a"  oninput="value=value.replace(/[^\d]/g,'')" maxlength="3" class="tep myMOUSE" placeholder="this is your weight"></tr>
+              <tr><td id="demoFont" align="center">Blood type</td><td>
                 <!-- <input oninput="value=value.replace(/[^A-Z]/g,'')" maxlength="2" class="tep" placeholder="this is your blood type"> -->
-                <select style="width: 100%;">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="O">O</option>
-                    <option value="AB">AB</option>
+                <select style="font-size:20px; width: 100%;">
+                    <option style="font-size:20px; color:#0a0a0a"  value="A">A</option>
+                    <option style="font-size:20px; color:#0a0a0a"  value="B">B</option>
+                    <option style="font-size:20px; color:#0a0a0a"  value="O">O</option>
+                    <option style="font-size:20px; color:#0a0a0a"  value="AB">AB</option>
                 </select>
               </tr>
             </table>
-          <p><font size="5">Personal&nbsp;Medical&nbsp;Record</font></p>
-            <table border="3" align="center" style="width: 100%;">
-              <tr><td style="width: 20%;" align="center">Drug allergy</td><td><input class="tep" placeholder="this is your Drug allergy"></tr>
-              <tr><td align="center">Immunization history</td><td><input class="tep" placeholder="this is your Immunization history"></tr>
-              <tr><td align="center">Family history</td><td><input class="tep" placeholder="this is your Family history"></tr>
+            <br>
+          <p><font id="subtitleText" size="5">Personal&nbsp;Medical&nbsp;Record</font></p>
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              <ng-container matColumnDef="diagnosis">
+                <th mat-header-cell *matHeaderCellDef > Diagnosis </th>
+                <td mat-cell *matCellDef="let element"> {{element.diagnosis}} </td>
+              </ng-container>
+              <ng-container matColumnDef="organization">
+                <th mat-header-cell *matHeaderCellDef >Organization </th>
+                <td mat-cell *matCellDef="let element"> {{element.organization}} </td>
+              </ng-container>
+              <ng-container matColumnDef="time.start">
+                <th mat-header-cell *matHeaderCellDef >Time Start</th>
+                <td mat-cell *matCellDef="let element"> {{element.time.start}} </td>
+              </ng-container>
+              <ng-container matColumnDef="time.end">
+                  <th mat-header-cell *matHeaderCellDef >Time End</th>
+                  <td mat-cell *matCellDef="let element"> {{element.time.end}} </td>
+                </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <br/>
-            <button type="submit" (click)="window()">Submit</button>
+            <mat-paginator #paginator 
+            [pageSize]="5"
+            showFirstLastButtons></mat-paginator> 
+            <button type="submit" title="Are you sure to submit?" (click)="window()">Submit</button>
+            <br>
+            <br>
+            <br>
