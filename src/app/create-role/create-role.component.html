@@ -1,0 +1,13 @@
+<div>
+    <div>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="role">
+            <div>
+                <span>選擇一個角色</span>
+            </div>
+            <mat-radio-button value="Organization">醫療機構</mat-radio-button>
+            <mat-radio-button value="Patient">病患</mat-radio-button>
+        </mat-radio-group>
+        <div>Your choice:{{role}}</div>
+    </div>
+
+</div>

@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { LoginComponent } from './login/login.component';
-import { CreateAccountComponent } from './create-account/create-account.component';
 import { HomeComponent } from './home/home.component';
 // import { MatGridListModule } from '@angular/material/grid-list';
 import { MedicalResourceFilterComponent } from './medical-resource-filter/medical-resource-filter.component';
@@ -61,7 +60,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 import {LoginService} from './login-service/login-service.service'
-
+import {CreateRoleComponent} from './create-role/create-role.component'
+import {CreateRoleModule} from './create-role/create-role.component.module'
+import {FormsModule} from '@angular/forms'
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
@@ -87,7 +88,7 @@ export function provideConfig() {
       { path: '', component: HomeComponent },
       { path: 'account', component:AccountManagerComponent},
       { path: 'login', component:LoginComponent},
-      { path: 'create-account', component:CreateAccountComponent},
+      { path: 'create-role', component:CreateRoleComponent},
       { path: 'patient-information-management', component:PatientManagerComponent},
       { path: 'medical-information-sharing', component:SharedInfoManagerComponent},
       { path: 'medical-institution-management', component:InstitutionManagerComponent},
@@ -136,12 +137,12 @@ export function provideConfig() {
     PortalModule,
     ScrollingModule,
     SocialLoginModule,
+    CreateRoleModule,
   ],
   declarations: [
     AppComponent,
     TopBarComponent,
     LoginComponent,
-    CreateAccountComponent,
     HomeComponent,
     MedicalResourceFilterComponent,
     AccountManagerComponent,
