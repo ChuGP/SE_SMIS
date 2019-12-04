@@ -65,7 +65,7 @@ import {LoginService} from './login-service/login-service.service'
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider("12526582446-d105ujne61ftnofajtgjd7v0imk6htlj.apps.googleusercontent.com")
+    provider: new GoogleLoginProvider("12526582446-q11oa9a1p9p7u92seh267hk8c5rg4li6.apps.googleusercontent.com")
   },
   {
     id: FacebookLoginProvider.PROVIDER_ID,

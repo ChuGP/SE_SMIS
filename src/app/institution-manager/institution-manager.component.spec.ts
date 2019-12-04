@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InstitutionManagerComponent } from './institution-manager.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { RouterTestingModule } from '@angular/router/testing';
 describe('InstitutionManagerComponent', () => {
   let component: InstitutionManagerComponent;
   let fixture: ComponentFixture<InstitutionManagerComponent>;
@@ -12,7 +13,11 @@ describe('InstitutionManagerComponent', () => {
         InstitutionManagerComponent,
       ],
       imports:[
+        RouterTestingModule,
         MatGridListModule,
+      ],
+      providers:[
+        
       ]
     })
     .compileComponents();

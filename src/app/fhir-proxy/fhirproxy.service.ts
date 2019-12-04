@@ -10,25 +10,32 @@ export class FHIRProxyService {
     
   }
 
-  createResource(resourceName,info){
+  async createResource(resourceName,info){
     return this.http.post<Resource>(this.baseUrl+`${resourceName}`,info).toPromise()
+    .catch(error=>{
+      return error.error as Resource
+    });
   }
 
   async getResource(resourceName, id:string){
-    return this.http.get<Resource>(this.baseUrl+`${resourceName}/${id}`).toPromise();
+    return this.http.get<Resource>(this.baseUrl+`${resourceName}/${id}`).toPromise()
+    .catch(error=>{
+      return error.error as Resource
+    });
   }
   async updateResource(resourceName, data){
-    return this.http.put<Resource>(this.baseUrl+`${resourceName}/${data.id}`,data).toPromise();
+    return this.http.put<Resource>(this.baseUrl+`${resourceName}/${data.id}`,data).toPromise()
+    .catch(error=>{
+      return error.error as Resource
+    });
   }
 
   async getExtensionResource(extensionUrl){
     return this.http.get<Resource>(this.baseUrl+extensionUrl).toPromise()
+    .catch(error=>{
+      return error.error as Resource
+    });
   }
-
-  async getExtensionAsync(extensionUrl){
-    return this.http.get<Resource>(this.baseUrl+extensionUrl).toPromise()
-  }
-  
   
 }
 

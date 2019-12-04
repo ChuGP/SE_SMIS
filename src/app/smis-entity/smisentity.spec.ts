@@ -74,13 +74,10 @@ describe('SMISEntity', () => {
   it('should parse Organization to institution',async()=>{
     const adapter: SMISEntityAdapter = TestBed.get(SMISEntityAdapter);
     let organization:Organization = organizations[0]
-    let expectedInstitution:InstitutionInfo = organization
-    expectedInstitution.medicalServices = [
-      adapter.parseHealthCareService(healthCareServices[0]),
-      adapter.parseHealthCareService(healthCareServices[1])
-    ]
     let actualInstitution:InstitutionInfo = await adapter.parseOrganization(organization)
-    expect(actualInstitution).toEqual(expectedInstitution)
+    expect(actualInstitution.address).toEqual(organization.address)
+    expect(actualInstitution.medicalServices.length).toEqual(2)
+    expect(actualInstitution.id).toEqual(organization.id)
   })
 
 });

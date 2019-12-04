@@ -137,8 +137,14 @@ describe('FHIRProxyService', () => {
 
   it('async getExtension should return',async ()=>{
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
-    const encounter:Encounter = await service.getExtensionAsync('Encounter/102869');
+    const encounter:Encounter = await service.getExtensionResource('Encounter/102869');
     expect(encounter.resourceType).toEqual('Encounter')
+  })
+
+  it('Error request Should get Error msg',async()=>{
+    const service: FHIRProxyService = TestBed.get(FHIRProxyService);
+    let err = await service.getResource('Organization','5')
+    expect(err.resourceType).toEqual('OperationOutcome')
   })
 
 });
