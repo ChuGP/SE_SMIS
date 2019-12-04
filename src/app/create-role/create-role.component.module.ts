@@ -5,11 +5,16 @@ import { CreateRoleComponent} from './create-role.component'
 import { BrowserModule } from '@angular/platform-browser';
 import {InstitutionManagerComponent} from '../institution-manager/institution-manager.component'
 import {PatientManagerComponent} from '../patient-manager/patient-manager.component'
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material' 
+
 @NgModule({
     imports: [
         BrowserModule,
         MatRadioModule,
-        FormsModule
+        FormsModule,
+        MatPaginatorModule,
+        MatTableModule
     ],
     declarations:[
         CreateRoleComponent,

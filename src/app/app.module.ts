@@ -61,7 +61,6 @@ import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-logi
 import {LoginService} from './login-service/login-service.service'
 import {CreateRoleComponent} from './create-role/create-role.component'
 import {CreateRoleModule} from './create-role/create-role.component.module'
-import {FormsModule} from '@angular/forms'
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
