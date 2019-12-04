@@ -1,36 +1,39 @@
 <h1>
-  <b><i>Institution Information</i></b>
+  <b><i id="titleText">Institution Information</i></b>
 </h1>
 <hr color = "87CEEB">
-<p><font size="5">Basic&nbsp;Info</font></p>
-<table border="3" align="center" style="width: 100%;">
+<p><font id="subtitleText" size="5">Basic&nbsp;Info</font></p>
+<table class="blueTable" border="3" align="center" style="width: 100%;">
       <tr>
-        <td align="center">Id</td><td><input class="tep" placeholder="this is your id"></td>
+        <td id="demoFont" align="center">Id</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your id"></td>
       </tr>
       <tr>
-        <td style="width: 20%;" align="center">Institution Name</td><td><input class="tep" placeholder="this is your name"></td>
+        <td id="demoFont" style="width: 20%;" align="center">Institution Name</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your name"></td>
       </tr>
       <tr>
-        <td align="center">Address</td><td><input class="tep" placeholder="this is your address"></td>
+        <td id="demoFont" align="center">Address</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your address"></td>
       </tr>
       <tr>
-        <td align="center">Telecom</td><td><input oninput="value=value.replace(/[^\d-]/g,'')" class="tep" placeholder="this is your telcom"></td>
+        <td id="demoFont" align="center">Telecom</td><td><input oninput="value=value.replace(/[^\d-]/g,'')" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your telcom"></td>
       </tr>
       <tr>
-          <button style="margin-right: 3px; font-size: 15px;" (click)="addAlias()" >Add Alias</button>
-          <button style="font-size: 15px;" (click)="subAlias()" >Remove Alias</button>
+        <td>
+          <button id="add" style="margin-right: 3px; font-size: 15px;" (click)="addAlias()" >Add Alias</button>
+          <button id="delete" style="font-size: 15px;" (click)="subAlias()" >Remove Alias</button>
+        </td>
+        
           </tr>
       <tr *ngFor="let i of [].constructor(aliastimes)">
-        <td align="center">Alias</td><td><input class="tep" placeholder="this is your alias"></td>
+        <td id="demoFont" align="center">Alias</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your alias"></td>
       </tr>
     </table>
     <p><font size="5">Medical&nbsp;Service</font></p>
-      <button style="margin-right: 3px;font-size: 15px;" (click)="add()" >Add Service</button>
-      <button style="font-size: 15px;" (click)="sub()" >Remove Service</button>
-      <table border="3" align="center" style="width: 100%;">
+      <button id="add" style="margin-right: 3px;font-size: 15px;" (click)="add()" >Add Service</button>
+      <button id="delete" style="font-size: 15px;" (click)="sub()" >Remove Service</button>
+      <table class="blueTable" border="3" align="center" style="width: 100%;">
         <i align="center" style="width: 100%;" *ngFor="let i of [].constructor(times)">
-          <tr><td align="center">Service</td><td><input class="tep" placeholder="this is your service"></td></tr>
+          <tr><td id="demoFont" align="center">Service</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your service"></td></tr>
         </i>
       </table>
       <br/>
-      <button type="submit" (click)="window()">Submit</button>
+      <button type="submit" id="submit" title="Are you sure to submit?" (click)="window()">Submit</button>

@@ -1,6 +1,6 @@
 <div [hidden]="display">
   <h1>
-      <b><i>Institution Informations</i></b>
+      <b><i id="titleText">Institution Informations</i></b>
     </h1>
     <hr color = "87CEEB">        
     <table mat-table [dataSource]="dataSource" >
@@ -39,7 +39,7 @@
 
 <div [hidden]="!display">
     <h1>
-        <b><i>Personal Information</i></b>
+        <b><i id="titleText">Personal Information</i></b>
       </h1>
       <hr color = "87CEEB">
       <table  border="3" align="center" style="width: 100%;">
@@ -48,7 +48,7 @@
           </tr>
         </table>
         <br/>
-        <button (click)="window()" type="submit" >Submit</button>
+        <button (click)="window()" type="submit" id="submit">Submit</button>
 
       <div [hidden]="!showPatient">
         <table mat-table [dataSource]="dataSource" >

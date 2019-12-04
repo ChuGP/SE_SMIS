@@ -23,6 +23,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {diagnosis: ['diagnosis13', 'diagnosis2'],  organization: 'organization', time:{start:'Test1', end:'Test2'}},
   {diagnosis: ['diagnosis15', 'diagnosis2'],  organization: 'organization', time:{start:'Test1', end:'Test2'}},
   {diagnosis: ['diagnosis17', 'diagnosis2'],  organization: 'organization', time:{start:'Test1', end:'Test2'}},
+  {diagnosis: ['diagnosis19', 'diagnosis2'],  organization: 'organization', time:{start:'Test1', end:'Test2'}},
+  {diagnosis: ['diagnosis21', 'diagnosis2'],  organization: 'organization', time:{start:'Test1', end:'Test2'}},
   
 ];
 

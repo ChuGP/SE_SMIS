@@ -20,7 +20,7 @@
               <tr><td id="demoFont" align="center">Weight</td><td><input style="font-size:24px; color:#0a0a0a"  oninput="value=value.replace(/[^\d]/g,'')" maxlength="3" class="tep myMOUSE" placeholder="this is your weight"></tr>
               <tr><td id="demoFont" align="center">Blood type</td><td>
                 <!-- <input oninput="value=value.replace(/[^A-Z]/g,'')" maxlength="2" class="tep" placeholder="this is your blood type"> -->
-                <select style="font-size:20px; width: 100%;">
+                <select style="font-size:20px; width: 100%; color:#0a0a0a;">
                     <option style="font-size:20px; color:#0a0a0a"  value="A">A</option>
                     <option style="font-size:20px; color:#0a0a0a"  value="B">B</option>
                     <option style="font-size:20px; color:#0a0a0a"  value="O">O</option>
@@ -28,7 +28,7 @@
                 </select>
               </tr>
             </table>
-            <br>
+          <br>
           <p><font id="subtitleText" size="5">Personal&nbsp;Medical&nbsp;Record</font></p>
           <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
               <ng-container matColumnDef="diagnosis">
@@ -53,7 +53,4 @@
             <mat-paginator #paginator 
             [pageSize]="5"
             showFirstLastButtons></mat-paginator> 
-            <button type="submit" title="Are you sure to submit?" (click)="window()">Submit</button>
-            <br>
-            <br>
-            <br>
+            <button type="submit" id="submit" title="Are you sure to submit?" (click)="window()">Submit</button>
