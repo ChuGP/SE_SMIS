@@ -58,7 +58,23 @@ import {MatTreeModule} from '@angular/material/tree';
 import { FHIRProxyService } from './fhir-proxy/fhirproxy.service';
 import {SMISEntityAdapter} from './smis-entity/smisentity'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
+import {LoginService} from './login-service/login-service.service'
 
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("12526582446-d105ujne61ftnofajtgjd7v0imk6htlj.apps.googleusercontent.com")
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider("417817125766065")
+  }
+]);
+export function provideConfig() {
+  return config;
+}
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -119,6 +135,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
+    SocialLoginModule,
   ],
   declarations: [
     AppComponent,
@@ -133,8 +150,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SharedInfoManagerComponent,
   ],
   providers:[
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    },
     FHIRProxyService,
-    SMISEntityAdapter
+    SMISEntityAdapter,
+    LoginService
   ],
   bootstrap: [ 
     AppComponent

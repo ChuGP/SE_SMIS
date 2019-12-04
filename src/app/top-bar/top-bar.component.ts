@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {LoginService} from '../login-service/login-service.service'
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private loginService:LoginService) { }
 
   ngOnInit() {
   }

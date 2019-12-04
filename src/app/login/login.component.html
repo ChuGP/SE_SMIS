@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!loginService.isLogin()">
 <p>Account</p>
 <input type="text" placeholder="input your account">
 <p>Password</p>
@@ -10,4 +10,19 @@
 <div>
   <button [routerLink]="['/create-account']" style="background: #D2691E">Create account</button>
 </div>
+<div>
+  <button (click)="signInWithFB()" style="background: #D2691E">Login with facebook</button>
+</div>
+<div>
+  <button (click)="signInWithGoogle()" style="background: #D2691E">Login with Google</button>
+</div>
+</div>
+
+<div *ngIf="loginService.isLogin()">
+  <div>Your ID:{{loginService.user.id}}</div>
+  <div>Your Name:{{loginService.user.name}}</div>
+  <div>Your Email:{{loginService.user.email}}</div>
+  <div>
+    <img [src]="loginService.user.photoUrl" alt="Your photo">
+  </div>
 </div>
