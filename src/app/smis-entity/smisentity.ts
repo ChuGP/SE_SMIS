@@ -85,6 +85,7 @@ export interface PatientInfo{
    birthDate?:string,
    gender?:string,
    address?:Address[],
+   maritalStatus?:CodeAbleConcept,
    family?:Array<{relation:string, patient:PatientInfo}>,
    medicalRecord?:Map<string,MedicalRecord>;
 }
@@ -124,12 +125,12 @@ export interface MedicalService{
    comment?:string,
 }
 export interface Address{
-    line:Array<string>,
-    use:string,
-    city:string,
-    state:string,
-    postalCode:string,
-    country:string
+    line?:Array<string>,
+    use?:string,
+    city?:string,
+    state?:string,
+    postalCode?:string,
+    country?:string
  }
 
  export interface Name{

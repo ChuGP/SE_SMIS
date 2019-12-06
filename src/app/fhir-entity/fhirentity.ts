@@ -37,7 +37,8 @@ export class FHIREntityAdapter{
          name:patientInfo.name,
          telecom:patientInfo.telecom,
          birthDate:patientInfo.birthDate,
-         gender:patientInfo.gender
+         gender:patientInfo.gender,
+         maritalStatus:patientInfo.maritalStatus
       }      
       patient.link=[]
       patient.extension=[]
@@ -126,6 +127,7 @@ export interface Patient{
    gender?:string,
    address?:Address[],
    extension?:Extension[],
+   maritalStatus?:CodeAbleConcept,
    link?:Array<{other:Reference}>,
 }
 export interface Organization{
@@ -160,12 +162,12 @@ export interface HealthcareService{
 }
 
 export interface Address{
-    line:Array<string>,
-    use:string,
-    city:string,
-    state:string,
-    postalCode:string,
-    country:string
+    line?:Array<string>,
+    use?:string,
+    city?:string,
+    state?:string,
+    postalCode?:string,
+    country?:string
  }
 
  export interface Name{
