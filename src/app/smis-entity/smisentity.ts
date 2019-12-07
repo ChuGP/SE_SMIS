@@ -14,7 +14,7 @@ export class SMISEntityAdapter{
    }
 
    async parsePatient(FHIRPatient:Patient){
-      let patientInfo:PatientInfo = Object.assign({},FHIRPatient)
+      let patientInfo:PatientInfo = Object.assign({privateKey:""},FHIRPatient)
       patientInfo.medicalRecord = new Map<string,MedicalRecord>()
       patientInfo.family =[]
       if(FHIRPatient.extension){
@@ -31,6 +31,11 @@ export class SMISEntityAdapter{
                patient:await this.parsePatient(family)
             })
          }
+      }
+      if(FHIRPatient.identifier){
+         let privateKey = FHIRPatient.identifier.find(x=>(x.system=="privateKey"))
+         if(privateKey)
+            patientInfo.privateKey = privateKey.value
       }
       return patientInfo
     }
@@ -61,7 +66,7 @@ export class SMISEntityAdapter{
          for(let service of healthCareService.type){
             if(service.coding){
                for(let display of service.coding)
-                  medicalService.serviceType.push(display.display)
+                  medicalService.serviceType.push({serviceType:display.display})
             }
          }
       }
@@ -69,15 +74,27 @@ export class SMISEntityAdapter{
     }
     
     async parseOrganization(organization:Organization){
-       let institution:InstitutionInfo = Object.assign({medicalServices:[]},organization)
+      let institution:InstitutionInfo = {
+         resourceType:organization.resourceType,
+         id:organization.id,
+         address:organization.address,
+         telecom:organization.telecom,
+         medicalServices:[],
+         type:organization.type,
+         alias:[],
+         name:organization.name
+      }
       for(let extension of organization.extension)
          institution.medicalServices.push(this.parseHealthCareService(await this.fhir.getExtensionResource(extension.url)))
+      for(let alias of organization.alias)
+         institution.alias.push({alias:alias})
       return institution
     }
 }
 
 export interface PatientInfo{
    resourceType:string,
+   privateKey:string,
    active?:boolean,
    id?:string,
    name?:Name[],
@@ -115,13 +132,13 @@ export interface InstitutionInfo{
    medicalServices?:MedicalService[],
    type?:CodeAbleConcept[],
    telecom?:Array<{system:string,value:string}>,
-   alias?:string[]
+   alias?:Array<{alias:string}>
 }
 export interface MedicalService{
    resourceType:string,
    id:string,
    name:string,
-   serviceType:string[],
+   serviceType:Array<{serviceType:string}>,
    comment?:string,
 }
 export interface Address{

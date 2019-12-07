@@ -43,6 +43,12 @@ describe('FHIREntity', () => {
     let patientInfo:PatientInfo = await SMISadapter.parsePatient(patient)
     let actualResult:Patient = FHIRadapter.parsePatientInfo(patientInfo)
     expect(actualResult).toEqual(patient)
+    expect(actualResult.identifier).toEqual([
+        {
+        system:"privateKey",
+        value:"12345"
+      }
+    ])
   })
 
   it('should parse MedicalService to HealthcareService',()=>{
@@ -59,8 +65,11 @@ describe('FHIREntity', () => {
     const SMISadapter = TestBed.get(SMISEntityAdapter)
     let organization:Organization = organizations[0]
     let institutionInfo:InstitutionInfo = await SMISadapter.parseOrganization(organization)
-    let actualResult = FHIRadapter.parseInstitutionInfo(institutionInfo)
-    expect(actualResult).toEqual(organization)
+    let actualResult:Organization = FHIRadapter.parseInstitutionInfo(institutionInfo)
+    expect(actualResult.address).toEqual(organization.address)
+    expect(actualResult.alias.length).toEqual(organization.alias.length)
+    expect(actualResult.name).toEqual(organization.name)
+    expect(actualResult.extension).toEqual(organization.extension)
   })
 
 });

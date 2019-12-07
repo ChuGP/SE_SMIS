@@ -31,6 +31,12 @@ export class FHIREntityAdapter{
    parsePatientInfo(patientInfo:PatientInfo){
       let patient:Patient = {
          resourceType:patientResource,
+         identifier:[
+            {
+               system:"privateKey",
+               value:patientInfo.privateKey
+            }
+         ],
          id:patientInfo.id,
          active:patientInfo.active,
          address:patientInfo.address,
@@ -76,12 +82,12 @@ export class FHIREntityAdapter{
             healthcareService.type.push({
                coding:[
                   {
-                     system:type,
-                     code:type,
-                     display:type
+                     system:type.serviceType,
+                     code:type.serviceType,
+                     display:type.serviceType
                   }
                ],
-               text:type
+               text:type.serviceType
             })
          }
       }
@@ -89,16 +95,19 @@ export class FHIREntityAdapter{
    }
 
    parseInstitutionInfo(institutionInfo:InstitutionInfo){
-      let organization:Organization = {
-         resourceType:institutionInfo.resourceType,
-         id:institutionInfo.id,
-         address:institutionInfo.address,
-         alias:institutionInfo.alias,
-         name:institutionInfo.name,
-         type:institutionInfo.type,
-         telecom:institutionInfo.telecom,
-         extension:[]
-      }
+      let organization:Organization = Object.assign({alias:[],extension:[]},institutionInfo)
+      // let organization:Organization = {
+      //    resourceType:institutionInfo.resourceType,
+      //    id:institutionInfo.id,
+      //    address:institutionInfo.address,
+      //    alias:[],
+      //    name:institutionInfo.name,
+      //    type:institutionInfo.type,
+      //    telecom:institutionInfo.telecom,
+      //    extension:[]
+      // }
+      // for(let alias of institutionInfo.alias)
+      //    organization.alias.push(alias.alias)
       if(institutionInfo.medicalServices){
          for(let service of institutionInfo.medicalServices){
             let healthcareService:HealthcareService = this.parseMedicalService(service)
@@ -119,6 +128,10 @@ export const healthcareServiceResource="HealthcareService"
 
 export interface Patient{
    resourceType:string,
+   identifier?:Array<{
+      system:string,
+      value:string
+   }>,
    active?:boolean,
    id?:string,
    name?:Name[],

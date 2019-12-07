@@ -4,36 +4,41 @@
 <hr color = "87CEEB">
 <p><font id="subtitleText" size="5">Basic&nbsp;Info</font></p>
 <table class="blueTable" border="3" align="center" style="width: 100%;">
-      <tr>
-        <td id="demoFont" align="center">Id</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your id"></td>
-      </tr>
-      <tr>
-        <td id="demoFont" style="width: 20%;" align="center">Institution Name</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your name"></td>
-      </tr>
-      <tr>
-        <td id="demoFont" align="center">Address</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your address"></td>
-      </tr>
-      <tr>
-        <td id="demoFont" align="center">Telecom</td><td><input oninput="value=value.replace(/[^\d-]/g,'')" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your telcom"></td>
-      </tr>
-      <tr>
-        <td>
-          <button id="add" style="margin-right: 3px; font-size: 15px;" (click)="addAlias()" >Add Alias</button>
-          <button id="delete" style="font-size: 15px;" (click)="subAlias()" >Remove Alias</button>
-        </td>
-        
-          </tr>
-      <tr *ngFor="let i of [].constructor(aliastimes)">
-        <td id="demoFont" align="center">Alias</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your alias"></td>
-      </tr>
-    </table>
+  <tr>
+    <td id="demoFont" style="width: 20%;" align="center">Institution Name</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your name" [(ngModel)]="institution.name"></td>
+  </tr>
+  <tr>
+    <td id="demoFont" align="center">Address</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your address" [(ngModel)]="institution.address[0].city"></td>
+  </tr>
+  <tr>
+    <td id="demoFont" align="center">Telecom</td><td><input oninput="value=value.replace(/[^\d-]/g,'')" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your telcom" [(ngModel)]="institution.telecom[0].value"></td>
+  </tr>
+  <tr>
+    <td>
+      <button id="add" style="margin-right: 3px; font-size: 15px;" (click)="addAlias()" >Add Alias</button>
+      <button id="delete" style="font-size: 15px;" (click)="removeAlias()" >Remove Alias</button>
+    </td>
+  </tr>
+  <tr *ngFor="let alias of institution.alias">
+    <td id="demoFont" align="center">Alias</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your alias" [(ngModel)]="alias.alias"></td>
+  </tr>
+</table>
     <p><font size="5">Medical&nbsp;Service</font></p>
-      <button id="add" style="margin-right: 3px;font-size: 15px;" (click)="add()" >Add Service</button>
-      <button id="delete" style="font-size: 15px;" (click)="sub()" >Remove Service</button>
+      <button id="add" style="margin-right: 3px;font-size: 15px;" (click)="addMedicalService()" >Add Service</button>
+      <button id="delete" style="font-size: 15px;" (click)="removeMedicalService()" >Remove Service</button>
       <table class="blueTable" border="3" align="center" style="width: 100%;">
-        <i align="center" style="width: 100%;" *ngFor="let i of [].constructor(times)">
-          <tr><td id="demoFont" align="center">Service</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your service"></td></tr>
+        <i align="center" style="width: 100%;" *ngFor="let medicalService of institution.medicalServices">
+          <tr>
+            <td id="demoFont" align="center">服務名稱</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your service name" [(ngModel)]="medicalService.name"></td>
+            <td id="demoFont" align="center">服務描述</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your service comment" [(ngModel)]="medicalService.comment"></td>
+            <div id="demoFont" align="center" *ngFor="let serviceType of medicalService.serviceType;index as i">
+              <td id="demoFont" align="center">服務類型</td>
+              <td><input type="text" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="this is your serviceType" [(ngModel)]="serviceType.serviceType"></td>
+            </div>
+            <td><button style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" (click)="medicalService.serviceType.push({serviceType:''})">新增類型</button></td>
+            <td><button style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" (click)="medicalService.serviceType.pop()">刪除類型</button></td>
+          </tr>
         </i>
       </table>
       <br/>
-      <button type="submit" id="submit" title="Are you sure to submit?" (click)="window()">Submit</button>
+      <button type="submit" id="submit" title="Are you sure to submit?" (click)="confirmSubmit()">Submit</button>

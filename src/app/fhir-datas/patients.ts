@@ -4,6 +4,16 @@ export const patients:Patient[]=[
     {
         "resourceType": "Patient",
         "id": "99980",
+        "maritalStatus": {
+            "coding":[],
+            "text": "Stable single"
+        },
+        "identifier":[
+            {
+                "value":"12345",
+                "system":"privateKey"
+            }
+        ],
         "active": true,
         "name": [
             {

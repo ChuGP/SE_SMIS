@@ -36,6 +36,9 @@
                     <option style="font-size:20px; color:#0a0a0a"  value="female">Female</option>
                 </select>
               </tr>
+              <tr>
+                <td id="demoFont" align="center">隱私金鑰</td><td><input style="font-size:24px; color:#0a0a0a"  type="password" class="tep myMOUSEPoint" placeholder="input your private key" [(ngModel)]="patientInfo.privateKey"></td>
+              </tr>
             </table>
           <br>
           <p><font id="subtitleText" size="5">Personal&nbsp;Medical&nbsp;Record</font></p>
@@ -46,7 +49,7 @@
               </ng-container>
               <ng-container matColumnDef="organization">
                 <th mat-header-cell *matHeaderCellDef >Organization </th>
-                <td mat-cell *matCellDef="let element"> {{element.organization}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.organization.display}} </td>
               </ng-container>
               <ng-container matColumnDef="time.start">
                 <th mat-header-cell *matHeaderCellDef >Time Start</th>
@@ -62,4 +65,4 @@
             <mat-paginator
             [pageSize]="5"
             showFirstLastButtons></mat-paginator> 
-            <button type="submit" id="submit" title="Are you sure to submit?" (click)="window()">Submit</button>
+            <button type="submit" id="submit" title="Are you sure to submit?" (click)="confirmSubmit()">Submit</button>

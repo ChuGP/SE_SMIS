@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
+import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
+import { InstitutionInfo, MedicalService } from '../smis-entity/smisentity';
+import { healthcareServiceResource } from '../fhir-entity/fhirentity';
 
 @Component({
   selector: 'app-institution-manager',
@@ -7,31 +10,70 @@ import { Router } from '@angular/router'
   styleUrls: ['./institution-manager.component.css']
 })
 export class InstitutionManagerComponent implements OnInit {
+  private institution:InstitutionInfo
+  private test:string[]=['a','b','c']
   times=1;
   aliastimes=1;
-  constructor(private router:Router) { }
+  constructor(private router:Router, private fhirProxy:FHIRProxyService) { 
+    this.institution = this.getDefaultInstitutionInfo()
+  }
 
   ngOnInit() {
   }
 
-  add() {
-    this.times++;
+  getDefaultInstitutionInfo(){
+    let institution:InstitutionInfo={
+      resourceType:"Organization",
+      id:'',
+      name:'',
+      address:[
+        {
+          city:""
+        }
+      ],
+      medicalServices:[this.getDefaultMedicalService()],
+      type:[],
+      telecom:[
+        {
+          system:"",
+          value:""
+        }
+      ],
+      alias:[{alias:''}]
+    }
+    return institution
+  }
+
+  getDefaultMedicalService():MedicalService{
+    return {
+      resourceType:healthcareServiceResource,
+      id:'',
+      serviceType:[{serviceType:''}],
+      name:'',
+      comment:''
+    }
+  }
+
+  addMedicalService() {
+    this.institution.medicalServices.push(this.getDefaultMedicalService())
   }
 
   addAlias() {
-    this.aliastimes++;
+    this.institution.alias.push({alias:''})
   }
 
-  subAlias() {
-    this.aliastimes--;
+  removeAlias() {
+    this.institution.alias.pop()
   }
 
-  sub() {
-    this.times--;
+  removeMedicalService() {
+    this.institution.medicalServices.pop()
   }
   
-  window() {
-    if(confirm("Submit Success!"))
+  confirmSubmit() {
+    console.log(JSON.stringify(this.institution))
+    if(confirm("確認要送出修改嗎!")){
       this.router.navigate([""]);
+    }
   }
 }

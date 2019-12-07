@@ -53,6 +53,7 @@ describe('SMISEntity', () => {
     let patient:Patient = patients[0]
     let info:PatientInfo = await adapter.parsePatient(patient)
     let item=info.family.find(x=>(x.relation=='dad'))
+    expect(info.privateKey).toEqual("12345")
     expect(item.patient.resourceType).toEqual(patient.resourceType)
   })
 
@@ -65,7 +66,10 @@ describe('SMISEntity', () => {
       id:fakeService.id,
       name:fakeService.name,
       comment:fakeService.comment,
-      serviceType:['Psychotherapy','Psychiatry']
+      serviceType:[
+        {serviceType:'Psychotherapy'},
+        {serviceType:'Psychiatry'}
+      ]
     } 
     let medicalService:MedicalService = adapter.parseHealthCareService(fakeService)
     expect(medicalService).toEqual(expectedMedicalService)
