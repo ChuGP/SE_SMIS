@@ -1,20 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MedicalResourceFilterComponent } from './medical-resource-filter.component';
-import { MatTableModule } from '@angular/material' ;
-import {MatPaginatorModule} from '@angular/material/paginator';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MedicalResourceFilterComponentModule } from './medical-resource-filter.component.module';
 describe('MedicalResourceFilterComponent', () => {
   let component: MedicalResourceFilterComponent;
   let fixture: ComponentFixture<MedicalResourceFilterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MedicalResourceFilterComponent ],
+      declarations: [],
       imports:[
-            BrowserAnimationsModule,
-            MatTableModule,
-            MatPaginatorModule
+        MedicalResourceFilterComponentModule
       ]
     })
     .compileComponents();

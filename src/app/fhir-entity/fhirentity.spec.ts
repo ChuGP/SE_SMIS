@@ -5,18 +5,16 @@ import { encounters} from '../fhir-datas/encounters'
 import { patients} from '../fhir-datas/patients'
 import { healthCareServices} from '../fhir-datas/healthcareServices'
 import {organizations} from '../fhir-datas/organizations'
-import {HttpClientModule} from '@angular/common/http'
-import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
+import {FHIREntityModule} from './fhirentity.module'
+import {SMISEntityModule} from '../smis-entity/smisentity.module'
 describe('FHIREntity', () => {
   beforeEach(() => TestBed.configureTestingModule({
     declarations:[],
     imports:[
-      HttpClientModule
+      FHIREntityModule,
+      SMISEntityModule,
     ],
     providers:[
-      FHIRProxyService,
-      FHIREntityAdapter,
-      SMISEntityAdapter
     ]
   }));
 

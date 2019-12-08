@@ -96,18 +96,6 @@ export class FHIREntityAdapter{
 
    parseInstitutionInfo(institutionInfo:InstitutionInfo){
       let organization:Organization = Object.assign({alias:[],extension:[]},institutionInfo)
-      // let organization:Organization = {
-      //    resourceType:institutionInfo.resourceType,
-      //    id:institutionInfo.id,
-      //    address:institutionInfo.address,
-      //    alias:[],
-      //    name:institutionInfo.name,
-      //    type:institutionInfo.type,
-      //    telecom:institutionInfo.telecom,
-      //    extension:[]
-      // }
-      // for(let alias of institutionInfo.alias)
-      //    organization.alias.push(alias.alias)
       if(institutionInfo.medicalServices){
          for(let service of institutionInfo.medicalServices){
             let healthcareService:HealthcareService = this.parseMedicalService(service)

@@ -11,9 +11,6 @@ import { healthcareServiceResource } from '../fhir-entity/fhirentity';
 })
 export class InstitutionManagerComponent implements OnInit {
   private institution:InstitutionInfo
-  private test:string[]=['a','b','c']
-  times=1;
-  aliastimes=1;
   constructor(private router:Router, private fhirProxy:FHIRProxyService) { 
     this.institution = this.getDefaultInstitutionInfo()
   }

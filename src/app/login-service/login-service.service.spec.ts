@@ -1,25 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-
 import { LoginService } from './login-service.service';
-import { AuthServiceConfig, AuthService } from 'angularx-social-login';
-import { provideConfig } from '../app.module';
-import { RouterTestingModule } from '@angular/router/testing';
+import {LoginServiceModule} from './login-service.service.module'
+
 describe('LoginService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports:[
-      RouterTestingModule
+      LoginServiceModule,
     ],
     declarations: [
       
     ],
-    providers:[
-      {
-        provide: AuthServiceConfig,
-        useFactory: provideConfig
-      },
-      AuthService,
-      LoginService
-    ],   
+    providers:[],   
   }));
 
   it('should be created', () => {

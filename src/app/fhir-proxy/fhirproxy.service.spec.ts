@@ -2,12 +2,13 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { FHIRProxyService } from './fhirproxy.service';
 import { Patient, Organization, Encounter, Resource} from '../fhir-entity/fhirentity';
+import { FHIRProxyModule } from './fhirproxy.service.module';
 
 describe('FHIRProxyService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     declarations:[],
     imports:[
-      HttpClientModule,
+      FHIRProxyModule,
     ]
   }));
 

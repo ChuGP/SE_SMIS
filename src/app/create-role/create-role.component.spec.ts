@@ -1,11 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {CreateRoleModule} from './create-role.component.module'
 import { CreateRoleComponent } from './create-role.component';
-import { CreateRoleModule} from './create-role.component.module'
-import {MatRadioModule} from '@angular/material/radio'
-import { FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
 describe('CreateRoleComponent', () => {
   let component: CreateRoleComponent;
   let fixture: ComponentFixture<CreateRoleComponent>;
@@ -13,11 +8,7 @@ describe('CreateRoleComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports:[
-        MatRadioModule,
-        RouterTestingModule,
-        FormsModule,
-        CreateRoleModule,
-        HttpClientModule
+       CreateRoleModule
       ],
       providers:[
         

@@ -1,16 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SharedInfoManagerComponent } from './shared-info-manager.component';
-import { MatTableModule } from '@angular/material' ;
+import { SharedInfoManagerComponentModule } from './shared-info-manager.component.module';
 describe('SharedInfoManagerComponent', () => {
   let component: SharedInfoManagerComponent;
   let fixture: ComponentFixture<SharedInfoManagerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SharedInfoManagerComponent ],
+      declarations: [
+      ],
       imports:[
-        MatTableModule
+        SharedInfoManagerComponentModule
       ]
     })
     .compileComponents();

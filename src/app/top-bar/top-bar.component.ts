@@ -3,7 +3,7 @@ import {LoginService} from '../login-service/login-service.service'
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.css']
+  styleUrls: ['./top-bar.component.css'],
 })
 export class TopBarComponent implements OnInit {
 

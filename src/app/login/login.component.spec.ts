@@ -1,16 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { InstitutionManagerComponent } from './institution-manager.component';
-import {InstitutionManagerComponentModule} from './institution-manager.component.module'
-describe('InstitutionManagerComponent', () => {
-  let component: InstitutionManagerComponent;
-  let fixture: ComponentFixture<InstitutionManagerComponent>;
+import {LoginComponent} from './login.component'
+import {LoginComponentModule} from './login.component.module'
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ 
       ],
       imports:[
-        InstitutionManagerComponentModule
+        LoginComponentModule
       ],
       providers:[
       ]
@@ -19,7 +19,7 @@ describe('InstitutionManagerComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstitutionManagerComponent);
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

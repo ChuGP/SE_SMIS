@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { BrowserModule} from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+
 import { AppComponent } from './app.component';
-import { TopBarComponent } from './top-bar/top-bar.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { MedicalResourceFilterComponent } from './medical-resource-filter/medical-resource-filter.component';
@@ -11,77 +11,20 @@ import { AccountManagerComponent } from './account-manager/account-manager.compo
 import { PatientManagerComponent } from './patient-manager/patient-manager.component';
 import { InstitutionManagerComponent } from './institution-manager/institution-manager.component';
 import { SharedInfoManagerComponent } from './shared-info-manager/shared-info-manager.component';
-import { HttpClientModule } from '@angular/common/http';
-import {MatButtonModule} from '@angular/material/button';
-import {A11yModule} from '@angular/cdk/a11y';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {PortalModule} from '@angular/cdk/portal';
-import {ScrollingModule} from '@angular/cdk/scrolling';
-import {CdkStepperModule} from '@angular/cdk/stepper';
-import {CdkTableModule} from '@angular/cdk/table';
-import {CdkTreeModule} from '@angular/cdk/tree';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatBadgeModule} from '@angular/material/badge';
-import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {MatCardModule} from '@angular/material/card';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatListModule} from '@angular/material/list';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatSortModule} from '@angular/material/sort';
-import {MatTableModule} from '@angular/material/table';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatTreeModule} from '@angular/material/tree';
-import { FHIRProxyService } from './fhir-proxy/fhirproxy.service';
-import {SMISEntityAdapter} from './smis-entity/smisentity'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
-import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
-import {LoginService} from './login-service/login-service.service'
-import {CreateRoleComponent} from './create-role/create-role.component'
-import {CreateRoleModule} from './create-role/create-role.component.module'
-let config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider("12526582446-q11oa9a1p9p7u92seh267hk8c5rg4li6.apps.googleusercontent.com")
-  },
-  {
-    id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider("417817125766065")
-  }
-]);
-export function provideConfig() {
-  return config;
-}
+import { CreateRoleComponent } from './create-role/create-role.component'
+
+import { AccountManagerComponentModule } from './account-manager/account-manager.component.module';
+import { HomeComponentModule } from './home/home.component.module';
+import { LoginComponentModule } from './login/login.component.module'
+import { CreateRoleModule } from './create-role/create-role.component.module';
+import { SharedInfoManagerComponentModule } from './shared-info-manager/shared-info-manager.component.module';
+import { MedicalResourceFilterComponentModule } from './medical-resource-filter/medical-resource-filter.component.module';
+import { TopBarComponentModule } from './top-bar/top-bar.component.module';
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
-    ReactiveFormsModule,
-    MatGridListModule,
-    HttpClientModule,
-    MatButtonModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'account', component:AccountManagerComponent},
@@ -91,80 +34,23 @@ export function provideConfig() {
       { path: 'medical-information-sharing', component:SharedInfoManagerComponent},
       { path: 'medical-institution-management', component:InstitutionManagerComponent},
       { path: 'medical-institution-recommend', component:MedicalResourceFilterComponent}]),
-    
-    A11yModule,
-    CdkStepperModule,
-    CdkTableModule,
-    CdkTreeModule,
-    DragDropModule,
-    MatAutocompleteModule,
-    MatBadgeModule,
-    MatBottomSheetModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatStepperModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatTreeModule,
-    PortalModule,
-    ScrollingModule,
-    SocialLoginModule,
-    CreateRoleModule,
+      AccountManagerComponentModule,
+      HomeComponentModule,
+      LoginComponentModule,
+      CreateRoleModule,
+      SharedInfoManagerComponentModule,
+      MedicalResourceFilterComponentModule,
+      TopBarComponentModule
   ],
   declarations: [
     AppComponent,
-    TopBarComponent,
-    LoginComponent,
-    HomeComponent,
-    MedicalResourceFilterComponent,
-    AccountManagerComponent,
-    SharedInfoManagerComponent,
   ],
   providers:[
-    {
-      provide: AuthServiceConfig,
-      useFactory: provideConfig
-    },
-    FHIRProxyService,
-    SMISEntityAdapter,
-    LoginService
   ],
   bootstrap: [ 
     AppComponent
   ],
+  schemas:[]
     
 })
 export class AppModule { }
-
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/
