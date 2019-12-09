@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
-import { InstitutionInfo, MedicalService } from '../smis-entity/smisentity';
-import { healthcareServiceResource } from '../fhir-entity/fhirentity';
+import { InstitutionInfo, MedicalService, SMISEntityAdapter } from '../smis-entity/smisentity';
+import { healthcareServiceResource, organizationResource, FHIREntityAdapter, Organization, HealthcareService } from '../fhir-entity/fhirentity';
+import { LoginService } from '../login-service/login-service.service';
 
 @Component({
   selector: 'app-institution-manager',
@@ -11,11 +12,24 @@ import { healthcareServiceResource } from '../fhir-entity/fhirentity';
 })
 export class InstitutionManagerComponent implements OnInit {
   private institution:InstitutionInfo
-  constructor(private router:Router, private fhirProxy:FHIRProxyService) { 
+  constructor(private fhirProxy:FHIRProxyService, private loginService:LoginService, private smisAdapter:SMISEntityAdapter, private fhirAdapter:FHIREntityAdapter) { 
     this.institution = this.getDefaultInstitutionInfo()
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    if(this.loginService.isLogin()){
+      let userId = this.loginService.getUserInfo().email.replace('@','')
+      let institution:InstitutionInfo = await this.getInstitution(userId);
+      if(institution.resourceType != organizationResource){
+        institution = this.getDefaultInstitutionInfo()
+        institution.id = userId
+      }
+        this.setInstitution(institution)
+    }
+  }
+
+  setInstitution(institution:InstitutionInfo){
+    this.institution = institution
   }
 
   getDefaultInstitutionInfo(){
@@ -66,11 +80,47 @@ export class InstitutionManagerComponent implements OnInit {
   removeMedicalService() {
     this.institution.medicalServices.pop()
   }
+
+  async getInstitution(id){
+    let organization:Organization = await this.fhirProxy.getResource(organizationResource,id)
+    return await this.smisAdapter.parseOrganization(organization) as InstitutionInfo
+  }
+
+  async updateInstitution(institution:InstitutionInfo){
+    let organization:Organization = this.fhirAdapter.parseInstitutionInfo(institution)
+    if(organization.id)
+      organization = await this.fhirProxy.updateResource(organizationResource,organization)
+    else
+      organization = await this.fhirProxy.createResource(organizationResource,organization)
+    return await this.smisAdapter.parseOrganization(organization)
+  }
+
+  async updateMedicalService(medicalService:MedicalService){
+    let healthcareService:HealthcareService = this.fhirAdapter.parseMedicalService(medicalService)
+    if(healthcareService.id)
+      healthcareService = await this.fhirProxy.updateResource(healthcareServiceResource,healthcareService)
+    else
+      healthcareService = await this.fhirProxy.createResource(healthcareServiceResource,healthcareService)
+    return this.smisAdapter.parseHealthCareService(healthcareService)
+  }
+
+  async updateMedicalServices(medicalServices:MedicalService[]){
+    let result:MedicalService[] = []
+    for(let medicalService of medicalServices)
+        result.push(await this.updateMedicalService(medicalService))
+    return result
+  }
   
-  confirmSubmit() {
-    console.log(JSON.stringify(this.institution))
+  async confirmSubmit() {
     if(confirm("確認要送出修改嗎!")){
-      this.router.navigate([""]);
+      let result = "修改失敗!"
+      this.institution.medicalServices = await this.updateMedicalServices(this.institution.medicalServices)
+      let institution = await this.updateInstitution(this.institution)
+      if(institution.resourceType == organizationResource){
+        this.institution.id = institution.id
+        result = "修改成功!"
+      }
+      alert(result)
     }
   }
 }

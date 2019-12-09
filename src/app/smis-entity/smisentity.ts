@@ -84,10 +84,14 @@ export class SMISEntityAdapter{
          alias:[],
          name:organization.name
       }
-      for(let extension of organization.extension)
-         institution.medicalServices.push(this.parseHealthCareService(await this.fhir.getExtensionResource(extension.url)))
-      for(let alias of organization.alias)
-         institution.alias.push({alias:alias})
+      if(organization.extension){
+         for(let extension of organization.extension)
+            institution.medicalServices.push(this.parseHealthCareService(await this.fhir.getExtensionResource(extension.url)))
+      }
+      if(organization.alias){
+         for(let alias of organization.alias)
+            institution.alias.push({alias:alias})
+      }
       return institution
     }
 }

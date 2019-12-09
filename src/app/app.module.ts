@@ -34,13 +34,13 @@ import { TopBarComponentModule } from './top-bar/top-bar.component.module';
       { path: 'medical-information-sharing', component:SharedInfoManagerComponent},
       { path: 'medical-institution-management', component:InstitutionManagerComponent},
       { path: 'medical-institution-recommend', component:MedicalResourceFilterComponent}]),
-      AccountManagerComponentModule,
-      HomeComponentModule,
-      LoginComponentModule,
-      CreateRoleModule,
-      SharedInfoManagerComponentModule,
-      MedicalResourceFilterComponentModule,
-      TopBarComponentModule
+    AccountManagerComponentModule,
+    HomeComponentModule,
+    LoginComponentModule,
+    CreateRoleModule,
+    SharedInfoManagerComponentModule,
+    MedicalResourceFilterComponentModule,
+    TopBarComponentModule
   ],
   declarations: [
     AppComponent,
