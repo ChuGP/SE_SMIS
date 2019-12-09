@@ -16,5 +16,10 @@
 </div>
 
 <div *ngIf="loginService.isLogin()">
-  <app-create-role></app-create-role>
+  <div>
+    <img [src]="loginService.user.photoUrl" alt="Your photo">
+  </div>
+  <div>Welcome to {{loginService.user.name}}</div>
+  <div>Your Have success Login with {{loginService.user.email}}</div>
+  
 </div>

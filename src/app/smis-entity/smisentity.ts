@@ -17,6 +17,8 @@ export class SMISEntityAdapter{
       let patientInfo:PatientInfo = {
          resourceType:(FHIRPatient.resourceType?FHIRPatient.resourceType:patientResource),
          id:(FHIRPatient.id?FHIRPatient.id:''),
+         active:(FHIRPatient.active?FHIRPatient.active:true),
+         gender:(FHIRPatient.gender?FHIRPatient.gender:''),
          privateKey:"",
          address:(FHIRPatient.address?FHIRPatient.address:[{city:""}]),
          telecom:(FHIRPatient.telecom?FHIRPatient.telecom:[{}]),

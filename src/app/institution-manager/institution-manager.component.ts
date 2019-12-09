@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
 import { InstitutionInfo, MedicalService, SMISEntityAdapter } from '../smis-entity/smisentity';
 import { healthcareServiceResource, organizationResource, FHIREntityAdapter, Organization, HealthcareService } from '../fhir-entity/fhirentity';
@@ -12,19 +12,16 @@ import { LoginService } from '../login-service/login-service.service';
 })
 export class InstitutionManagerComponent implements OnInit {
   private institution:InstitutionInfo
-  constructor(private fhirProxy:FHIRProxyService, private loginService:LoginService, private smisAdapter:SMISEntityAdapter, private fhirAdapter:FHIREntityAdapter) { 
+  constructor(private fhirProxy:FHIRProxyService, private loginService:LoginService, private smisAdapter:SMISEntityAdapter, private fhirAdapter:FHIREntityAdapter, private actRoute:ActivatedRoute) { 
     this.institution = this.getDefaultInstitutionInfo()
   }
 
   async ngOnInit() {
-    if(this.loginService.isLogin()){
-      let userId = this.loginService.getUserInfo().email.replace('@','')
-      let institution:InstitutionInfo = await this.getInstitution(userId);
-      if(institution.resourceType != organizationResource){
-        institution = this.getDefaultInstitutionInfo()
-        institution.id = userId
-      }
-        this.setInstitution(institution)
+    let userId = this.actRoute.snapshot.paramMap.get('id')
+    if(this.loginService.isLogin() && userId){
+        let institution:InstitutionInfo = await this.getInstitution(userId);
+        if(institution.resourceType == organizationResource)
+          this.setInstitution(institution)
     }
   }
 

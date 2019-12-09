@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import {FHIRProxyService} from '../fhir-proxy/fhirproxy.service';
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {PatientInfo, SMISEntityAdapter, MedicalRecord} from '../smis-entity/smisentity'
@@ -23,14 +23,16 @@ export class PatientManagerComponent implements OnInit {
   private paginator: MatPaginator;
   private dataSource;
 
-  constructor(private fhir:FHIRProxyService, private router:Router, private fhirAdapter:FHIREntityAdapter, private smisAdapter:SMISEntityAdapter, private loginService:LoginService) { 
-    this.patientInfo = this.getDefaultPatient();
+  constructor(private fhir:FHIRProxyService, private router:Router, private fhirAdapter:FHIREntityAdapter, private smisAdapter:SMISEntityAdapter, private loginService:LoginService,private actRoute:ActivatedRoute) { 
+    this.displayPatient(this.getDefaultPatient());
   }
   
   async ngOnInit() {
-    if(this.loginService.isLogin()){
-      let patientInfo:PatientInfo = await this.getPatient(this.loginService.getUserInfo().email.replace('@',''))
-      this.displayPatient(patientInfo)
+    let userId = this.actRoute.snapshot.paramMap.get('id')
+    if(this.loginService.isLogin() && userId){
+      let patientInfo:PatientInfo = await this.getPatient(userId)
+      if(patientInfo.resourceType == patientResource)
+        this.displayPatient(patientInfo)
     }
   }
 
@@ -75,10 +77,8 @@ export class PatientManagerComponent implements OnInit {
   }
 
   async getPatient(patientId){
-    let patient:Patient = await this.fhir.getResource(patientResource,patientId)   
-    if(patient.resourceType==patientResource)   
-      return await this.smisAdapter.parsePatient(patient)
-    return patient as PatientInfo
+    let patient:Patient = await this.fhir.getResource(patientResource,patientId)     
+    return await this.smisAdapter.parsePatient(patient) as PatientInfo
   }
 
   getDefaultPatient(){
