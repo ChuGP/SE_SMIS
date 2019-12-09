@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { AuthServiceConfig, AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { FHIRProxyModule } from '../fhir-proxy/fhirproxy.service.module';
 let config = new AuthServiceConfig([
     {
       id: GoogleLoginProvider.PROVIDER_ID,
@@ -14,13 +15,16 @@ let config = new AuthServiceConfig([
     return config;
   }
 @NgModule({
-    imports:[],
+    imports:[
+      FHIRProxyModule
+    ],
     providers:[
         {
             provide: AuthServiceConfig,
             useFactory: provideConfig
           },
           AuthService,
+          
     ],
     declarations:[]
 })

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MedicalRecord, PatientInfo, MedicalService, InstitutionInfo } from '../smis-entity/smisentity';
+import { MedicalRecord, PatientInfo, MedicalService, InstitutionInfo, getDefaultTelecom } from '../smis-entity/smisentity';
 
 export class FHIREntity {
 }
@@ -96,14 +96,14 @@ export class FHIREntityAdapter{
 
    parseInstitutionInfo(institutionInfo:InstitutionInfo){
       let organization:Organization = {
-         resourceType:(institutionInfo.resourceType?institutionInfo.resourceType:organizationResource),
-         id:(institutionInfo.id?institutionInfo.id:''),
+         resourceType:institutionInfo.resourceType,
+         id:institutionInfo.id,
          extension:[],
          alias:[],
-         name:(institutionInfo.name?institutionInfo.name:''),
-         telecom:(institutionInfo.telecom?institutionInfo.telecom:[]),
-         type:(institutionInfo.type?institutionInfo.type:[]),
-         address:(institutionInfo.address?institutionInfo.address:[])
+         name:institutionInfo.name,
+         telecom:institutionInfo.telecom,
+         type:institutionInfo.type,
+         address:institutionInfo.address
       }
       if(institutionInfo.medicalServices){
          for(let service of institutionInfo.medicalServices){
@@ -150,7 +150,7 @@ export interface Organization{
    name?:string,
    address?:Address[],
    type?:CodeAbleConcept[],
-   telecom?:Array<{system:string,value:string}>,
+   telecom?:Array<Telecom>,
    alias?:string[],
    extension?:Extension[]
 }
@@ -185,9 +185,9 @@ export interface Address{
  }
 
  export interface Name{
-  use:string,
-  family:string,
-  given:string[]  
+  use?:string,
+  family?:string,
+  given?:string[]  
  }
 
  export interface Telecom{

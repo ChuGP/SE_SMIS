@@ -1,4 +1,4 @@
-import {Patient,Encounter, HealthcareService,Reference, Organization, CodeAbleConcept} from '../fhir-entity/fhirentity'
+import {Patient,Encounter, HealthcareService,Reference, Organization, CodeAbleConcept, patientResource, organizationResource} from '../fhir-entity/fhirentity'
 import {FHIRProxyService} from '../fhir-proxy/fhirproxy.service'
 import { Injectable } from '@angular/core'
 
@@ -14,7 +14,17 @@ export class SMISEntityAdapter{
    }
 
    async parsePatient(FHIRPatient:Patient){
-      let patientInfo:PatientInfo = Object.assign({privateKey:""},FHIRPatient)
+      let patientInfo:PatientInfo = {
+         resourceType:(FHIRPatient.resourceType?FHIRPatient.resourceType:patientResource),
+         id:(FHIRPatient.id?FHIRPatient.id:''),
+         privateKey:"",
+         address:(FHIRPatient.address?FHIRPatient.address:[{city:""}]),
+         telecom:(FHIRPatient.telecom?FHIRPatient.telecom:[{}]),
+         name:(FHIRPatient.name?FHIRPatient.name:getDefaultName()),
+         birthDate:(FHIRPatient.birthDate?FHIRPatient.birthDate:""),
+         maritalStatus:(FHIRPatient.maritalStatus?FHIRPatient.maritalStatus:getDefaultCodeAbleConcept()),
+         medicalRecord:new Map<string,MedicalRecord>()
+      }
       patientInfo.medicalRecord = new Map<string,MedicalRecord>()
       patientInfo.family =[]
       if(FHIRPatient.extension){
@@ -75,14 +85,14 @@ export class SMISEntityAdapter{
     
     async parseOrganization(organization:Organization){
       let institution:InstitutionInfo = {
-         resourceType:organization.resourceType,
-         id:organization.id,
-         address:organization.address,
-         telecom:organization.telecom,
+         resourceType:(organization.resourceType?organization.resourceType:organizationResource),
+         id:(organization.id?organization.id:''),
+         address:(organization.address?organization.address:getDefaultAddress()),
+         telecom:(organization.telecom?organization.telecom:getDefaultTelecom()),
          medicalServices:[],
-         type:organization.type,
+         type:(organization.type?organization.type:[getDefaultCodeAbleConcept()]),
          alias:[],
-         name:organization.name
+         name:(organization.name?organization.name:'')
       }
       if(organization.extension){
          for(let extension of organization.extension)
@@ -94,6 +104,30 @@ export class SMISEntityAdapter{
       }
       return institution
     }
+
+}
+
+export function getDefaultAddress():Address[]{
+   return [{city:""}] as Address[]
+}
+
+export function getDefaultTelecom():Telecom[]{
+   return [{}] as Telecom[]
+}
+
+export function getDefaultCodeAbleConcept(){
+   return {
+      coding:[],
+      text:""
+   } as CodeAbleConcept
+}
+
+export function getDefaultName():Name[]{
+   return [{
+      given:[""],
+      family:"",
+      use:""
+   }] as Name[]
 }
 
 export interface PatientInfo{
@@ -135,7 +169,7 @@ export interface InstitutionInfo{
    address?:Address[],
    medicalServices?:MedicalService[],
    type?:CodeAbleConcept[],
-   telecom?:Array<{system:string,value:string}>,
+   telecom?:Array<Telecom>,
    alias?:Array<{alias:string}>
 }
 export interface MedicalService{
@@ -155,9 +189,9 @@ export interface Address{
  }
 
  export interface Name{
-  use:string,
-  family:string,
-  given:string[]  
+  use?:string,
+  family?:string,
+  given?:string[]  
  }
 
  export interface Telecom{

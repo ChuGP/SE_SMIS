@@ -53,25 +53,23 @@ export class PatientManagerComponent implements OnInit {
 
   async confirmSubmit() {
     if(confirm("確認要送出嗎?")){
-      let info = await this.updatePatient(this.patientInfo)
+      let patient = await this.updatePatient(this.patientInfo)
       let result = "更新失敗"
-      if(info.resourceType==patientResource){
-        this.displayPatient(await this.smisAdapter.parsePatient(info))
+      if(patient.resourceType==patientResource){
+        this.displayPatient(patient)
         result = "更新成功"
       }
       alert(result)
-      // this.router.navigate([""]);
     }
   }
 
   async updatePatient(patientInfo:PatientInfo){
     let patient:Patient = this.fhirAdapter.parsePatientInfo(patientInfo)
-    return await this.fhir.updateResource(patientResource,patient)
-  }
-
-  async createPatient(patientInfo:PatientInfo){
-    let patient:Patient = this.fhirAdapter.parsePatientInfo(patientInfo)
-    return await this.fhir.createResource(patientResource,patient)
+    if(patient.id)
+      patient = await this.fhir.updateResource(patientResource,patient)
+    else
+      patient = await this.fhir.createResource(patientResource,patient)
+    return await this.smisAdapter.parsePatient(patient)
   }
 
   async getPatient(patientId){

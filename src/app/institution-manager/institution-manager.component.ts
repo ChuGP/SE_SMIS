@@ -115,9 +115,9 @@ export class InstitutionManagerComponent implements OnInit {
     if(confirm("確認要送出修改嗎!")){
       let result = "修改失敗!"
       this.institution.medicalServices = await this.updateMedicalServices(this.institution.medicalServices)
-      let institution = await this.updateInstitution(this.institution)
+      let institution:InstitutionInfo = await this.updateInstitution(this.institution)
       if(institution.resourceType == organizationResource){
-        this.institution.id = institution.id
+        this.setInstitution(institution)
         result = "修改成功!"
       }
       alert(result)

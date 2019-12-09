@@ -16,10 +16,5 @@
 </div>
 
 <div *ngIf="loginService.isLogin()">
-  <div>Your ID:{{loginService.user.id}}</div>
-  <div>Your Name:{{loginService.user.name}}</div>
-  <div>Your Email:{{loginService.user.email}}</div>
-  <div>
-    <img [src]="loginService.user.photoUrl" alt="Your photo">
-  </div>
+  <app-create-role></app-create-role>
 </div>
