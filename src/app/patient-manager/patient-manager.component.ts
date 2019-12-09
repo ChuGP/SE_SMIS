@@ -14,6 +14,8 @@ import {LoginService} from '../login-service/login-service.service'
 })
 
 export class PatientManagerComponent implements OnInit {
+  private checked=false;
+  private typeInput="password";
   private displayRecords:MedicalRecord[]=[];
   private patientInfo:PatientInfo;
   private displayedColumns: string[] = ['diagnosis', 'organization', 'time.start', 'time.end'];
@@ -101,5 +103,12 @@ export class PatientManagerComponent implements OnInit {
       },
       medicalRecord:new Map<string,MedicalRecord>()
     };
+  }
+
+  showPasswd(){
+    if(this.checked==true)
+      this.typeInput="text";
+    else
+      this.typeInput="password";
   }
 }
