@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class LoginService {
   private user: SocialUser;
   private menu=[]
+  private role=""
   private islogin;
   constructor(private authService:AuthService, private fhirProxy:FHIRProxyService, private router:Router) {
     this.islogin = false;
@@ -22,10 +23,12 @@ export class LoginService {
         let organization = await fhirProxy.getResource(organizationResource,userId)
         if(patient.resourceType == patientResource){
           this.menu = getPatientMenu(userId)
+          this.role = patientResource
           this.router.navigate([''])
         }
         else if(organization.resourceType == organizationResource){
           this.menu = getInstitutionMenu(userId)
+          this.role = organizationResource
           this.router.navigate([''])
         }
         else{
@@ -64,6 +67,10 @@ export class LoginService {
 
   getUserInfo(){
     return this.user
+  }
+
+  getRole(){
+    return this.role
   }
 
 }

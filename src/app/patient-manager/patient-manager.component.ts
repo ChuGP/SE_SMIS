@@ -8,6 +8,20 @@ import { patientResource } from '../fhir-entity/fhirentity'
 import { LoginService } from '../login-service/login-service.service'
 import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
+
+interface MedicalForm{
+  id:string,
+  diagnosis:Array<{diagnosis:string}>,
+  organization:{
+    reference:string,
+    display:string
+  },
+  time:{
+    start:string,
+    end:string
+  }
+}
+
 @Component({
   selector: 'app-patient-manager',
   templateUrl: './patient-manager.component.html',
@@ -16,7 +30,9 @@ import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
 export class PatientManagerComponent implements OnInit {
   private checked=false;
+  private disable
   private typeInput="password";
+  private medicalRecord:MedicalForm
   private displayRecords:MedicalRecord[]=[];
   private patientInfo:PatientInfo;
   private displayedColumns: string[] = ['diagnosis', 'organization', 'time.start', 'time.end'];
@@ -26,10 +42,12 @@ export class PatientManagerComponent implements OnInit {
 
   constructor(private smisFacade:SMISFacadeService,private fhir:FHIRProxyService, private router:Router,private loginService:LoginService,private actRoute:ActivatedRoute) { 
     this.displayPatient(this.getDefaultPatient());
+    this.medicalRecord = this.getDefaultMedicalForm()
   }
   
   async ngOnInit() {
     let userId = this.actRoute.snapshot.paramMap.get('id')
+    this.disable = this.actRoute.snapshot.queryParamMap.get('disable')
     if(this.loginService.isLogin() && userId){
       let patientInfo:PatientInfo = await this.smisFacade.getPatient(userId)
       if(patientInfo.resourceType == patientResource)
@@ -68,6 +86,15 @@ export class PatientManagerComponent implements OnInit {
     }
   }
 
+  async confirmSubmitRecord(){
+    if(confirm('確認要送出嗎?')){
+      let medicalRecord:MedicalRecord = Object.assign({diagnosis:[]},this.medicalRecord)
+      for(let diagnosis of this.medicalRecord.diagnosis)
+      medicalRecord.diagnosis.push(diagnosis.diagnosis)
+      
+    }
+  }
+
   getDefaultPatient(){
     return {
       resourceType:patientResource,
@@ -90,6 +117,21 @@ export class PatientManagerComponent implements OnInit {
       },
       medicalRecord:new Map<string,MedicalRecord>()
     };
+  }
+
+  getDefaultMedicalForm():MedicalForm{
+    return {
+      id:"",
+      diagnosis:[{diagnosis:''}],
+      organization:{
+        reference:"",
+        display:""
+      },
+      time:{
+         start:"",
+         end:""
+      }
+    } as MedicalForm
   }
 
   showPasswd(){

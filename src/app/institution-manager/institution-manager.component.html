@@ -43,20 +43,19 @@
     <button id="add" style="margin-right: 1px;font-size: 15px;" (click)="addMedicalService()">新增服務</button>
     <button id="delete" style="font-size: 15px;" (click)="removeMedicalService()">刪除服務</button>
   </div>
-  <form #serviceForm="ngForm">
     <table class="blueTable" border="3" align="center" style="width: 100%;">
-      <i align="center" style="width: 100%;" *ngFor="let medicalService of institution.medicalServices">
+      <i align="center" style="width: 100%;" *ngFor="let medicalService of institution.medicalServices;index as i">
         <tr>
           <td id="demoFont" align="center">服務名稱</td>
           <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control" placeholder="輸入服務名稱"
-              [(ngModel)]="medicalService.name" name="service" required [disabled]="disable"></td>
+              [(ngModel)]="medicalService.name" required [disabled]="disable"></td>
           <td id="demoFont" align="center">服務描述</td>
           <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="輸入服務描述"
-              [(ngModel)]="medicalService.comment" name="description" [disabled]="disable"></td>
+              [(ngModel)]="medicalService.comment" [disabled]="disable"></td>
           <div id="demoFont" align="center" *ngFor="let serviceType of medicalService.serviceType;index as i">
             <td id="demoFont" align="center">服務類型</td>
             <td><input type="text" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control"
-                placeholder="輸入服務類別" [(ngModel)]="serviceType.serviceType" name="type" required [disabled]="disable">
+                placeholder="輸入服務類別" [(ngModel)]="serviceType.serviceType" required [disabled]="disable">
             </td>
           </div>
           <td [hidden]="disable"><button id="add" style="font-size:15px;" class="tep myMOUSE"
@@ -66,12 +65,11 @@
         </tr>
       </i>
     </table>
-  </form>
 
   <br />
-  <p *ngIf="institutionForm.valid && serviceForm.valid" [hidden]="disable">
+  <p *ngIf="institutionForm.valid" [hidden]="disable">
     <button type="submit" id="submit" title="Are you sure to submit?" (click)="confirmSubmit()">送出</button>
   </p>
-  <p *ngIf="!institutionForm.valid || !serviceForm.valid" [hidden]="disable">
-    <button type="submit" [disabled]="!institutionForm.valid || !serviceForm.valid">送出</button>
+  <p *ngIf="!institutionForm.valid" [hidden]="disable">
+    <button type="submit" [disabled]="!institutionForm.valid">送出</button>
   </p>

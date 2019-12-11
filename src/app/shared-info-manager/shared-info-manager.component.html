@@ -1,4 +1,4 @@
-<div [hidden]="display">
+<div *ngIf="loginService.role=='Patient'">
   <h1>
       <b><i id="titleText">Institution Informations</i></b>
     </h1>
@@ -37,18 +37,20 @@
     </table>
 </div>
 
-<div [hidden]="!display">
+<div *ngIf="loginService.role=='Organization'">
     <h1>
         <b><i id="titleText">Personal Information</i></b>
       </h1>
       <hr color = "87CEEB">
+      <form #patientIdForm="ngForm">
       <table  border="3" align="center" style="width: 100%;">
           <tr>
-            <td align="center">ID</td><td><input class="tep" placeholder="the ID"></td>
+            <td align="center">ID</td><td><input class="tep" placeholder="the ID" type="text" [(ngModel)]="patientId" name="patientId" required></td>
           </tr>
         </table>
+      </form>
         <br/>
-        <button (click)="window()" type="submit" id="submit">Submit</button>
+        <button (click)="submit()" type="submit" id="submit" [disabled]="!patientIdForm.valid">Submit</button>
 
       <div [hidden]="!showPatient">
         <table mat-table [dataSource]="dataSource" >
@@ -72,7 +74,3 @@
         </div>
       
   </div>
-
- <br>
-  <button (click)="change()">Change Display</button>
-  <div>  
