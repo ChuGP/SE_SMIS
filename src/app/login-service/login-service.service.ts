@@ -22,11 +22,11 @@ export class LoginService {
         let organization = await fhirProxy.getResource(organizationResource,userId)
         if(patient.resourceType == patientResource){
           this.menu = getPatientMenu(userId)
-          this.router.navigate(['patient-information-management',`${userId}`])
+          this.router.navigate([''])
         }
         else if(organization.resourceType == organizationResource){
           this.menu = getInstitutionMenu(userId)
-          this.router.navigate(['medical-institution-management',`${userId}`])
+          this.router.navigate([''])
         }
         else{
           this.menu = getNewMemberMenu()
