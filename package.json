@@ -23,6 +23,7 @@
     "@angular/router": "~8.2.11",
     "angular-paginator": "^3.0.0",
     "angularx-social-login": "^2.2.1",
+    "font-awesome": "^4.7.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

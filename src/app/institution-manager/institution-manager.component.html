@@ -19,23 +19,19 @@
             <td id="demoFont" align="center">電話</td>
             <td><input oninput="value=value.replace(/[^\d-]/g,'')" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control" placeholder="輸入電話" [(ngModel)]="institution.telecom[0].value" name="telecom" required></td>
         </tr>
-        <tr>
-            <td>
-                <button id="add" style="margin-right: 3px; font-size: 15px;" (click)="addAlias()" name="add">新增別名</button>
-                <button id="delete" style="font-size: 15px;" (click)="removeAlias()" name="delete">刪除別名</button>
-            </td>
-        </tr>
         <tr *ngFor="let alias of institution.alias">
             <td id="demoFont" align="center">別名</td>
             <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="輸入別名" [(ngModel)]="alias.alias">
             </td>
         </tr>
     </table>
+    <button id="add" style="margin-right: 1px; font-size: 15px;" (click)="addAlias()" name="add">新增別名</button>
+    <button id="delete" style="font-size: 15px;" (click)="removeAlias()" name="delete">刪除別名</button>
 </form>
 <p>
     <font size="5">Medical&nbsp;Service</font>
 </p>
-<button id="add" style="margin-right: 3px;font-size: 15px;" (click)="addMedicalService()">新增服務</button>
+<button id="add" style="margin-right: 1px;font-size: 15px;" (click)="addMedicalService()">新增服務</button>
 <button id="delete" style="font-size: 15px;" (click)="removeMedicalService()">刪除服務</button>
 <form #serviceForm="ngForm">
     <table class="blueTable" border="3" align="center" style="width: 100%;">

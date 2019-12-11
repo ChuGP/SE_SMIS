@@ -1,25 +1,25 @@
 <div *ngIf="!loginService.isLogin()">
-<p>Account</p>
-<input type="text" placeholder="input your account">
-<p>Password</p>
-<input type="password" placeholder="input your password">
-<div>
-  <button [routerLink]="['/account']">login</button>
-</div>
-<br>
-<div>
-  <button (click)="signInWithFB()" style="background: #D2691E">Login with facebook</button>
-</div>
-<div>
-  <button (click)="signInWithGoogle()" style="background: #D2691E">Login with Google</button>
-</div>
+    <div align="center">
+        <p id="demotext">帳號</p>
+        <input style="font-size:24px; color:#0a0a0a" type="text" placeholder="請輸入帳號!">
+        <p id="demotext">密碼</p>
+        <input style="font-size:24px; color:#0a0a0a" type="password" placeholder="請輸入密碼!">
+    </div>
+    <div align="center">
+        <button [routerLink]="['/account']">login</button>
+    </div>
+    <br>
+    <div align="center">
+        <button (click)="signInWithFB()" style="color:#0a0a0a; background-color: rgb(181, 181, 233);">Login with facebook</button>
+        <button (click)="signInWithGoogle()" style="color:#0a0a0a; background-color: cornsilk;">Login with Google</button>
+    </div>
 </div>
 
-<div *ngIf="loginService.isLogin()">
-  <div>
-    <img [src]="loginService.user.photoUrl" alt="Your photo">
-  </div>
-  <div>Welcome to {{loginService.user.name}}</div>
-  <div>Your Have success Login with {{loginService.user.email}}</div>
-  
+<div *ngIf="loginService.isLogin() ">
+    <div align="center ">
+        <img [src]="loginService.user.photoUrl " alt="Your photo ">
+    </div>
+    <div>Welcome to {{loginService.user.name}}</div>
+    <div>Your Have success Login with {{loginService.user.email}}</div>
+
 </div>
