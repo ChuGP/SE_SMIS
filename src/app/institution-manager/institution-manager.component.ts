@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
-import { InstitutionInfo, MedicalService, SMISEntityAdapter } from '../smis-entity/smisentity';
-import { healthcareServiceResource, organizationResource, FHIREntityAdapter, Organization, HealthcareService } from '../fhir-entity/fhirentity';
+import { InstitutionInfo, MedicalService } from '../smis-entity/smisentity';
+import { healthcareServiceResource, organizationResource } from '../fhir-entity/fhirentity';
 import { LoginService } from '../login-service/login-service.service';
+import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
 @Component({
   selector: 'app-institution-manager',
@@ -12,14 +13,17 @@ import { LoginService } from '../login-service/login-service.service';
 })
 export class InstitutionManagerComponent implements OnInit {
   private institution:InstitutionInfo
-  constructor(private fhirProxy:FHIRProxyService, private loginService:LoginService, private smisAdapter:SMISEntityAdapter, private fhirAdapter:FHIREntityAdapter, private actRoute:ActivatedRoute) { 
+  private disable
+  constructor(private smisFacade:SMISFacadeService,private fhirProxy:FHIRProxyService, private loginService:LoginService, private actRoute:ActivatedRoute) { 
     this.institution = this.getDefaultInstitutionInfo()
   }
 
   async ngOnInit() {
     let userId = this.actRoute.snapshot.paramMap.get('id')
+    this.disable = this.actRoute.snapshot.queryParamMap.get('disable')
+    
     if(this.loginService.isLogin() && userId){
-        let institution:InstitutionInfo = await this.getInstitution(userId);
+        let institution:InstitutionInfo = await this.smisFacade.getInstitution(userId);
         if(institution.resourceType == organizationResource)
           this.setInstitution(institution)
     }
@@ -77,42 +81,12 @@ export class InstitutionManagerComponent implements OnInit {
   removeMedicalService() {
     this.institution.medicalServices.pop()
   }
-
-  async getInstitution(id){
-    let organization:Organization = await this.fhirProxy.getResource(organizationResource,id)
-    return await this.smisAdapter.parseOrganization(organization) as InstitutionInfo
-  }
-
-  async updateInstitution(institution:InstitutionInfo){
-    let organization:Organization = this.fhirAdapter.parseInstitutionInfo(institution)
-    if(organization.id)
-      organization = await this.fhirProxy.updateResource(organizationResource,organization)
-    else
-      organization = await this.fhirProxy.createResource(organizationResource,organization)
-    return await this.smisAdapter.parseOrganization(organization)
-  }
-
-  async updateMedicalService(medicalService:MedicalService){
-    let healthcareService:HealthcareService = this.fhirAdapter.parseMedicalService(medicalService)
-    if(healthcareService.id)
-      healthcareService = await this.fhirProxy.updateResource(healthcareServiceResource,healthcareService)
-    else
-      healthcareService = await this.fhirProxy.createResource(healthcareServiceResource,healthcareService)
-    return this.smisAdapter.parseHealthCareService(healthcareService)
-  }
-
-  async updateMedicalServices(medicalServices:MedicalService[]){
-    let result:MedicalService[] = []
-    for(let medicalService of medicalServices)
-        result.push(await this.updateMedicalService(medicalService))
-    return result
-  }
   
   async confirmSubmit() {
     if(confirm("確認要送出修改嗎!")){
       let result = "修改失敗!"
-      this.institution.medicalServices = await this.updateMedicalServices(this.institution.medicalServices)
-      let institution:InstitutionInfo = await this.updateInstitution(this.institution)
+      this.institution.medicalServices = await this.smisFacade.updateMedicalServices(this.institution.medicalServices)
+      let institution:InstitutionInfo = await this.smisFacade.updateInstitution(this.institution)
       if(institution.resourceType == organizationResource){
         this.setInstitution(institution)
         result = "修改成功!"

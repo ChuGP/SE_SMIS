@@ -5,8 +5,7 @@ import { FHIRProxyModule} from '../fhir-proxy/fhirproxy.service.module'
 import { InstitutionManagerComponent } from './institution-manager.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginServiceModule } from '../login-service/login-service.service.module';
-import { FHIREntityModule } from '../fhir-entity/fhirentity.module';
-import { SMISEntityModule } from '../smis-entity/smisentity.module';
+import { SMISFacadeModule } from '../smis-facade/smis-facade.service.module';
 @NgModule({
     imports: [
         BrowserModule,
@@ -14,8 +13,7 @@ import { SMISEntityModule } from '../smis-entity/smisentity.module';
         FHIRProxyModule,
         FormsModule,
         LoginServiceModule,
-        FHIREntityModule,
-        SMISEntityModule
+        SMISFacadeModule
     ],
     exports:[
         InstitutionManagerComponent

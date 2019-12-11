@@ -72,15 +72,15 @@ export function getPatientMenu(userId){
   return [
     {
       url:['patient-information-management',userId],
-      display:'病人資訊管理功能'
+      display:'病人資訊管理功能',
     },
     {
       url:['medical-institution-recommend'],
-      display:'醫療機構過濾功能'
+      display:'醫療機構過濾功能',
     },
     {
       url:['medical-information-sharing'],
-      display:'醫療資訊共享功能'
+      display:'醫療資訊共享功能',
     },
   ]
 }
@@ -89,11 +89,11 @@ export function getInstitutionMenu(userId){
   return [
     {
       url:['medical-institution-management',userId],
-      display:'醫療機構資訊管理功能'
+      display:'醫療機構資訊管理功能',
     },
     {
       url:['medical-information-sharing'],
-      display:'醫療資訊共享功能'
+      display:'醫療資訊共享功能',
     },
   ]
 }
@@ -101,7 +101,7 @@ export function getNewMemberMenu(){
   return [
     {
       url:['create-role'],
-      display:'創建角色功能'
+      display:'創建角色功能',
     },
   ]
 }

@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import {FHIRProxyService} from '../fhir-proxy/fhirproxy.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
 import { Router, ActivatedRoute } from '@angular/router'
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-import {PatientInfo, SMISEntityAdapter, MedicalRecord} from '../smis-entity/smisentity'
-import { Patient, FHIREntityAdapter,patientResource} from '../fhir-entity/fhirentity'
-import {LoginService} from '../login-service/login-service.service'
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { PatientInfo, MedicalRecord } from '../smis-entity/smisentity'
+import { patientResource } from '../fhir-entity/fhirentity'
+import { LoginService } from '../login-service/login-service.service'
+import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
 @Component({
   selector: 'app-patient-manager',
@@ -23,14 +24,14 @@ export class PatientManagerComponent implements OnInit {
   private paginator: MatPaginator;
   private dataSource;
 
-  constructor(private fhir:FHIRProxyService, private router:Router, private fhirAdapter:FHIREntityAdapter, private smisAdapter:SMISEntityAdapter, private loginService:LoginService,private actRoute:ActivatedRoute) { 
+  constructor(private smisFacade:SMISFacadeService,private fhir:FHIRProxyService, private router:Router,private loginService:LoginService,private actRoute:ActivatedRoute) { 
     this.displayPatient(this.getDefaultPatient());
   }
   
   async ngOnInit() {
     let userId = this.actRoute.snapshot.paramMap.get('id')
     if(this.loginService.isLogin() && userId){
-      let patientInfo:PatientInfo = await this.getPatient(userId)
+      let patientInfo:PatientInfo = await this.smisFacade.getPatient(userId)
       if(patientInfo.resourceType == patientResource)
         this.displayPatient(patientInfo)
     }
@@ -57,7 +58,7 @@ export class PatientManagerComponent implements OnInit {
 
   async confirmSubmit() {
     if(confirm("確認要送出嗎?")){
-      let patient = await this.updatePatient(this.patientInfo)
+      let patient = await this.smisFacade.updatePatient(this.patientInfo)
       let result = "更新失敗"
       if(patient.resourceType==patientResource){
         this.displayPatient(patient)
@@ -65,20 +66,6 @@ export class PatientManagerComponent implements OnInit {
       }
       alert(result)
     }
-  }
-
-  async updatePatient(patientInfo:PatientInfo){
-    let patient:Patient = this.fhirAdapter.parsePatientInfo(patientInfo)
-    if(patient.id)
-      patient = await this.fhir.updateResource(patientResource,patient)
-    else
-      patient = await this.fhir.createResource(patientResource,patient)
-    return await this.smisAdapter.parsePatient(patient)
-  }
-
-  async getPatient(patientId){
-    let patient:Patient = await this.fhir.getResource(patientResource,patientId)     
-    return await this.smisAdapter.parsePatient(patient) as PatientInfo
   }
 
   getDefaultPatient(){

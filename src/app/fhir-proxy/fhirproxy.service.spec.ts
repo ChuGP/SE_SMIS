@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { FHIRProxyService } from './fhirproxy.service';
-import { Patient, Organization, Encounter, Resource} from '../fhir-entity/fhirentity';
+import { Patient, Organization, Encounter, Resource, organizationResource, SearchResult} from '../fhir-entity/fhirentity';
 import { FHIRProxyModule } from './fhirproxy.service.module';
 
 describe('FHIRProxyService', () => {
@@ -146,6 +146,14 @@ describe('FHIRProxyService', () => {
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let err = await service.getResource('Organization','5')
     expect(err.resourceType).toEqual('OperationOutcome')
+  })
+
+  it('Should get searchresult',async()=>{
+    const service: FHIRProxyService = TestBed.get(FHIRProxyService);
+    let searchresult:SearchResult =await service.searchResource(organizationResource,{type:'team'})
+    let organization:Organization = searchresult.entry[0].resource as Organization
+    expect(organization.resourceType).toEqual(organizationResource)
+    expect(searchresult.total).toEqual(1)
   })
 
 });

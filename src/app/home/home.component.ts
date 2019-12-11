@@ -6,10 +6,11 @@ import { LoginService } from '../login-service/login-service.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor(private loginService:LoginService) { }
-
-  ngOnInit() {
+  constructor(private loginService:LoginService) { 
+    
   }
 
+  ngOnInit() {
+    
+  }
 }

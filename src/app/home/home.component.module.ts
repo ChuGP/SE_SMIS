@@ -11,7 +11,7 @@ import { LoginComponentModule } from '../login/login.component.module';
         RouterModule,
         RouterTestingModule,
         LoginServiceModule,
-        LoginComponentModule
+        LoginComponentModule,
     ],
     exports:[
         HomeComponent

@@ -122,10 +122,11 @@ export class FHIREntityAdapter{
    }
 }
 
-export const encounterResource="Encounter"
-export const patientResource="Patient"
-export const organizationResource="Organization"
-export const healthcareServiceResource="HealthcareService"
+export const encounterResource = "Encounter"
+export const patientResource = "Patient"
+export const organizationResource = "Organization"
+export const healthcareServiceResource = "HealthcareService"
+export const searchResource = "Bundle"
 
 export interface Patient{
    resourceType:string,
@@ -220,4 +221,15 @@ export interface Address{
  export interface Resource{
     resourceType:string,
     id?:string
+ }
+
+export interface Entry{
+   fullUrl:string,
+   resource:Resource
+}
+
+ export interface SearchResult{
+   resourceType:string,
+   total?:number,
+   entry?: Array<Entry>
  }
