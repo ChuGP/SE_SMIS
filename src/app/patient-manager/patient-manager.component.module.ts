@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser';
-import { FHIRProxyModule} from '../fhir-proxy/fhirproxy.service.module'
 import { RouterTestingModule } from '@angular/router/testing';
 import { PatientManagerComponent } from './patient-manager.component';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
@@ -11,7 +10,6 @@ import { SMISFacadeModule } from '../smis-facade/smis-facade.service.module';
     imports: [
         BrowserModule,
         RouterTestingModule,
-        FHIRProxyModule,
         FormsModule,
         MatTableModule,
         MatPaginatorModule,

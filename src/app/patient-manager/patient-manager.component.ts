@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
-import { Router, ActivatedRoute } from '@angular/router'
+import { Component, OnInit, ViewChild, Input,OnChanges, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router'
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { PatientInfo, MedicalRecord } from '../smis-entity/smisentity'
@@ -8,39 +7,40 @@ import { patientResource } from '../fhir-entity/fhirentity'
 import { LoginService } from '../login-service/login-service.service'
 import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
-
-
 @Component({
   selector: 'app-patient-manager',
   templateUrl: './patient-manager.component.html',
   styleUrls: ['./patient-manager.component.css']
 })
 
-export class PatientManagerComponent implements OnInit {
+export class PatientManagerComponent implements OnInit ,OnChanges {
   @Input('disable')
   private disable:boolean
-  @Input('patientId')
-  private patientId:string
   private checked=false;
   private typeInput="password";
   
   private displayRecords:MedicalRecord[]=[];
+  @Input('patientInfo')
   private patientInfo:PatientInfo;
   private displayedColumns: string[] = ['diagnosis', 'organization', 'time.start', 'time.end'];
   @ViewChild(MatPaginator, {static: true}) 
   private paginator: MatPaginator;
   private dataSource;
 
-  constructor(private smisFacade:SMISFacadeService,private fhir:FHIRProxyService, private router:Router,private loginService:LoginService,private actRoute:ActivatedRoute) { 
-    this.displayPatient(this.getDefaultPatient());
+  constructor(private smisFacade:SMISFacadeService, private loginService:LoginService,private actRoute:ActivatedRoute) { 
+      this.displayPatient(this.smisFacade.getDefaultPatient());
   }
   
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.patientInfo){
+      this.displayPatient(changes.patientInfo.currentValue)
+    }
+  }
+
   async ngOnInit() {
     let userId = this.actRoute.snapshot.paramMap.get('id')
-    if(userId)
-      this.patientId = userId
-    if(this.loginService.isLogin()){
-      let patientInfo:PatientInfo = await this.smisFacade.getPatient(this.patientId)
+    if(this.loginService.isLogin() && userId){
+      let patientInfo:PatientInfo = await this.smisFacade.getPatient(userId)
       if(patientInfo.resourceType == patientResource)
         this.displayPatient(patientInfo)
     }
@@ -75,30 +75,6 @@ export class PatientManagerComponent implements OnInit {
       }
       alert(result)
     }
-  }
-
-  getDefaultPatient(){
-    return {
-      resourceType:patientResource,
-      privateKey:"",
-      address:[
-        {
-          city:""
-        }
-      ],
-      telecom:[{}],
-      name:[{
-        given:[""],
-        family:"",
-        use:""
-      }],
-      birthDate:"",
-      maritalStatus:{
-        coding:[],
-        text:""
-      },
-      medicalRecord:[]
-    };
   }
 
   showPasswd(){

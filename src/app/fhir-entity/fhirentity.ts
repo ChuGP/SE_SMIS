@@ -44,10 +44,10 @@ export class FHIREntityAdapter{
          telecom:patientInfo.telecom,
          birthDate:patientInfo.birthDate,
          gender:patientInfo.gender,
-         maritalStatus:patientInfo.maritalStatus
+         maritalStatus:patientInfo.maritalStatus,
+         link:[],
+         extension:[]
       }      
-      patient.link=[]
-      patient.extension=[]
       if(patientInfo.family){
          for(let member of patientInfo.family){
             patient.link.push({

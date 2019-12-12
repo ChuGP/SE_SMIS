@@ -153,7 +153,7 @@ describe('FHIRProxyService', () => {
     let searchresult:SearchResult =await service.searchResource(organizationResource,{type:'team'})
     let organization:Organization = searchresult.entry[0].resource as Organization
     expect(organization.resourceType).toEqual(organizationResource)
-    expect(searchresult.total).toEqual(1)
+    expect(searchresult.total).toEqual(2)
   })
 
 });

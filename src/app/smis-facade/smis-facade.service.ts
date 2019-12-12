@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
-import { FHIREntityAdapter, Patient, patientResource, HealthcareService, healthcareServiceResource, Organization, organizationResource, Encounter, encounterResource } from '../fhir-entity/fhirentity';
+import { FHIREntityAdapter, Patient, patientResource, HealthcareService, healthcareServiceResource, Organization, organizationResource, Encounter, encounterResource, SearchResult, searchResource } from '../fhir-entity/fhirentity';
 import { SMISEntityAdapter, PatientInfo, MedicalService, InstitutionInfo, MedicalRecord } from '../smis-entity/smisentity';
 
 @Injectable({
@@ -13,21 +13,6 @@ export class SMISFacadeService {
   }
 
   async updatePatient(patientInfo:PatientInfo){
-    if(patientInfo.medicalRecord){
-      let medicalRecords:MedicalRecord[] = []
-      for(let medicalRecord of patientInfo.medicalRecord)
-        medicalRecords.push(await this.updateMedicalRecord(medicalRecord))
-      patientInfo.medicalRecord = medicalRecords
-    }
-    if(patientInfo.family){
-      let family:Array<{relation:string,patient:PatientInfo}> = []
-      for(let familyMember of patientInfo.family)
-        family.push({
-          relation:familyMember.relation,
-          patient:await this.updatePatient(familyMember.patient)
-        })
-      patientInfo.family = family
-    }
     let patient:Patient = this.fhirAdapter.parsePatientInfo(patientInfo)
     if(patient.id)
       patient = await this.fhirProxy.updateResource(patientResource,patient)
@@ -79,6 +64,42 @@ export class SMISFacadeService {
     else
       result = await this.fhirProxy.createResource(encounterResource,encounter)
     return this.smisAdapter.parseEncounter(result)
+  }
+
+  async searchInstitution(params){
+    let institutions:InstitutionInfo[] = []
+    let institutionResult:SearchResult = await this.fhirProxy.searchResource(organizationResource,params)
+    if(institutionResult.resourceType == searchResource && institutionResult.total>0){
+      for(let entry of institutionResult.entry){
+        let organization:Organization = entry.resource
+        institutions.push(await this.smisAdapter.parseOrganization(organization))
+      }
+    }
+    return institutions
+  }
+
+  getDefaultPatient(){
+    return {
+      resourceType:patientResource,
+      privateKey:"",
+      address:[
+        {
+          city:""
+        }
+      ],
+      telecom:[{}],
+      name:[{
+        given:[""],
+        family:"",
+        use:""
+      }],
+      birthDate:"",
+      maritalStatus:{
+        coding:[],
+        text:""
+      },
+      medicalRecord:[]
+    };
   }
 
 }

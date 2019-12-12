@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {InstitutionInfo, PatientInfo, SMISEntityAdapter, MedicalRecord} from '../smis-entity/smisentity'
-import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
 import { organizationResource, SearchResult, searchResource, Organization, patientResource, Patient } from '../fhir-entity/fhirentity';
-import { Router } from '@angular/router';
 import { LoginService } from '../login-service/login-service.service';
 import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
@@ -30,40 +28,29 @@ export class SharedInfoManagerComponent implements OnInit {
   private dataSource
   private medicalRecord:MedicalForm
   private patientId="";
+  private currentInstitution:InstitutionInfo
+  private patientInfo:PatientInfo
   private isPrivateCorrect = false;
-  institutionColumns: string[] = ['id', 'name' ,'address', 'telecom'];
-  patientColumns: string[] = ['time', 'organization', 'diagnosis'];
-  showPatient=false;
-  display=false;
+  private institutionColumns: string[] = ['id', 'name' ,'address', 'telecom'];
 
-  constructor(private fhirProxy:FHIRProxyService, private smisAdapter:SMISEntityAdapter, private router:Router, private loginService:LoginService, private smisFacade:SMISFacadeService) {
+  constructor(private loginService:LoginService, private smisFacade:SMISFacadeService) {
     this.medicalRecord = this.getDefaultMedicalForm()
 
   }
   
   async ngOnInit() {
     if(this.loginService.getUserResource().resourceType == patientResource){
-      let institutions = await this.searchInstitution({type:'team'})
+      let institutions = await this.smisFacade.searchInstitution({type:'team'})
       this.dataSource = new MatTableDataSource<any>(institutions);
     }
   }
-  
-  async searchInstitution(params){
-    let institutions:InstitutionInfo[] = []
-    let institutionResult:SearchResult = await this.fhirProxy.searchResource(organizationResource,params)
-    if(institutionResult.resourceType == searchResource && institutionResult.total>0){
-      for(let entry of institutionResult.entry){
-        let organization:Organization = entry.resource
-        institutions.push(await this.smisAdapter.parseOrganization(organization))
-      }
-    }
-    return institutions
-  }
 
-  async submit() {
+  async searchPatient() {
     let patient:PatientInfo = await this.smisFacade.getPatient(this.patientId)
-    if(patient.resourceType == patientResource)
+    if(patient.resourceType == patientResource){
+      this.patientInfo = patient
       this.confirmPrivateKey(patient)
+    }
     else{
       alert("病人不存在,請重新輸入")
       this.patientId = ""
@@ -80,28 +67,36 @@ export class SharedInfoManagerComponent implements OnInit {
       }
     }
 
-  async confirmSubmitRecord(){
+  async submitRecord(){
     if(confirm('確認要送出嗎?')){
-      let medicalRecord:MedicalRecord ={
-        organization:{
-          reference:`${organizationResource}/${this.loginService.getUserId()}`,
-          display:this.loginService.getUserUserAsOrganization().name
-        },
-        diagnosis:[],
-        time:this.medicalRecord.time
-      } 
-      for(let diagnosis of this.medicalRecord.diagnosis)
-        medicalRecord.diagnosis.push(diagnosis.diagnosis)
-      let patient:PatientInfo = await this.smisFacade.getPatient(this.patientId)
-      patient.medicalRecord.push(medicalRecord)
-      let result = await this.smisFacade.updatePatient(patient)
-      if(result.resourceType == patientResource)
+      let organization = this.loginService.getUserAsOrganization()
+      let medicalRecord = this.parseMedicalForm(this.medicalRecord,organization.name,organization.id)
+      medicalRecord = await this.smisFacade.updateMedicalRecord(medicalRecord)
+      this.patientInfo.medicalRecord.push(medicalRecord)
+      let result = await this.smisFacade.updatePatient(this.patientInfo)
+      if(result.resourceType == patientResource){
         alert("新增成功!")
+        this.patientInfo = result
+      }
       else
         alert("新增失敗")
     }
   }
   
+  parseMedicalForm(formData:MedicalForm,organizationName,organizationId){
+    let medicalRecord:MedicalRecord ={
+      organization:{
+        reference:`${organizationResource}/${organizationId}`,
+        display:organizationName
+      },
+      diagnosis:[],
+      time:formData.time
+    }
+    for(let diagnosis of formData.diagnosis)
+      medicalRecord.diagnosis.push(diagnosis.diagnosis)
+    return medicalRecord as MedicalRecord
+  }
+
   getDefaultMedicalForm():MedicalForm{
     return {
       id:"",
@@ -117,11 +112,7 @@ export class SharedInfoManagerComponent implements OnInit {
     } as MedicalForm
   }
   
-  showDetail(id){
-    this.router.navigate(['medical-institution-management',id],{
-      queryParams:{
-        disable:true,
-      }
-    })
+  selectInstitution(institution:InstitutionInfo){
+    this.currentInstitution = institution
   }
 }

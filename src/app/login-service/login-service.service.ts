@@ -12,6 +12,7 @@ export class LoginService {
   private menu=[]
   private userId
   private userResource:Resource;
+  private role;
   private islogin;
   constructor(private authService:AuthService, private fhirProxy:FHIRProxyService, private router:Router) {
     this.islogin = false;
@@ -78,7 +79,7 @@ export class LoginService {
     return this.userResource as Patient
   }
 
-  getUserUserAsOrganization():Organization{
+  getUserAsOrganization():Organization{
     return this.userResource as Organization
   }
 
