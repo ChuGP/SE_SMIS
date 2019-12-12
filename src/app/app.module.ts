@@ -30,6 +30,7 @@ import { TopBarComponentModule } from './top-bar/top-bar.component.module';
       { path: 'account', component:AccountManagerComponent},
       { path: 'login', component:LoginComponent},
       { path: 'create-role', component:CreateRoleComponent},
+      { path: 'create-role/:id', component:CreateRoleComponent},
       { path: 'patient-information-management/:id', component:PatientManagerComponent},
       { path: 'patient-information-management', component:PatientManagerComponent},
       { path: 'medical-information-sharing', component:SharedInfoManagerComponent},

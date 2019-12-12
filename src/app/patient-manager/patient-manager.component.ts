@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input,OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, Input,OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,11 +14,13 @@ import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 })
 
 export class PatientManagerComponent implements OnInit ,OnChanges {
+  @Output() submit: EventEmitter<any> = new EventEmitter();
   @Input('disable')
   private disable:boolean
   private checked=false;
   private typeInput="password";
-  
+  @Input('userId')
+  private userId
   private displayRecords:MedicalRecord[]=[];
   @Input('patientInfo')
   private patientInfo:PatientInfo;
@@ -40,9 +42,12 @@ export class PatientManagerComponent implements OnInit ,OnChanges {
   async ngOnInit() {
     let userId = this.actRoute.snapshot.paramMap.get('id')
     if(this.loginService.isLogin() && userId){
-      let patientInfo:PatientInfo = await this.smisFacade.getPatient(userId)
+      this.userId = userId
+      let patientInfo:PatientInfo = await this.smisFacade.getPatient(this.userId)
       if(patientInfo.resourceType == patientResource)
         this.displayPatient(patientInfo)
+      else
+        this.patientInfo.id = this.userId
     }
   }
 
@@ -68,12 +73,13 @@ export class PatientManagerComponent implements OnInit ,OnChanges {
   async confirmSubmit() {
     if(confirm("確認要送出嗎?")){
       let patient = await this.smisFacade.updatePatient(this.patientInfo)
-      let result = "更新失敗"
       if(patient.resourceType==patientResource){
         this.displayPatient(patient)
-        result = "更新成功"
+        alert("更新成功")
+        this.submit.emit(null)
       }
-      alert(result)
+      else
+        alert("更新失敗")
     }
   }
 

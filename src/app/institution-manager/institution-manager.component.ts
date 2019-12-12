@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { InstitutionInfo, MedicalService } from '../smis-entity/smisentity';
 import { healthcareServiceResource, organizationResource } from '../fhir-entity/fhirentity';
@@ -11,10 +11,13 @@ import { SMISFacadeService } from '../smis-facade/smis-facade.service';
   styleUrls: ['./institution-manager.component.css']
 })
 export class InstitutionManagerComponent implements OnInit,OnChanges {
+  @Output() submit: EventEmitter<any> = new EventEmitter();
   @Input('institutionInfo')
   private institution:InstitutionInfo
   @Input('disable')
   private disable
+  @Input('userId')
+  private userId
   constructor(private smisFacade:SMISFacadeService, private loginService:LoginService, private actRoute:ActivatedRoute) { 
     this.institution = this.getDefaultInstitutionInfo()
   }
@@ -27,10 +30,14 @@ export class InstitutionManagerComponent implements OnInit,OnChanges {
 
   async ngOnInit() {
     let userId = this.actRoute.snapshot.paramMap.get('id')
-    if(this.loginService.isLogin() && userId){
-        let institution:InstitutionInfo = await this.smisFacade.getInstitution(userId);
+    if(userId)
+      this.userId = userId
+    if(this.loginService.isLogin()){
+        let institution:InstitutionInfo = await this.smisFacade.getInstitution(this.userId);
         if(institution.resourceType == organizationResource)
           this.setInstitution(institution)
+        else
+          this.institution.id = this.userId
     }
   }
 
@@ -89,14 +96,15 @@ export class InstitutionManagerComponent implements OnInit,OnChanges {
   
   async confirmSubmit() {
     if(confirm("確認要送出修改嗎!")){
-      let result = "修改失敗!"
       this.institution.medicalServices = await this.smisFacade.updateMedicalServices(this.institution.medicalServices)
       let institution:InstitutionInfo = await this.smisFacade.updateInstitution(this.institution)
       if(institution.resourceType == organizationResource){
         this.setInstitution(institution)
-        result = "修改成功!"
+        alert("更新成功!")
+        this.submit.emit(null)
       }
-      alert(result)
+      else
+        alert("更新失敗!")
     }
   }
 }

@@ -6,13 +6,15 @@ import { CreateRoleComponent} from './create-role.component'
 import { BrowserModule } from '@angular/platform-browser';
 import {PatientManagerComponentModule} from '../patient-manager/patient-manager.component.module'
 import {InstitutionManagerComponentModule} from '../institution-manager/institution-manager.component.module'
+import { RouterTestingModule } from '@angular/router/testing';
 @NgModule({
     imports: [
         BrowserModule,
         MatRadioModule,
         FormsModule,
         InstitutionManagerComponentModule,
-        PatientManagerComponentModule
+        PatientManagerComponentModule,
+        RouterTestingModule
     ],
     exports:[
         CreateRoleComponent

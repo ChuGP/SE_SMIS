@@ -26,17 +26,14 @@ export class LoginService {
         if(patient.resourceType == patientResource){
           this.userResource = patient
           this.menu = getPatientMenu(this.userId)
-          this.router.navigate([''])
         }
         else if(organization.resourceType == organizationResource){
           this.userResource = organization
-          this.menu = getInstitutionMenu(this.userId)
-          this.router.navigate([''])
+          this.menu = getInstitutionMenu(this.userId)        
         }
-        else{
-          this.menu = getNewMemberMenu()
-          this.router.navigate(['create-role'])
-        }
+        else
+          this.menu = getNewMemberMenu(this.userId)
+        this.router.navigate([''])
       }
     });
   }
@@ -118,10 +115,10 @@ export function getInstitutionMenu(userId){
     },
   ]
 }
-export function getNewMemberMenu(){
+export function getNewMemberMenu(userId){
   return [
     {
-      url:['create-role'],
+      url:['create-role',userId],
       display:'創建角色功能',
     },
   ]
