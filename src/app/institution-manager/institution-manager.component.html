@@ -24,18 +24,20 @@
             class="tep myMOUSE form-control" placeholder="輸入電話" [(ngModel)]="institution.telecom[0].value"
             name="telecom" required [disabled]="disable"></td>
       </tr>
-      <tr *ngFor="let alias of institution.alias">
-        <td id="demoFont" align="center">別名</td>
-        <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="輸入別名"
-            [(ngModel)]="alias.alias" [disabled]="disable" name="alias">
-        </td>
-      </tr>
     </table>
-    <div [hidden]="disable">
-      <button id="add" style="margin-right: 1px; font-size: 15px;" (click)="addAlias()" name="add">新增別名</button>
-      <button id="delete" style="font-size: 15px;" (click)="removeAlias()" name="delete">刪除別名</button>
-    </div>
   </form>
+  <table class="blueTable" border="3" align="center" style="width: 100%;">
+    <tr *ngFor="let alias of institution.alias">
+      <td id="demoFont" align="center" style="width: 20%;">別名</td>
+      <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="輸入別名" [(ngModel)]="alias.alias"
+          [disabled]="disable">
+      </td>
+    </tr>
+  </table>
+  <div [hidden]="disable">
+    <button id="add" style="margin-right: 1px; font-size: 15px;" (click)="addAlias()" name="add">新增別名</button>
+    <button id="delete" style="font-size: 15px;" (click)="removeAlias()" name="delete">刪除別名</button>
+  </div>
   <p>
     <font size="5">Medical&nbsp;Service</font>
   </p>
@@ -43,28 +45,28 @@
     <button id="add" style="margin-right: 1px;font-size: 15px;" (click)="addMedicalService()">新增服務</button>
     <button id="delete" style="font-size: 15px;" (click)="removeMedicalService()">刪除服務</button>
   </div>
-    <table class="blueTable" border="3" align="center" style="width: 100%;">
-      <i align="center" style="width: 100%;" *ngFor="let medicalService of institution.medicalServices;index as i">
-        <tr>
-          <td id="demoFont" align="center">服務名稱</td>
-          <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control" placeholder="輸入服務名稱"
-              [(ngModel)]="medicalService.name" required [disabled]="disable"></td>
-          <td id="demoFont" align="center">服務描述</td>
-          <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="輸入服務描述"
-              [(ngModel)]="medicalService.comment" [disabled]="disable"></td>
-          <div id="demoFont" align="center" *ngFor="let serviceType of medicalService.serviceType;index as i">
-            <td id="demoFont" align="center">服務類型</td>
-            <td><input type="text" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control"
-                placeholder="輸入服務類別" [(ngModel)]="serviceType.serviceType" required [disabled]="disable">
-            </td>
-          </div>
-          <td [hidden]="disable"><button id="add" style="font-size:15px;" class="tep myMOUSE"
-              (click)="medicalService.serviceType.push({serviceType:''})" name="add">新增類型</button></td>
-          <td [hidden]="disable"><button id="delete" style="font-size:15px;" class="tep myMOUSE"
-              (click)="medicalService.serviceType.pop()" name="delete">刪除類型</button></td>
-        </tr>
-      </i>
-    </table>
+  <table class="blueTable" border="3" align="center" style="width: 100%;">
+    <i align="center" style="width: 100%;" *ngFor="let medicalService of institution.medicalServices;index as i">
+      <tr>
+        <td id="demoFont" align="center">服務名稱</td>
+        <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control" placeholder="輸入服務名稱"
+            [(ngModel)]="medicalService.name" required [disabled]="disable"></td>
+        <td id="demoFont" align="center">服務描述</td>
+        <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="輸入服務描述"
+            [(ngModel)]="medicalService.comment" [disabled]="disable"></td>
+        <div id="demoFont" align="center" *ngFor="let serviceType of medicalService.serviceType;index as i">
+          <td id="demoFont" align="center">服務類型</td>
+          <td><input type="text" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control"
+              placeholder="輸入服務類別" [(ngModel)]="serviceType.serviceType" required [disabled]="disable">
+          </td>
+        </div>
+        <td [hidden]="disable"><button id="add" style="font-size:15px;" class="tep myMOUSE"
+            (click)="medicalService.serviceType.push({serviceType:''})" name="add">新增類型</button></td>
+        <td [hidden]="disable"><button id="delete" style="font-size:15px;" class="tep myMOUSE"
+            (click)="medicalService.serviceType.pop()" name="delete">刪除類型</button></td>
+      </tr>
+    </i>
+  </table>
 
   <br />
   <p *ngIf="institutionForm.valid" [hidden]="disable">

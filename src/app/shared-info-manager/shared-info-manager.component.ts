@@ -84,13 +84,17 @@ export class SharedInfoManagerComponent implements OnInit {
   }
   
   parseMedicalForm(formData:MedicalForm,organizationName,organizationId){
+    let date = new Date()
     let medicalRecord:MedicalRecord ={
       organization:{
         reference:`${organizationResource}/${organizationId}`,
         display:organizationName
       },
       diagnosis:[],
-      time:formData.time
+      time:{
+        start:`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}T${formData.time.start}:00`,
+        end:`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}T${formData.time.end}:00`
+      }
     }
     for(let diagnosis of formData.diagnosis)
       medicalRecord.diagnosis.push(diagnosis.diagnosis)

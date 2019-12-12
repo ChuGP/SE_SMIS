@@ -59,10 +59,10 @@
       <i align="center" style="width: 100%;">
         <tr>
           <td id="demoFont" align="center">開始時間</td>
-          <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control" placeholder="輸入開始時間"
+          <td><input style="font-size:24px; color:#0a0a0a" type="time" class="tep myMOUSE form-control" placeholder="輸入開始時間"
               [(ngModel)]="medicalRecord.time.start" required></td>
           <td id="demoFont" align="center">結束時間</td>
-          <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="輸入結束時間"
+          <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" type="time" placeholder="輸入結束時間"
               [(ngModel)]="medicalRecord.time.end" required></td>
           <div id="demoFont" align="center" *ngFor="let diagnosis of medicalRecord.diagnosis;index as i">
             <td id="demoFont" align="center">症狀</td>
