@@ -7,8 +7,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { LoginServiceModule } from '../login-service/login-service.service.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 import { SMISFacadeModule } from '../smis-facade/smis-facade.service.module';
+import { PatientManagerComponentModule } from '../patient-manager/patient-manager.component.module';
 @NgModule({
     imports:[
         BrowserModule,
@@ -18,7 +18,8 @@ import { SMISFacadeModule } from '../smis-facade/smis-facade.service.module';
         SMISEntityModule,
         RouterTestingModule,
         LoginServiceModule,
-        SMISFacadeModule
+        SMISFacadeModule,
+        PatientManagerComponentModule
     ],
     exports:[
         SharedInfoManagerComponent

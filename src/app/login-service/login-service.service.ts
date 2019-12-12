@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FacebookLoginProvider,SocialUser,AuthService,GoogleLoginProvider } from "angularx-social-login";
 import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
-import { Resource, patientResource, organizationResource } from '../fhir-entity/fhirentity';
+import { Resource, patientResource, organizationResource, Patient, Organization } from '../fhir-entity/fhirentity';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 export class LoginService {
   private user: SocialUser;
   private menu=[]
-  private role=""
+  private userId
+  private userResource:Resource;
   private islogin;
   constructor(private authService:AuthService, private fhirProxy:FHIRProxyService, private router:Router) {
     this.islogin = false;
@@ -18,17 +19,17 @@ export class LoginService {
       if(user){
         this.user = user
         this.islogin = true
-        let userId = user.email.replace('@','')
-        let patient:Resource = await fhirProxy.getResource(patientResource,userId)
-        let organization = await fhirProxy.getResource(organizationResource,userId)
+        this.userId = user.email.replace('@','')
+        let patient:Resource = await fhirProxy.getResource(patientResource,this.userId)
+        let organization:Resource = await fhirProxy.getResource(organizationResource,this.userId)
         if(patient.resourceType == patientResource){
-          this.menu = getPatientMenu(userId)
-          this.role = patientResource
+          this.userResource = patient
+          this.menu = getPatientMenu(this.userId)
           this.router.navigate([''])
         }
         else if(organization.resourceType == organizationResource){
-          this.menu = getInstitutionMenu(userId)
-          this.role = organizationResource
+          this.userResource = organization
+          this.menu = getInstitutionMenu(this.userId)
           this.router.navigate([''])
         }
         else{
@@ -69,8 +70,20 @@ export class LoginService {
     return this.user
   }
 
-  getRole(){
-    return this.role
+  getUserId(){
+    return this.userId
+  }
+
+  getUserAsPatient():Patient{
+    return this.userResource as Patient
+  }
+
+  getUserUserAsOrganization():Organization{
+    return this.userResource as Organization
+  }
+
+  getUserResource(){
+    return this.userResource
   }
 
 }

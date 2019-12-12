@@ -97,36 +97,11 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
-<div>
-    <table class="blueTable" border="3" align="center" style="width: 100%;">
-        <i align="center" style="width: 100%;">
-            <tr>
-                <td id="demoFont" align="center">開始時間</td>
-                <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control" placeholder="輸入服務名稱"
-                        [(ngModel)]="medicalRecord.time.start" required></td>
-                <td id="demoFont" align="center">結束時間</td>
-                <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="輸入服務描述"
-                        [(ngModel)]="medicalRecord.time.end" required></td>
-                <div id="demoFont" align="center" *ngFor="let diagnosis of medicalRecord.diagnosis;index as i">
-                    <td id="demoFont" align="center">症狀</td>
-                    <td><input type="text" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control"
-                            placeholder="輸入症狀" [(ngModel)]="diagnosis.diagnosis" required>
-                    </td>
-                </div>
-                <td><button id="add" style="font-size:15px;" class="tep myMOUSE"
-                        (click)="medicalRecord.diagnosis.push({serviceType:''})">新增症狀</button></td>
-                <td ><button id="delete" style="font-size:15px;" class="tep myMOUSE"
-                        (click)="medicalRecord.diagnosis.pop()">刪除症狀</button></td>
-            </tr>
-        </i>
-    </table>
-    <button type="submit" id="submit" title="確定要送出嗎?"
-        (click)="confirmSubmit()">送出</button>
-</div>
+
 <p *ngIf="patientForm.valid" [hidden]="disable">
     <button type="submit" [disabled]="!patientForm.valid" id="submit" title="確定要送出嗎?"
         (click)="confirmSubmit()">送出</button>
 </p>
-<p *ngIf="!patientForm.valid">
+<p *ngIf="!patientForm.valid" [hidden]="disable">
     <button type="submit" [disabled]="!patientForm.valid" [hidden]="disable">送出</button>
 </p>

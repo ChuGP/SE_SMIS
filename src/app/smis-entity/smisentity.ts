@@ -25,14 +25,13 @@ export class SMISEntityAdapter{
          name:(FHIRPatient.name?FHIRPatient.name:getDefaultName()),
          birthDate:(FHIRPatient.birthDate?FHIRPatient.birthDate:""),
          maritalStatus:(FHIRPatient.maritalStatus?FHIRPatient.maritalStatus:getDefaultCodeAbleConcept()),
-         medicalRecord:new Map<string,MedicalRecord>()
+         medicalRecord:[],
+         family:[]
       }
-      patientInfo.medicalRecord = new Map<string,MedicalRecord>()
-      patientInfo.family =[]
       if(FHIRPatient.extension){
          for(let extension of FHIRPatient.extension){
          let encounter:Encounter = await this.fhir.getExtensionResource(extension.url)
-         patientInfo.medicalRecord.set(encounter.id,this.parseEncounter(encounter))
+         patientInfo.medicalRecord.push(this.parseEncounter(encounter))
          }
       }
       if(FHIRPatient.link){
@@ -144,7 +143,7 @@ export interface PatientInfo{
    address?:Address[],
    maritalStatus?:CodeAbleConcept,
    family?:Array<{relation:string, patient:PatientInfo}>,
-   medicalRecord?:Map<string,MedicalRecord>;
+   medicalRecord?:MedicalRecord[];
 }
 
 export interface MedicalRecord{

@@ -61,8 +61,8 @@ export class FHIREntityAdapter{
       if(patientInfo.medicalRecord){
          for(let record of patientInfo.medicalRecord){
             patient.extension.push({
-               url:`${encounterResource}/${record[1].id}`,
-               valueString:record[0]
+               url:`${encounterResource}/${record.id}`,
+               valueString:record.id
             })
          }
       }

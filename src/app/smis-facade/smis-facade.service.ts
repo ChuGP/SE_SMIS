@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
-import { FHIREntityAdapter, Patient, patientResource, HealthcareService, healthcareServiceResource, Organization, organizationResource } from '../fhir-entity/fhirentity';
-import { SMISEntityAdapter, PatientInfo, MedicalService, InstitutionInfo } from '../smis-entity/smisentity';
+import { FHIREntityAdapter, Patient, patientResource, HealthcareService, healthcareServiceResource, Organization, organizationResource, Encounter, encounterResource } from '../fhir-entity/fhirentity';
+import { SMISEntityAdapter, PatientInfo, MedicalService, InstitutionInfo, MedicalRecord } from '../smis-entity/smisentity';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,21 @@ export class SMISFacadeService {
   }
 
   async updatePatient(patientInfo:PatientInfo){
+    if(patientInfo.medicalRecord){
+      let medicalRecords:MedicalRecord[] = []
+      for(let medicalRecord of patientInfo.medicalRecord)
+        medicalRecords.push(await this.updateMedicalRecord(medicalRecord))
+      patientInfo.medicalRecord = medicalRecords
+    }
+    if(patientInfo.family){
+      let family:Array<{relation:string,patient:PatientInfo}> = []
+      for(let familyMember of patientInfo.family)
+        family.push({
+          relation:familyMember.relation,
+          patient:await this.updatePatient(familyMember.patient)
+        })
+      patientInfo.family = family
+    }
     let patient:Patient = this.fhirAdapter.parsePatientInfo(patientInfo)
     if(patient.id)
       patient = await this.fhirProxy.updateResource(patientResource,patient)
@@ -54,6 +69,16 @@ export class SMISFacadeService {
     for(let medicalService of medicalServices)
         result.push(await this.updateMedicalService(medicalService))
     return result
+  }
+
+  async updateMedicalRecord(medicalRecord:MedicalRecord){
+    let encounter:Encounter = this.fhirAdapter.parseMedicalRecord(medicalRecord)
+    let result:Encounter;
+    if(encounter.id)
+      result = await this.fhirProxy.updateResource(encounterResource,encounter)
+    else
+      result = await this.fhirProxy.createResource(encounterResource,encounter)
+    return this.smisAdapter.parseEncounter(result)
   }
 
 }

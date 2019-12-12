@@ -1,76 +1,85 @@
-<div *ngIf="loginService.role=='Patient'">
+<div *ngIf="loginService.getUserResource().resourceType=='Patient'">
   <h1>
-      <b><i id="titleText">Institution Informations</i></b>
-    </h1>
-    <hr color = "87CEEB">        
-    <table mat-table [dataSource]="dataSource" >
-      <!-- Position Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef > Id. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef > Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-      <ng-container matColumnDef="alias">
-        <th mat-header-cell *matHeaderCellDef > Alias </th>
-        <td mat-cell *matCellDef="let element"> {{element.alias}} </td>
-      </ng-container>
-      <!-- Weight Column -->
-      <ng-container matColumnDef="address">
-        <th mat-header-cell *matHeaderCellDef > Address </th>
-        <td mat-cell *matCellDef="let element"> {{element.address[0].city}} </td>
-      </ng-container>
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="telecom">
-        <th mat-header-cell *matHeaderCellDef > Telecom </th>
-        <td mat-cell *matCellDef="let element"> {{element.telecom[0].value}} </td>
-      </ng-container>
-      <!-- <ng-container matColumnDef="medicalServices">
+    <b><i id="titleText">Institution Informations</i></b>
+  </h1>
+  <hr color="87CEEB">
+  <table mat-table [dataSource]="dataSource">
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id. </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="alias">
+      <th mat-header-cell *matHeaderCellDef> Alias </th>
+      <td mat-cell *matCellDef="let element"> {{element.alias}} </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef> Address </th>
+      <td mat-cell *matCellDef="let element"> {{element.address[0].city}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="telecom">
+      <th mat-header-cell *matHeaderCellDef> Telecom </th>
+      <td mat-cell *matCellDef="let element"> {{element.telecom[0].value}} </td>
+    </ng-container>
+    <!-- <ng-container matColumnDef="medicalServices">
         <th mat-header-cell *matHeaderCellDef > Medical Services </th>
         <td mat-cell *matCellDef="let element"> {{element.medicalServices}} </td>
       </ng-container> -->
-      <tr mat-header-row *matHeaderRowDef="institutionColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: institutionColumns;" (click)="showDetail(row.id)"></tr>
-    </table>
+    <tr mat-header-row *matHeaderRowDef="institutionColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: institutionColumns;" (click)="showDetail(row.id)"></tr>
+  </table>
 </div>
 
-<div *ngIf="loginService.role=='Organization'">
-    <h1>
-        <b><i id="titleText">Personal Information</i></b>
-      </h1>
-      <hr color = "87CEEB">
-      <form #patientIdForm="ngForm">
-      <table  border="3" align="center" style="width: 100%;">
-          <tr>
-            <td align="center">ID</td><td><input class="tep" placeholder="the ID" type="text" [(ngModel)]="patientId" name="patientId" required></td>
-          </tr>
-        </table>
-      </form>
-        <br/>
-        <button (click)="submit()" type="submit" id="submit" [disabled]="!patientIdForm.valid">Submit</button>
+<div *ngIf="loginService.getUserResource().resourceType=='Organization'">
+  <h1>
+    <b><i id="titleText">Personal Information</i></b>
+  </h1>
+  <hr color="87CEEB">
+  <form #patientIdForm="ngForm">
+    <table border="3" align="center" style="width: 100%;">
+      <tr>
+        <td align="center">ID</td>
+        <td><input class="tep" placeholder="the ID" type="text" [(ngModel)]="patientId" name="patientId" required></td>
+      </tr>
+    </table>
+  </form>
+  <br />
+  <button (click)="submit()" type="submit" id="submit" [disabled]="!patientIdForm.valid">Submit</button>
+  <div *ngIf="isPrivateCorrect">
+    <app-patient-manager [disable]="true" [patientId]="patientId"></app-patient-manager>
+    <table class="blueTable" border="3" align="center" style="width: 100%;">
+      <i align="center" style="width: 100%;">
+        <tr>
+          <td id="demoFont" align="center">開始時間</td>
+          <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control" placeholder="輸入服務名稱"
+              [(ngModel)]="medicalRecord.time.start" required></td>
+          <td id="demoFont" align="center">結束時間</td>
+          <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="輸入服務描述"
+              [(ngModel)]="medicalRecord.time.end" required></td>
+          <div id="demoFont" align="center" *ngFor="let diagnosis of medicalRecord.diagnosis;index as i">
+            <td id="demoFont" align="center">症狀</td>
+            <td><input type="text" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control"
+                placeholder="輸入症狀" [(ngModel)]="diagnosis.diagnosis" required>
+            </td>
+          </div>
+          <td><button id="add" style="font-size:15px;" class="tep myMOUSE"
+              (click)="medicalRecord.diagnosis.push({serviceType:''})">新增症狀</button></td>
+          <td><button id="delete" style="font-size:15px;" class="tep myMOUSE"
+              (click)="medicalRecord.diagnosis.pop()">刪除症狀</button></td>
+        </tr>
+      </i>
+      <tr>
+        <td><button type="submit" id="submit" title="確定要送出嗎?" (click)="confirmSubmitRecord()">送出</button></td>
+      </tr>
+    </table>
 
-      <div [hidden]="!showPatient">
-        <table mat-table [dataSource]="dataSource" >
-            <!-- Position Column -->
-            <ng-container matColumnDef="time">
-              <th mat-header-cell *matHeaderCellDef > Time </th>
-              <td mat-cell *matCellDef="let element"> {{element.time}} </td>
-            </ng-container>
-            <!-- Name Column -->
-            <ng-container matColumnDef="organization">
-              <th mat-header-cell *matHeaderCellDef > Organization </th>
-              <td mat-cell *matCellDef="let element"> {{element.organization}} </td>
-            </ng-container>
-            <ng-container matColumnDef="diagnosis">
-              <th mat-header-cell *matHeaderCellDef > Diagnosis </th>
-              <td mat-cell *matCellDef="let element"> {{element.diagnosis}} </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="patientColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: patientColumns;"></tr>
-          </table>
-        </div>
-      
   </div>
+
+</div>
