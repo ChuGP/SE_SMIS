@@ -180,6 +180,7 @@ export interface Address{
     line?:Array<string>,
     use?:string,
     city?:string,
+    text?:string,
     state?:string,
     postalCode?:string,
     country?:string
@@ -204,13 +205,13 @@ export interface Address{
 
  export interface CodeAbleConcept{
    coding:Coding[],
-   text:string
+   text?:string,
  }
 
  export interface Coding{
-    system:string,
-    code:string,
-    display:string
+    system?:string,
+    code?:string,
+    display?:string
  }
 
  export interface Reference{
