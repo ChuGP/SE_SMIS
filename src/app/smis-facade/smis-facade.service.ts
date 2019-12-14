@@ -12,6 +12,10 @@ export class SMISFacadeService {
 
   }
 
+  isPatientExist(patient:Patient){
+    return (patient.resourceType!=operationOutcome)
+  }
+
   async getPatient(patientId) {
     let patient: Patient = await this.fhirProxy.getResource(patientResource, patientId)
     return await this.smisAdapter.parsePatient(patient) as PatientInfo
@@ -24,6 +28,10 @@ export class SMISFacadeService {
     else
       patient = await this.fhirProxy.createResource(patientResource, patient)
     return await this.smisAdapter.parsePatient(patient)
+  }
+
+  isInstitutionExist(institution:InstitutionInfo){
+    return (institution.resourceType!=operationOutcome)
   }
 
   async getInstitution(id) {

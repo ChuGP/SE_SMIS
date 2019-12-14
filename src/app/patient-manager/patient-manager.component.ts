@@ -42,7 +42,10 @@ export class PatientManagerComponent implements OnInit ,OnChanges {
     let userId = this.actRoute.snapshot.paramMap.get('id')
     if(userId){
       let patientInfo:PatientInfo = await this.smisFacade.getPatient(userId)
-      this.displayPatient(patientInfo)
+      if(this.smisFacade.isPatientExist(patientInfo))
+        this.displayPatient(patientInfo)
+      else
+        this.patientInfo.id = userId
     }
   }
 

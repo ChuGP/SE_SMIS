@@ -18,7 +18,7 @@ export class LoginService {
       if(user){
         this.user = user
         this.islogin = true
-        let userId = user.email.replace('@','')
+        let userId = `SMIS${this.hashString(user.id)}`
         let patient:Resource = await smisFacade.getPatient(userId)
         let organization:Resource = await smisFacade.getInstitution(userId)
         if(patient.resourceType == patientResource){
@@ -72,6 +72,15 @@ export class LoginService {
 
   getUserMenu(){
     return this.menu
+  }
+
+  hashString(str){
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash += Math.pow(str.charCodeAt(i) * 31, str.length - i);
+      hash = hash & hash;
+    }
+    return hash;
   }
 
 }

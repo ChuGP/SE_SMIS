@@ -29,8 +29,14 @@ export class InstitutionManagerComponent implements OnInit,OnChanges {
 
   async ngOnInit() {
     let userId = this.actRoute.snapshot.paramMap.get('id')
-    if(userId)
-      this.setInstitution(await this.smisFacade.getInstitution(userId))
+    if(userId){
+      let institution = await this.smisFacade.getInstitution(userId)
+      if(this.smisFacade.isInstitutionExist(institution))
+        this.setInstitution(institution)
+      else
+        this.institution.id = userId
+    }
+
   }
 
   setInstitution(institution:InstitutionInfo){
