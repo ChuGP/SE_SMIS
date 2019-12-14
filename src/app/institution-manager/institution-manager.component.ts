@@ -32,7 +32,7 @@ export class InstitutionManagerComponent implements OnInit,OnChanges {
     let userId = this.actRoute.snapshot.paramMap.get('id')
     if(userId)
       this.userId = userId
-    if(this.loginService.isLogin()){
+    if(this.loginService.isLogin() && this.userId){
         let institution:InstitutionInfo = await this.smisFacade.getInstitution(this.userId);
         if(institution.resourceType == organizationResource)
           this.setInstitution(institution)

@@ -8,45 +8,17 @@
 </h3>
 <table  border="3" align="center" style="width: 100%;">
   <tr>
-    <td id="demoFont" align="center">Name</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="the Institution Name"></td>
+    <td id="demoFont" align="center">機構名稱或別名</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="the Institution Name" [(ngModel)]="searchParams.name"></td>
   </tr>
   <tr>
-    <td id="demoFont" style="width: 20%;" align="center">Alias</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="the Alias"></td>
+    <td id="demoFont" style="width: 20%;" align="center">機構位置</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="ex:台北市｜台北市大安區" [(ngModel)]="searchParams['address-city']"></td>
   </tr>
   <tr>
     <td id="demoFont" align="center">Medical services</td><td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="the Medical service options"></td>
   </tr>
 </table>
 <br/>
-<button type="submit" id="submit" title="Are you sure to submit?" >Submit</button>
+<button type="submit" id="submit" title="Are you sure to submit?" (click)="submitParams()">Submit</button>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef > Id. </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container>
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef > Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
-  <ng-container matColumnDef="alias">
-    <th mat-header-cell *matHeaderCellDef > Alias </th>
-    <td mat-cell *matCellDef="let element"> {{element.alias}} </td>
-  </ng-container>
-  <ng-container matColumnDef="address">
-    <th mat-header-cell *matHeaderCellDef > Address </th>
-    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
-  </ng-container>
-  <ng-container matColumnDef="telecom">
-    <th mat-header-cell *matHeaderCellDef > Telecom </th>
-    <td mat-cell *matCellDef="let element"> {{element.telecom}} </td>
-  </ng-container>
-  <ng-container matColumnDef="medicalServices">
-    <th mat-header-cell *matHeaderCellDef > Medical Services </th>
-    <td mat-cell *matCellDef="let element"> {{element.medicalServices}} </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-<mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator> 
+<app-institutions-list [searchParams]="params"></app-institutions-list>
 </div>    

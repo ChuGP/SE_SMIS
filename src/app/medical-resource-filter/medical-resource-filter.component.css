@@ -3,22 +3,3 @@
 table {
   width: 100%;
 }
-
-.tep {
-  margin-bottom:0px;
-  width:100%;
-}
-
-.mat-cell{
-  font-weight: bold;
-  font-size:14px;
-  color:#0a0a0a;
-  cursor: pointer;
-}
-
-.mat-header-cell{
-  font-weight: bold;
-  font-size:20px;
-  color:#ec0a0a;
-  cursor: pointer;
-}

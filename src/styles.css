@@ -176,3 +176,7 @@ table.blueTable {
     text-align: left;
     border-collapse: collapse;
 }
+.tep {
+    margin-bottom:0px;
+    width:100%;
+}

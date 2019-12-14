@@ -75,13 +75,22 @@ describe('SMISEntity', () => {
     expect(medicalService).toEqual(expectedMedicalService)
   })
 
-  it('should parse Organization to institution',async()=>{
+  it('should parse Organization to institution with medicalService',async()=>{
     const adapter: SMISEntityAdapter = TestBed.get(SMISEntityAdapter);
     let organization:Organization = organizations[0]
     let actualInstitution:InstitutionInfo = await adapter.parseOrganization(organization)
     expect(actualInstitution.address).toEqual(organization.address)
     expect(actualInstitution.medicalServices.length).toEqual(2)
     expect(actualInstitution.id).toEqual(organization.id)
+  })
+
+  it('should parse Organization to institution',async()=>{
+    const adapter: SMISEntityAdapter = TestBed.get(SMISEntityAdapter);
+    let organization:Organization = organizations[0]
+    let actualInstitution:InstitutionInfo = await adapter.parseOrganization(organization,false)
+    expect(actualInstitution.address).toEqual(organization.address)
+    expect(actualInstitution.id).toEqual(organization.id)
+    expect(actualInstitution.medicalServices.length).toEqual(0)
   })
 
 });

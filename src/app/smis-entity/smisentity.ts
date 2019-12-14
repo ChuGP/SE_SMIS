@@ -84,7 +84,7 @@ export class SMISEntityAdapter{
       return medicalService
     }
     
-    async parseOrganization(organization:Organization){
+    async parseOrganization(organization:Organization,detail=true){
       let institution:InstitutionInfo = {
          resourceType:(organization.resourceType?organization.resourceType:organizationResource),
          id:(organization.id?organization.id:''),
@@ -95,7 +95,7 @@ export class SMISEntityAdapter{
          alias:[],
          name:(organization.name?organization.name:'')
       }
-      if(organization.extension){
+      if(organization.extension && detail){
          for(let extension of organization.extension)
             institution.medicalServices.push(this.parseHealthCareService(await this.fhir.getExtensionResource(extension.url)))
       }
@@ -171,7 +171,7 @@ export interface InstitutionInfo{
    medicalServices?:MedicalService[],
    type?:CodeAbleConcept[],
    telecom?:Array<Telecom>,
-   alias?:Array<{alias:string}>
+   alias?:Array<{alias:string}>,
 }
 export interface MedicalService{
    resourceType:string,

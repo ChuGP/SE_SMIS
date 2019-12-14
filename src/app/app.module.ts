@@ -20,6 +20,7 @@ import { CreateRoleModule } from './create-role/create-role.component.module';
 import { SharedInfoManagerComponentModule } from './shared-info-manager/shared-info-manager.component.module';
 import { MedicalResourceFilterComponentModule } from './medical-resource-filter/medical-resource-filter.component.module';
 import { TopBarComponentModule } from './top-bar/top-bar.component.module';
+import { InstitutionsListModule } from './institutions-list/institutions-list.component.module';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import { TopBarComponentModule } from './top-bar/top-bar.component.module';
     CreateRoleModule,
     SharedInfoManagerComponentModule,
     MedicalResourceFilterComponentModule,
-    TopBarComponentModule
+    TopBarComponentModule,
+    InstitutionsListModule
   ],
   declarations: [
     AppComponent,

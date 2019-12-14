@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {InstitutionInfo, PatientInfo, SMISEntityAdapter, MedicalRecord} from '../smis-entity/smisentity'
-import { organizationResource, SearchResult, searchResource, Organization, patientResource, Patient } from '../fhir-entity/fhirentity';
+import {InstitutionInfo, PatientInfo, MedicalRecord} from '../smis-entity/smisentity'
+import { organizationResource, patientResource, Patient } from '../fhir-entity/fhirentity';
 import { LoginService } from '../login-service/login-service.service';
 import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
@@ -18,31 +18,24 @@ interface MedicalForm{
   }
 }
 
-
 @Component({
   selector: 'app-shared-info-manager',
   templateUrl: './shared-info-manager.component.html',
   styleUrls: ['./shared-info-manager.component.css']
 })
 export class SharedInfoManagerComponent implements OnInit {
-  private dataSource
   private medicalRecord:MedicalForm
   private patientId="";
-  private currentInstitution:InstitutionInfo
   private patientInfo:PatientInfo
   private isPrivateCorrect = false;
-  private institutionColumns: string[] = ['id', 'name' ,'address', 'telecom'];
 
   constructor(private loginService:LoginService, private smisFacade:SMISFacadeService) {
     this.medicalRecord = this.getDefaultMedicalForm()
 
   }
   
-  async ngOnInit() {
-    if(this.loginService.getUserResource().resourceType == patientResource){
-      let institutions = await this.smisFacade.searchInstitution({type:'team'})
-      this.dataSource = new MatTableDataSource<any>(institutions);
-    }
+  ngOnInit() {
+    
   }
 
   async searchPatient() {
@@ -116,7 +109,4 @@ export class SharedInfoManagerComponent implements OnInit {
     } as MedicalForm
   }
   
-  selectInstitution(institution:InstitutionInfo){
-    this.currentInstitution = institution
-  }
 }

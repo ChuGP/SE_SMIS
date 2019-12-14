@@ -72,7 +72,7 @@ export class SMISFacadeService {
     if(institutionResult.resourceType == searchResource && institutionResult.total>0){
       for(let entry of institutionResult.entry){
         let organization:Organization = entry.resource
-        institutions.push(await this.smisAdapter.parseOrganization(organization))
+        institutions.push(await this.smisAdapter.parseOrganization(organization,false))
       }
     }
     return institutions

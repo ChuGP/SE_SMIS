@@ -1,0 +1,35 @@
+<div>
+    <h1>
+      <b><i id="titleText">Institutions List</i></b>
+    </h1>
+    <hr color="87CEEB">
+    <table mat-table [dataSource]="dataSource">
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="alias">
+        <th mat-header-cell *matHeaderCellDef> Alias </th>
+        <td mat-cell *matCellDef="let element"> {{element.alias}} </td>
+      </ng-container>
+      <!-- Weight Column -->
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef> Address </th>
+        <td mat-cell *matCellDef="let element"> {{element.address[0].city}} </td>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="telecom">
+        <th mat-header-cell *matHeaderCellDef> Telecom </th>
+        <td mat-cell *matCellDef="let element"> {{element.telecom[0].value}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="institutionColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: institutionColumns;" (click)="selectInstitution(row.id)"></tr>
+    </table>
+    <app-institution-manager *ngIf="currentInstitution" [disable]="true" [institutionInfo]="currentInstitution"></app-institution-manager>
+  </div>
