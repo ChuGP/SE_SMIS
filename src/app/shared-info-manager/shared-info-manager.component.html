@@ -23,20 +23,20 @@
         <tr>
           <td id="demoFont" align="center">開始時間</td>
           <td><input style="font-size:24px; color:#0a0a0a" type="time" class="tep myMOUSE form-control"
-              placeholder="輸入開始時間" [(ngModel)]="medicalRecord.time.start" required></td>
+              placeholder="輸入開始時間" [(ngModel)]="medicalForm.time.start" required></td>
           <td id="demoFont" align="center">結束時間</td>
           <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" type="time" placeholder="輸入結束時間"
-              [(ngModel)]="medicalRecord.time.end" required></td>
-          <div id="demoFont" align="center" *ngFor="let diagnosis of medicalRecord.diagnosis;index as i">
+              [(ngModel)]="medicalForm.time.end" required></td>
+          <div id="demoFont" align="center" *ngFor="let diagnosis of medicalForm.diagnosis;index as i">
             <td id="demoFont" align="center">症狀</td>
             <td><input type="text" style="font-size:24px; color:#0a0a0a" class="tep myMOUSE form-control"
                 placeholder="輸入症狀" [(ngModel)]="diagnosis.diagnosis" required>
             </td>
           </div>
           <td><button id="add" style="font-size:15px;" class="tep myMOUSE"
-              (click)="medicalRecord.diagnosis.push({serviceType:''})">新增症狀</button></td>
+              (click)="medicalForm.diagnosis.push({serviceType:''})">新增症狀</button></td>
           <td><button id="delete" style="font-size:15px;" class="tep myMOUSE"
-              (click)="medicalRecord.diagnosis.pop()">刪除症狀</button></td>
+              (click)="medicalForm.diagnosis.pop()">刪除症狀</button></td>
         </tr>
       </i>
       <tr>

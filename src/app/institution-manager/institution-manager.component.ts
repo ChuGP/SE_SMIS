@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import { InstitutionInfo, MedicalService } from '../smis-entity/smisentity';
-import { healthcareServiceResource, organizationResource } from '../fhir-entity/fhirentity';
+import { InstitutionInfo } from '../smis-entity/smisentity';
+import { organizationResource } from '../fhir-entity/fhirentity';
 import { LoginService } from '../login-service/login-service.service';
 import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
@@ -55,7 +55,6 @@ export class InstitutionManagerComponent implements OnInit,OnChanges {
   
   async confirmSubmit() {
     if(confirm("確認要送出修改嗎!")){
-      this.institution.medicalServices = await this.smisFacade.updateMedicalServices(this.institution.medicalServices)
       let institution:InstitutionInfo = await this.smisFacade.updateInstitution(this.institution)
       if(institution.resourceType == organizationResource){
         this.setInstitution(institution)

@@ -72,7 +72,8 @@ export class SMISEntityAdapter{
          id:healthCareService.id,
          name:healthCareService.name,
          comment:healthCareService.comment,
-         serviceType:[]
+         serviceType:[],
+         providedBy:healthCareService.providedBy
       };
       if (healthCareService.type){
          for(let service of healthCareService.type){
@@ -181,6 +182,7 @@ export interface MedicalService{
    name:string,
    serviceType:Array<{serviceType:string}>,
    comment?:string,
+   providedBy?:Reference
 }
 export interface Address{
     line?:Array<string>,

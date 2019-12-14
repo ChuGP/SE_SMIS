@@ -75,7 +75,8 @@ export class FHIREntityAdapter{
          resourceType:medicalService.resourceType,
          id:medicalService.id,
          comment:medicalService.comment,
-         name:medicalService.name
+         name:medicalService.name,
+         providedBy:medicalService.providedBy
       }
       healthcareService.type=[]
       if(medicalService.serviceType){
@@ -176,7 +177,8 @@ export interface HealthcareService{
    id?:string,
    type?:CodeAbleConcept[],
    name?:string,
-   comment?:string
+   comment?:string,
+   providedBy?:Reference
 }
 
 export interface Address{
