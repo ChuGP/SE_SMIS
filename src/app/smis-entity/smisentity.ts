@@ -26,7 +26,8 @@ export class SMISEntityAdapter{
          birthDate:(FHIRPatient.birthDate?FHIRPatient.birthDate:""),
          maritalStatus:(FHIRPatient.maritalStatus?FHIRPatient.maritalStatus:getDefaultCodeAbleConcept()),
          medicalRecord:[],
-         family:[]
+         family:[],
+         photo:FHIRPatient.photo
       }
       if(FHIRPatient.extension){
          for(let extension of FHIRPatient.extension){
@@ -59,7 +60,7 @@ export class SMISEntityAdapter{
       let medicalRecord:MedicalRecord={
          id:FHIREncounter.id,
          diagnosis:sympton,
-         time:FHIREncounter.period,
+         time:(FHIREncounter.period?FHIREncounter.period:{start:'',end:''}),
          organization:FHIREncounter.serviceProvider
       };
       return medicalRecord
@@ -137,6 +138,7 @@ export interface PatientInfo{
    active?:boolean,
    id?:string,
    name?:Name[],
+   photo?:Array<{url:string}>,
    telecom?:Telecom[],
    birthDate?:string,
    gender?:string,

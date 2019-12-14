@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { AuthServiceConfig, AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-import { FHIRProxyModule } from '../fhir-proxy/fhirproxy.service.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SMISFacadeModule } from '../smis-facade/smis-facade.service.module';
 let config = new AuthServiceConfig([
     {
       id: GoogleLoginProvider.PROVIDER_ID,
@@ -17,7 +17,7 @@ let config = new AuthServiceConfig([
   }
 @NgModule({
     imports:[
-      FHIRProxyModule,
+      SMISFacadeModule,
       RouterTestingModule
     ],
     providers:[

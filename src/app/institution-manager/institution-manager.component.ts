@@ -16,10 +16,9 @@ export class InstitutionManagerComponent implements OnInit,OnChanges {
   private institution:InstitutionInfo
   @Input('disable')
   private disable
-  @Input('userId')
-  private userId
   constructor(private smisFacade:SMISFacadeService, private loginService:LoginService, private actRoute:ActivatedRoute) { 
-    this.institution = this.getDefaultInstitutionInfo()
+    if(!this.institution)
+      this.setInstitution(this.smisFacade.getDefaultInstitutionInfo())
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -31,55 +30,15 @@ export class InstitutionManagerComponent implements OnInit,OnChanges {
   async ngOnInit() {
     let userId = this.actRoute.snapshot.paramMap.get('id')
     if(userId)
-      this.userId = userId
-    if(this.loginService.isLogin() && this.userId){
-        let institution:InstitutionInfo = await this.smisFacade.getInstitution(this.userId);
-        if(institution.resourceType == organizationResource)
-          this.setInstitution(institution)
-        else
-          this.institution.id = this.userId
-    }
+      this.setInstitution(await this.smisFacade.getInstitution(userId))
   }
 
   setInstitution(institution:InstitutionInfo){
     this.institution = institution
   }
 
-  getDefaultInstitutionInfo(){
-    let institution:InstitutionInfo={
-      resourceType:"Organization",
-      id:'',
-      name:'',
-      address:[
-        {
-          city:""
-        }
-      ],
-      medicalServices:[this.getDefaultMedicalService()],
-      type:[],
-      telecom:[
-        {
-          system:"",
-          value:""
-        }
-      ],
-      alias:[{alias:''}]
-    }
-    return institution
-  }
-
-  getDefaultMedicalService():MedicalService{
-    return {
-      resourceType:healthcareServiceResource,
-      id:'',
-      serviceType:[{serviceType:''}],
-      name:'',
-      comment:''
-    }
-  }
-
   addMedicalService() {
-    this.institution.medicalServices.push(this.getDefaultMedicalService())
+    this.institution.medicalServices.push(this.smisFacade.getDefaultMedicalService())
   }
 
   addAlias() {

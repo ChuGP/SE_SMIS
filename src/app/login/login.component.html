@@ -10,16 +10,18 @@
     </div>
     <br>
     <div align="center">
-        <button (click)="signInWithFB()" style="color:#0a0a0a; background-color: rgb(181, 181, 233);">Login with facebook</button>
-        <button (click)="signInWithGoogle()" style="color:#0a0a0a; background-color: cornsilk;">Login with Google</button>
+        <button (click)="signInWithFB()" style="color:#0a0a0a; background-color: rgb(181, 181, 233);">Login with
+            facebook</button>
+        <button (click)="signInWithGoogle()" style="color:#0a0a0a; background-color: cornsilk;">Login with
+            Google</button>
     </div>
 </div>
 
 <div *ngIf="loginService.isLogin() ">
     <div align="center ">
-        <img [src]="loginService.user.photoUrl " alt="Your photo ">
+        <img [src]="loginService.getUserInfo().photoUrl " alt="Your photo ">
     </div>
-    <div>Welcome to {{loginService.user.name}}</div>
-    <div>Your Have success Login with {{loginService.user.email}}</div>
+    <div>Welcome to {{loginService.getUserInfo().name}}</div>
+    <div>Your Have success Login with {{loginService.getUserInfo().email}}</div>
 
 </div>

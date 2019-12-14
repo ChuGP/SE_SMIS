@@ -17,19 +17,18 @@ export class PatientManagerComponent implements OnInit ,OnChanges {
   @Output() submit: EventEmitter<any> = new EventEmitter();
   @Input('disable')
   private disable:boolean
-  private checked=false;
-  private typeInput="password";
-  @Input('userId')
-  private userId
-  private displayRecords:MedicalRecord[]=[];
   @Input('patientInfo')
   private patientInfo:PatientInfo;
-  private displayedColumns: string[] = ['diagnosis', 'organization', 'time.start', 'time.end'];
   @ViewChild(MatPaginator, {static: true}) 
   private paginator: MatPaginator;
+  private checked=false;
+  private typeInput="password";
+  private displayRecords:MedicalRecord[]=[];
+  private displayedColumns: string[] = ['diagnosis', 'organization', 'time.start', 'time.end'];
   private dataSource;
 
   constructor(private smisFacade:SMISFacadeService, private loginService:LoginService,private actRoute:ActivatedRoute) { 
+    if(!this.patientInfo)  
       this.displayPatient(this.smisFacade.getDefaultPatient());
   }
   
@@ -41,13 +40,9 @@ export class PatientManagerComponent implements OnInit ,OnChanges {
 
   async ngOnInit() {
     let userId = this.actRoute.snapshot.paramMap.get('id')
-    if(this.loginService.isLogin() && userId){
-      this.userId = userId
-      let patientInfo:PatientInfo = await this.smisFacade.getPatient(this.userId)
-      if(patientInfo.resourceType == patientResource)
-        this.displayPatient(patientInfo)
-      else
-        this.patientInfo.id = this.userId
+    if(userId){
+      let patientInfo:PatientInfo = await this.smisFacade.getPatient(userId)
+      this.displayPatient(patientInfo)
     }
   }
 

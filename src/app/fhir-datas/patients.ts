@@ -62,7 +62,8 @@ export const patients:Patient[]=[
                     "display": "dad"
                 }
             }
-        ]
+        ],
+        "photo":[]
     },
     {
         "resourceType": "Patient",

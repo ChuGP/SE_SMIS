@@ -46,7 +46,8 @@ export class FHIREntityAdapter{
          gender:patientInfo.gender,
          maritalStatus:patientInfo.maritalStatus,
          link:[],
-         extension:[]
+         extension:[],
+         photo:patientInfo.photo
       }      
       if(patientInfo.family){
          for(let member of patientInfo.family){
@@ -127,6 +128,7 @@ export const patientResource = "Patient"
 export const organizationResource = "Organization"
 export const healthcareServiceResource = "HealthcareService"
 export const searchResource = "Bundle"
+export const operationOutcome = "OperationOutcome"
 
 export interface Patient{
    resourceType:string,
@@ -135,6 +137,7 @@ export interface Patient{
       value:string
    }>,
    active?:boolean,
+   photo?:Array<{url:string}>,
    id?:string,
    name?:Name[],
    telecom?:Telecom[],

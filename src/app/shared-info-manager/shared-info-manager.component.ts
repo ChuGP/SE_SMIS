@@ -62,7 +62,7 @@ export class SharedInfoManagerComponent implements OnInit {
 
   async submitRecord(){
     if(confirm('確認要送出嗎?')){
-      let organization = this.loginService.getUserAsOrganization()
+      let organization = this.loginService.getUserResource() as InstitutionInfo
       let medicalRecord = this.parseMedicalForm(this.medicalRecord,organization.name,organization.id)
       medicalRecord = await this.smisFacade.updateMedicalRecord(medicalRecord)
       this.patientInfo.medicalRecord.push(medicalRecord)

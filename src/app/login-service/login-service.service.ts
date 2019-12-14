@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FacebookLoginProvider,SocialUser,AuthService,GoogleLoginProvider } from "angularx-social-login";
-import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
-import { Resource, patientResource, organizationResource, Patient, Organization } from '../fhir-entity/fhirentity';
+import { Resource, patientResource, organizationResource } from '../fhir-entity/fhirentity';
 import { Router } from '@angular/router';
+import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,29 +10,27 @@ import { Router } from '@angular/router';
 export class LoginService {
   private user: SocialUser;
   private menu=[]
-  private userId
   private userResource:Resource;
-  private role;
   private islogin;
-  constructor(private authService:AuthService, private fhirProxy:FHIRProxyService, private router:Router) {
+  constructor(private authService:AuthService, private smisFacade:SMISFacadeService, private router:Router) {
     this.islogin = false;
     this.authService.authState.subscribe(async (user) => {
       if(user){
         this.user = user
         this.islogin = true
-        this.userId = user.email.replace('@','')
-        let patient:Resource = await fhirProxy.getResource(patientResource,this.userId)
-        let organization:Resource = await fhirProxy.getResource(organizationResource,this.userId)
+        let userId = user.email.replace('@','')
+        let patient:Resource = await smisFacade.getPatient(userId)
+        let organization:Resource = await smisFacade.getInstitution(userId)
         if(patient.resourceType == patientResource){
           this.userResource = patient
-          this.menu = getPatientMenu(this.userId)
+          this.menu = getPatientMenu(userId)
         }
         else if(organization.resourceType == organizationResource){
           this.userResource = organization
-          this.menu = getInstitutionMenu(this.userId)        
+          this.menu = getInstitutionMenu(userId)        
         }
         else
-          this.menu = getNewMemberMenu(this.userId)
+          this.menu = getNewMemberMenu(userId)
         this.router.navigate([''])
       }
     });
@@ -67,21 +65,13 @@ export class LoginService {
   getUserInfo(){
     return this.user
   }
-
-  getUserId(){
-    return this.userId
-  }
-
-  getUserAsPatient():Patient{
-    return this.userResource as Patient
-  }
-
-  getUserAsOrganization():Organization{
-    return this.userResource as Organization
-  }
-
+  
   getUserResource(){
     return this.userResource
+  }
+
+  getUserMenu(){
+    return this.menu
   }
 
 }

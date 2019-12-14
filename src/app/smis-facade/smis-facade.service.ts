@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
-import { FHIREntityAdapter, Patient, patientResource, HealthcareService, healthcareServiceResource, Organization, organizationResource, Encounter, encounterResource, SearchResult, searchResource } from '../fhir-entity/fhirentity';
+import { FHIREntityAdapter, Patient, patientResource, HealthcareService, healthcareServiceResource, Organization, organizationResource, Encounter, encounterResource, SearchResult, searchResource, operationOutcome, Resource } from '../fhir-entity/fhirentity';
 import { SMISEntityAdapter, PatientInfo, MedicalService, InstitutionInfo, MedicalRecord } from '../smis-entity/smisentity';
 
 @Injectable({
@@ -12,6 +12,11 @@ export class SMISFacadeService {
 
   }
 
+  async getPatient(patientId){
+    let patient:Patient = await this.fhirProxy.getResource(patientResource,patientId)     
+    return await this.smisAdapter.parsePatient(patient) as PatientInfo
+  }
+
   async updatePatient(patientInfo:PatientInfo){
     let patient:Patient = this.fhirAdapter.parsePatientInfo(patientInfo)
     if(patient.id)
@@ -19,11 +24,6 @@ export class SMISFacadeService {
     else
       patient = await this.fhirProxy.createResource(patientResource,patient)
     return await this.smisAdapter.parsePatient(patient)
-  }
-
-  async getPatient(patientId){
-    let patient:Patient = await this.fhirProxy.getResource(patientResource,patientId)     
-    return await this.smisAdapter.parsePatient(patient) as PatientInfo
   }
 
   async getInstitution(id){
@@ -98,8 +98,42 @@ export class SMISFacadeService {
         coding:[],
         text:""
       },
-      medicalRecord:[]
+      medicalRecord:[],
+      photo:[]
     };
+  }
+
+  getDefaultInstitutionInfo(){
+    let institution:InstitutionInfo={
+      resourceType:"Organization",
+      id:'',
+      name:'',
+      address:[
+        {
+          city:""
+        }
+      ],
+      medicalServices:[this.getDefaultMedicalService()],
+      type:[],
+      telecom:[
+        {
+          system:"",
+          value:""
+        }
+      ],
+      alias:[{alias:''}]
+    }
+    return institution
+  }
+
+  getDefaultMedicalService():MedicalService{
+    return {
+      resourceType:healthcareServiceResource,
+      id:'',
+      serviceType:[{serviceType:''}],
+      name:'',
+      comment:''
+    }
   }
 
 }

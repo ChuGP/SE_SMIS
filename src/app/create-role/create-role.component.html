@@ -7,13 +7,13 @@
             <mat-radio-button value="Organization">醫療機構</mat-radio-button>
             <mat-radio-button value="Patient">病患</mat-radio-button>
         </mat-radio-group>
-        <div *ngIf = "role=='Organization'">
-            <app-institution-manager [userId]="userId" (submit)="onSubmit($event)"></app-institution-manager>
+        <div *ngIf="role=='Organization'">
+            <app-institution-manager [institutionInfo]="institution" (submit)="onSubmit($event)">
+            </app-institution-manager>
         </div>
         <div *ngIf="role=='Patient'">
-            <app-patient-manager [userId]="userId" (submit)="onSubmit($event)"></app-patient-manager>
+            <app-patient-manager [patientInfo]="patient" (submit)="onSubmit($event)"></app-patient-manager>
         </div>
     </div>
-    
-</div>
 
+</div>

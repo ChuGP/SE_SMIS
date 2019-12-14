@@ -5,7 +5,9 @@
 <p>
     <font id="subtitleText" size="5">Photo</font>
 </p>
-<img *ngIf="loginService.isLogin()" [src]="loginService.user.photoUrl" alt="Your photo">
+<div *ngFor="let photo of patientInfo.photo">
+    <img [src]="photo.url" alt="Your photo">
+</div>
 <p>
     <font id="subtitleText" size="5">Social&nbsp;Info</font>
 </p>
