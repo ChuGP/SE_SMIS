@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { InstitutionInfo } from '../smis-entity/smisentity';
-import { organizationResource } from '../fhir-entity/fhirentity';
 import { LoginService } from '../login-service/login-service.service';
 import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
@@ -10,28 +9,28 @@ import { SMISFacadeService } from '../smis-facade/smis-facade.service';
   templateUrl: './institution-manager.component.html',
   styleUrls: ['./institution-manager.component.css']
 })
-export class InstitutionManagerComponent implements OnInit,OnChanges {
+export class InstitutionManagerComponent implements OnInit, OnChanges {
   @Output() submit: EventEmitter<any> = new EventEmitter();
   @Input('institutionInfo')
-  private institution:InstitutionInfo
+  private institution: InstitutionInfo
   @Input('disable')
   private disable
-  constructor(private smisFacade:SMISFacadeService, private loginService:LoginService, private actRoute:ActivatedRoute) { 
-    if(!this.institution)
+  constructor(private smisFacade: SMISFacadeService, private loginService: LoginService, private actRoute: ActivatedRoute) {
+    if (!this.institution)
       this.setInstitution(this.smisFacade.getDefaultInstitutionInfo())
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.institutionInfo){
+    if (changes.institutionInfo) {
       this.setInstitution(changes.institutionInfo.currentValue)
     }
   }
 
   async ngOnInit() {
     let userId = this.actRoute.snapshot.paramMap.get('id')
-    if(userId){
+    if (userId) {
       let institution = await this.smisFacade.getInstitution(userId)
-      if(this.smisFacade.isInstitutionExist(institution))
+      if (this.smisFacade.isInstitution(institution))
         this.setInstitution(institution)
       else
         this.institution.id = userId
@@ -39,7 +38,7 @@ export class InstitutionManagerComponent implements OnInit,OnChanges {
 
   }
 
-  setInstitution(institution:InstitutionInfo){
+  setInstitution(institution: InstitutionInfo) {
     this.institution = institution
   }
 
@@ -48,7 +47,7 @@ export class InstitutionManagerComponent implements OnInit,OnChanges {
   }
 
   addAlias() {
-    this.institution.alias.push({alias:''})
+    this.institution.alias.push({ alias: '' })
   }
 
   removeAlias() {
@@ -58,11 +57,11 @@ export class InstitutionManagerComponent implements OnInit,OnChanges {
   removeMedicalService() {
     this.institution.medicalServices.pop()
   }
-  
+
   async confirmSubmit() {
-    if(confirm("確認要送出修改嗎!")){
-      let institution:InstitutionInfo = await this.smisFacade.updateInstitution(this.institution)
-      if(institution.resourceType == organizationResource){
+    if (confirm("確認要送出修改嗎!")) {
+      let institution: InstitutionInfo = await this.smisFacade.updateInstitution(this.institution)
+      if (this.smisFacade.isInstitution(institution)) {
         this.setInstitution(institution)
         alert("更新成功!")
         this.submit.emit(null)

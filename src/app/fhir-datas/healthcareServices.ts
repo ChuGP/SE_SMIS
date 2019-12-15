@@ -1,6 +1,6 @@
-import {HealthcareService} from '../fhir-entity/fhirentity'
+import { HealthcareService } from '../fhir-entity/fhirentity'
 
-export const healthCareServices:HealthcareService[]=[
+export const healthCareServices: HealthcareService[] = [
     {
         "resourceType": "HealthcareService",
         "id": "140139",
@@ -13,7 +13,7 @@ export const healthCareServices:HealthcareService[]=[
                         "display": "Psychotherapy"
                     }
                 ],
-                "text":"Psychotherapy"
+                "text": "Psychotherapy"
             },
             {
                 "coding": [
@@ -23,11 +23,15 @@ export const healthCareServices:HealthcareService[]=[
                         "display": "Psychiatry"
                     }
                 ],
-                "text":"Psychiatry"
+                "text": "Psychiatry"
             }
         ],
-        "name":"Psychiatry",
-        "comment":"This Service is for SMIS demo"
+        "providedBy": {
+            "reference": "Organization/257318",
+            "display": "NTUT"
+        },
+        "name": "Psychiatry",
+        "comment": "This Service is for SMIS demo"
     },
 
     {
@@ -267,6 +271,10 @@ export const healthCareServices:HealthcareService[]=[
                 "text": "腎癌"
             }
         ],
+        "providedBy": {
+            "reference": "Organization/257272",
+            "display": "國立台灣大學醫學院附設醫院"
+        },
         "name": "Cancer Services",
         "comment": "Cancer health service"
     },
@@ -327,12 +335,20 @@ export const healthCareServices:HealthcareService[]=[
             }
         ],
         "name": "International Medical Service",
-        "comment": "國際醫療"
+        "comment": "國際醫療",
+        "providedBy": {
+            "reference": "Organization/257272",
+            "display": "國立台灣大學醫學院附設醫院"
+        },
     },
 
     {
         "resourceType": "HealthcareService",
         "id": "257261",
+        "providedBy": {
+            "reference": "Organization/257272",
+            "display": "國立台灣大學醫學院附設醫院"
+        },
         "type": [
             {
                 "coding": [

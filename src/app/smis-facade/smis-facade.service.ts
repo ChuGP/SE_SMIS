@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FHIRProxyService } from '../fhir-proxy/fhirproxy.service';
 import { FHIREntityAdapter, Patient, patientResource, HealthcareService, healthcareServiceResource, Organization, organizationResource, Encounter, encounterResource, SearchResult, searchResource, operationOutcome, Resource } from '../fhir-entity/fhirentity';
-import { SMISEntityAdapter, PatientInfo, MedicalService, InstitutionInfo, MedicalRecord, Extension } from '../smis-entity/smisentity';
+import { SMISEntityAdapter, PatientInfo, MedicalService, InstitutionInfo, MedicalRecord, Extension, SearchParams } from '../smis-entity/smisentity';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ export class SMISFacadeService {
 
   }
 
-  isPatientExist(patient:Patient){
-    return (patient.resourceType!=operationOutcome)
+  isPatient(patient: Patient) {
+    return (patient.resourceType != operationOutcome)
   }
 
   async getPatient(patientId) {
@@ -30,8 +30,8 @@ export class SMISFacadeService {
     return await this.smisAdapter.parsePatient(patient)
   }
 
-  isInstitutionExist(institution:InstitutionInfo){
-    return (institution.resourceType!=operationOutcome)
+  isInstitution(institution: InstitutionInfo) {
+    return (institution.resourceType != operationOutcome)
   }
 
   async getInstitution(id) {
@@ -88,13 +88,48 @@ export class SMISFacadeService {
     return this.smisAdapter.parseEncounter(result)
   }
 
-  async searchInstitution(params) {
+  hasSearchResult(searchResult: SearchResult) {
+    return (searchResult.resourceType == searchResource && searchResult.total > 0)
+  }
+
+  async searchInstitution(params: SearchParams) {
+    let paramsWithoutServiceName: SearchParams = {
+      type: (params.type ? params.type : 'team'),
+      "address-city": (params["address-city"] ? params["address-city"] : ''),
+      name: (params.name ? params.name : '')
+    }
     let institutions: InstitutionInfo[] = []
-    let institutionResult: SearchResult = await this.fhirProxy.searchResource(organizationResource, params)
-    if (institutionResult.resourceType == searchResource && institutionResult.total > 0) {
+    let institutionsWithoutService: InstitutionInfo[] = []
+    let institutionResult: SearchResult = await this.fhirProxy.searchResource(organizationResource, paramsWithoutServiceName)
+    if (this.hasSearchResult(institutionResult)) {
       for (let entry of institutionResult.entry) {
         let organization: Organization = entry.resource
-        institutions.push(await this.smisAdapter.parseOrganization(organization, false))
+        institutionsWithoutService.push(await this.smisAdapter.parseOrganization(organization, false))
+      }
+      if (params.serviceName) {
+        let institutionsWithService = await this.searchInstitutionByMedicalService(params.serviceName)
+        institutionsWithService.forEach(institution => {
+          if (institutionsWithoutService.find(x => (x.id == institution.id)))
+            institutions.push(institution)
+        })
+      }
+      else {
+        institutions = institutionsWithoutService
+      }
+    }
+    return institutions
+  }
+
+  async searchInstitutionByMedicalService(serviceName) {
+    let institutions: InstitutionInfo[] = []
+    let medicalServiceResult: SearchResult = await this.fhirProxy.searchResource(healthcareServiceResource, { name: serviceName })
+    if (this.hasSearchResult(medicalServiceResult)) {
+      for (let entry of medicalServiceResult.entry) {
+        let healthcareService: HealthcareService = entry.resource
+        if (healthcareService.providedBy) {
+          let organization: Organization = await this.fhirProxy.getExtensionResource(healthcareService.providedBy.reference)
+          institutions.push(await this.smisAdapter.parseOrganization(organization, false))
+        }
       }
     }
     return institutions
@@ -136,7 +171,17 @@ export class SMISFacadeService {
         }
       ],
       medicalServices: [this.getDefaultMedicalService()],
-      type: [],
+      type: [
+        {
+          "coding": [
+            {
+              "system": "smis",
+              "code": "team"
+            }
+          ],
+          "text": "smis"
+        }
+      ],
       telecom: [
         {
           system: "",

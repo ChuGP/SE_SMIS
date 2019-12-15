@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { InstitutionInfo, PatientInfo, MedicalRecord } from '../smis-entity/smisentity'
-import { organizationResource, patientResource, Patient } from '../fhir-entity/fhirentity';
+import { organizationResource } from '../fhir-entity/fhirentity';
 import { LoginService } from '../login-service/login-service.service';
 import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 
@@ -40,7 +40,7 @@ export class SharedInfoManagerComponent implements OnInit {
 
   async searchPatient() {
     let patient: PatientInfo = await this.smisFacade.getPatient(this.patientId)
-    if (patient.resourceType == patientResource) {
+    if (this.smisFacade.isPatient(patient)) {
       this.patientInfo = patient
       this.confirmPrivateKey(patient)
     }
@@ -63,13 +63,13 @@ export class SharedInfoManagerComponent implements OnInit {
   async submitRecord() {
     if (confirm('確認要送出嗎?')) {
       let organization = this.loginService.getUserResource() as InstitutionInfo
-      let medicalRecord:MedicalRecord = this.parseMedicalForm(this.medicalForm, organization.name, organization.id)
+      let medicalRecord: MedicalRecord = this.parseMedicalForm(this.medicalForm, organization.name, organization.id)
       medicalRecord = await this.smisFacade.updateMedicalRecord(medicalRecord)
       this.patientInfo.medicalRecord.push(medicalRecord)
-      let result = await this.smisFacade.updatePatient(this.patientInfo)
-      if (result.resourceType == patientResource) {
+      let patient = await this.smisFacade.updatePatient(this.patientInfo)
+      if (this.smisFacade.isPatient(patient)) {
         alert("新增成功!")
-        this.patientInfo = result
+        this.patientInfo = patient
       }
       else
         alert("新增失敗")
