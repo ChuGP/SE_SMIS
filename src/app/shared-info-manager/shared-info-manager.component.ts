@@ -55,7 +55,7 @@ export class SharedInfoManagerComponent implements OnInit {
     if (key == patient.privateKey)
       this.isPrivateCorrect = true
     else {
-      if (confirm("Privacy key Error!\nDo you want to retry?"))
+      if (confirm("Privacy key 錯誤!\n想要重新嘗試嗎?"))
         this.confirmPrivateKey(patient)
     }
   }
