@@ -1,25 +1,24 @@
-<app-institutions-list *ngIf="loginService.getUserResource() && loginService.getUserResource().resourceType=='Patient'"
-  [searchParams]="{type:'team'}"></app-institutions-list>
+<app-institutions-list *ngIf="loginService.getUserResource() && loginService.getUserResource().resourceType=='Patient'" [searchParams]="{type:'team'}"></app-institutions-list>
 
 <div *ngIf="loginService.getUserResource() && loginService.getUserResource().resourceType=='Organization'">
-  <h1>
-    <b><i id="titleText">Personal Information</i></b>
-  </h1>
-  <hr color="87CEEB">
-  <form #patientIdForm="ngForm">
-    <table border="3" align="center" style="width: 100%;">
-      <tr>
-        <td align="center">ID</td>
-        <td><input class="tep" placeholder="the ID" type="text" [(ngModel)]="patientId" name="patientId" required></td>
-      </tr>
-    </table>
-  </form>
-  <br />
-  <button (click)="searchPatient()" type="submit" id="submit" [disabled]="!patientIdForm.valid">Submit</button>
-  <div *ngIf="isPrivateCorrect">
-    <app-patient-manager [disable]="true" [patientInfo]="patientInfo"></app-patient-manager>
-    <table class="blueTable" border="3" align="center" style="width: 100%;">
-      <i align="center" style="width: 100%;">
+    <h1>
+        <b><i id="titleText">Personal Information</i></b>
+    </h1>
+    <hr color="87CEEB">
+    <form #patientIdForm="ngForm">
+        <table border="3" align="center" style="width: 100%;">
+            <tr>
+                <td align="center" style="width: 20%;">ID</td>
+                <td><input style="font-size:24px;" class="tep" placeholder="the ID" type="text" [(ngModel)]="patientId" name="patientId" required></td>
+            </tr>
+        </table>
+    </form>
+    <br />
+    <button (click)="searchPatient()" type="submit" id="submit" [disabled]="!patientIdForm.valid">Submit</button>
+    <div *ngIf="isPrivateCorrect">
+        <app-patient-manager [disable]="true" [patientInfo]="patientInfo"></app-patient-manager>
+        <table class="blueTable" border="3" align="center" style="width: 100%;">
+            <i align="center" style="width: 100%;">
         <tr>
           <td id="demoFont" align="center">開始時間</td>
           <td><input style="font-size:24px; color:#0a0a0a" type="time" class="tep myMOUSE form-control"
@@ -39,11 +38,11 @@
               (click)="medicalForm.diagnosis.pop()">刪除症狀</button></td>
         </tr>
       </i>
-      <tr>
-        <td><button type="submit" id="submit" title="確定要送出嗎?" (click)="submitRecord()">送出</button></td>
-      </tr>
-    </table>
+            <tr>
+                <td><button type="submit" id="submit" title="確定要送出嗎?" (click)="submitRecord()">送出</button></td>
+            </tr>
+        </table>
 
-  </div>
+    </div>
 
 </div>

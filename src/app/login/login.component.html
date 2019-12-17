@@ -1,27 +1,18 @@
-<div *ngIf="!loginService.isLogin()">
-    <div align="center">
-        <p id="demotext">帳號</p>
-        <input style="font-size:24px; color:#0a0a0a" type="text" placeholder="請輸入帳號!">
-        <p id="demotext">密碼</p>
-        <input style="font-size:24px; color:#0a0a0a" type="password" placeholder="請輸入密碼!">
+<div align="center">
+    <div *ngIf="!loginService.isLogin()">
+        <div align="center" style="padding-top: 19%;">
+            <img src="https://icon-library.net/images/facebook-login-icon/facebook-login-icon-10.jpg" width="30%" (click)="signInWithFB()">
+            <br>
+            <img src="https://icon-library.net/images/login-with-google-icon/login-with-google-icon-16.jpg" width="27.5%" (click)="signInWithGoogle()">
+        </div>
     </div>
-    <div align="center">
-        <button [routerLink]="['/account']">login</button>
-    </div>
-    <br>
-    <div align="center">
-        <button (click)="signInWithFB()" style="color:#0a0a0a; background-color: rgb(181, 181, 233);">Login with
-            facebook</button>
-        <button (click)="signInWithGoogle()" style="color:#0a0a0a; background-color: cornsilk;">Login with
-            Google</button>
-    </div>
-</div>
 
-<div *ngIf="loginService.isLogin() ">
-    <div align="center ">
-        <img [src]="loginService.getUserInfo().photoUrl " alt="Your photo ">
-    </div>
-    <div>Welcome to {{loginService.getUserInfo().name}}</div>
-    <div>Your Have success Login with {{loginService.getUserInfo().email}}</div>
+    <div *ngIf="loginService.isLogin() ">
+        <div align="center ">
+            <img [src]="loginService.getUserInfo().photoUrl " alt="Your photo ">
+        </div>
+        <div>Welcome to {{loginService.getUserInfo().name}}</div>
+        <div>Your Have success Login with {{loginService.getUserInfo().email}}</div>
 
+    </div>
 </div>

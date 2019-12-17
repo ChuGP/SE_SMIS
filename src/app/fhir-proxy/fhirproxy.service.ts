@@ -23,6 +23,7 @@ export class FHIRProxyService {
       return error.error as Resource
     });
   }
+  
   async updateResource(resourceName, data){
     return this.http.put<Resource>(this.baseUrl+`${resourceName}/${data.id}`,data).toPromise()
     .catch(error=>{
