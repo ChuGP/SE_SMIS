@@ -5,7 +5,7 @@ import {Resource, SearchResult} from '../fhir-entity/fhirentity';
   providedIn: 'root'
 })
 export class FHIRProxyService {
-  baseUrl='http://hapi.fhir.org/baseR4/';
+  baseUrl='http://140.124.181.144:8080/hapi-fhir-jpaserver/fhir/';
   constructor(private http:HttpClient) { 
     
   }
