@@ -12,7 +12,7 @@ import { SMISFacadeService } from '../smis-facade/smis-facade.service';
 export class InstitutionManagerComponent implements OnInit, OnChanges {
   @Output() submit: EventEmitter<any> = new EventEmitter();
   @Input('institutionInfo')
-  private institution: InstitutionInfo
+  institution: InstitutionInfo
   @Input('disable')
   private disable
   constructor(private smisFacade: SMISFacadeService, private loginService: LoginService, private actRoute: ActivatedRoute) {

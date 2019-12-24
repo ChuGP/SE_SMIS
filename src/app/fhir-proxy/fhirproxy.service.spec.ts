@@ -146,6 +146,15 @@ describe('FHIRProxyService', () => {
     const service: FHIRProxyService = TestBed.get(FHIRProxyService);
     let err = await service.getResource('Organization','5')
     expect(err.resourceType).toEqual('OperationOutcome')
+    err = await service.createResource('Organization','5')
+    expect(err.resourceType).toEqual('OperationOutcome')
+    err = await service.updateResource('Organization','5')
+    expect(err.resourceType).toEqual('OperationOutcome')
+    err = await service.getExtensionResource('Organization/200')
+    expect(err.resourceType).toEqual('OperationOutcome')
+    err = await service.searchResource('Organization1','5')
+    expect(err.resourceType).toEqual('OperationOutcome')
+    
   })
 
   it('Should get searchresult',async()=>{
