@@ -1,0 +1,12 @@
+<div *ngIf="loginService.isLogin()" style="text-align:center;padding-top: 15%;">
+    <h1 *ngFor="let action of loginService.getUserMenu()">
+        <a [routerLink]="action.url">{{action.display}}</a>
+    </h1>
+    <h3>
+
+        本系統希望提供一個醫療資源共享的平台<br>透過共用的醫療資訊，使得病人可以不必花額外時間多次填寫個人資料，即可獲得醫療服務<br>醫療機構則可以獲得病人的病歷資料與歷史紀錄<br> 本系統還可以即時過濾病人適合的醫療機構，達到病患與機構雙贏的局面。
+    </h3>
+</div>
+<app-login *ngIf="!loginService.isLogin()"></app-login>
+<div style="padding-top: 15%;">
+</div>

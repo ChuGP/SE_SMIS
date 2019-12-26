@@ -1,0 +1,29 @@
+:host(app-patient-manager){
+    width:100%;
+  }
+
+table {
+    width: 100%;
+  }
+
+  .mat-cell{
+    font-weight: bold;
+    font-size:14px;
+    color:#0a0a0a;
+    cursor: pointer;
+  }
+
+  .mat-header-cell{
+    font-weight: bold;
+    font-size:20px;
+    color:#0aacec;
+    cursor: pointer;
+  }
+
+  .ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }

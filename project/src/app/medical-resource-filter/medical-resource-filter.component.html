@@ -1,0 +1,31 @@
+<div>
+  <h1>
+    <b><i id="titleText">Medical Resource Filter System</i></b>
+  </h1>
+  <hr color="87CEEB">
+  <h3 id="subtitleText">
+    Patient Requirement block
+  </h3>
+  <table border="3" align="center" style="width: 100%;">
+    <tr>
+      <td id="demoFont" align="center">機構名稱或別名</td>
+      <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="the Institution Name"
+          [(ngModel)]="searchParams.name"></td>
+    </tr>
+    <tr>
+      <td id="demoFont" style="width: 20%;" align="center">機構位置</td>
+      <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="ex:台北市｜台北市大安區"
+          [(ngModel)]="searchParams['address-city']"></td>
+    </tr>
+    <tr>
+      <td id="demoFont" align="center">醫療服務</td>
+      <td><input style="font-size:24px; color:#0a0a0a" class="tep myMOUSE" placeholder="the Medical service name"
+          [(ngModel)]="searchParams.serviceName">
+      </td>
+    </tr>
+  </table>
+  <br />
+  <button type="submit" id="submit" title="Are you sure to submit?" (click)="submitParams()">Submit</button>
+
+  <app-institutions-list [searchParams]="params"></app-institutions-list>
+</div>

@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.0.4 (Python 3.6.2 on win32)" generated="20191223 20:18:24.731">
+<suite id="s1" name="SE term project AT" source="C:\Users\fourbags\Desktop\SE_term_project_AT">
+<suite id="s1-s1" name="Term Project" source="C:\Users\fourbags\Desktop\SE_term_project_AT\Term Project.robot">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Open Browser</arg>
+<arg>http://localhost:4200/login</arg>
+<arg>browser=chrome</arg>
+<arg>AND</arg>
+<arg>Maximize Browser Window</arg>
+</arguments>
+<kw name="Open Browser" library="util">
+<doc>Opens a new browser instance to the given ``url``.</doc>
+<arguments>
+<arg>http://localhost:4200/login</arg>
+<arg>browser=chrome</arg>
+</arguments>
+<msg timestamp="20191223 20:18:25.119" level="INFO">Opening browser 'chrome' to base url 'http://localhost:4200/login'.</msg>
+<status status="PASS" starttime="20191223 20:18:25.118" endtime="20191223 20:18:33.908"></status>
+</kw>
+<kw name="Maximize Browser Window" library="util">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20191223 20:18:33.910" endtime="20191223 20:18:35.038"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:25.117" endtime="20191223 20:18:35.038"></status>
+</kw>
+<test id="s1-s1-t1" name="Medical Institution Modify Patient Medical Record">
+<kw name="Login With Medical Institution">
+<kw name="Click Element After It Is Visble">
+<arguments>
+<arg>//*[@id='login-href']</arg>
+<arg>error=logoff button should be visible.</arg>
+</arguments>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>${locator}</arg>
+<arg>${error}</arg>
+<arg>${timeout}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:35.042" endtime="20191223 20:18:35.076"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:35.077" endtime="20191223 20:18:35.113"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:35.041" endtime="20191223 20:18:35.113"></status>
+</kw>
+<kw name="Click Element" library="util">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+</arguments>
+<msg timestamp="20191223 20:18:35.115" level="INFO">Clicking element '//*[@id='login-href']'.</msg>
+<status status="PASS" starttime="20191223 20:18:35.114" endtime="20191223 20:18:35.182"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:35.040" endtime="20191223 20:18:35.183"></status>
+</kw>
+<kw name="Login With Institution Role">
+<kw name="Click Element After It Is Visble">
+<arguments>
+<arg>//img[contains(@src, 'facebook')]</arg>
+<arg>timeout=${threeSeconds}</arg>
+<arg>error=Facebook icon should be visible.</arg>
+</arguments>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>${locator}</arg>
+<arg>${error}</arg>
+<arg>${timeout}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:35.186" endtime="20191223 20:18:35.205"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:35.206" endtime="20191223 20:18:35.236"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:35.185" endtime="20191223 20:18:35.236"></status>
+</kw>
+<kw name="Click Element" library="util">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+</arguments>
+<msg timestamp="20191223 20:18:35.237" level="INFO">Clicking element '//img[contains(@src, 'facebook')]'.</msg>
+<status status="PASS" starttime="20191223 20:18:35.237" endtime="20191223 20:18:35.414"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:35.184" endtime="20191223 20:18:35.415"></status>
+</kw>
+<kw name="List Windows" library="util">
+<doc>Deprecated. Use `Get Window Handles` instead.</doc>
+<assign>
+<var>${windows}</var>
+</assign>
+<msg timestamp="20191223 20:18:35.424" level="INFO">${windows} = ['CDwindow-5032D8E34FA074CCD3824D2BD0BAFAB2', 'CDwindow-F43D03C5D212A6E8216CAFE72933880D']</msg>
+<status status="PASS" starttime="20191223 20:18:35.416" endtime="20191223 20:18:35.424"></status>
+</kw>
+<kw name="Select Window" library="util">
+<doc>Selects browser window matching ``locator``.</doc>
+<arguments>
+<arg>${windows[1]}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:35.425" endtime="20191223 20:18:35.548"></status>
+</kw>
+<kw name="Input Text After It Is Visble">
+<arguments>
+<arg>//input[@id='email']</arg>
+<arg>0918526265</arg>
+<arg>error=Facebook email input text should be visible.</arg>
+</arguments>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>${locator}</arg>
+<arg>${error}</arg>
+<arg>${timeout}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:35.553" endtime="20191223 20:18:36.605"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:36.606" endtime="20191223 20:18:36.653"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:35.551" endtime="20191223 20:18:36.653"></status>
+</kw>
+<kw name="Input Text" library="util">
+<doc>Types the given ``text`` into text field identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>${text}</arg>
+</arguments>
+<msg timestamp="20191223 20:18:36.654" level="INFO">Typing text '0918526265' into text field '//input[@id='email']'.</msg>
+<status status="PASS" starttime="20191223 20:18:36.654" endtime="20191223 20:18:36.840"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:35.550" endtime="20191223 20:18:36.840"></status>
+</kw>
+<kw name="Input Text After It Is Visble">
+<arguments>
+<arg>//input[@id='pass']</arg>
+<arg>95816973</arg>
+<arg>error=Facebook email input text should be visible.</arg>
+</arguments>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>${locator}</arg>
+<arg>${error}</arg>
+<arg>${timeout}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:36.842" endtime="20191223 20:18:36.866"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:36.867" endtime="20191223 20:18:36.912"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:36.841" endtime="20191223 20:18:36.913"></status>
+</kw>
+<kw name="Input Text" library="util">
+<doc>Types the given ``text`` into text field identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>${text}</arg>
+</arguments>
+<msg timestamp="20191223 20:18:36.914" level="INFO">Typing text '95816973' into text field '//input[@id='pass']'.</msg>
+<status status="PASS" starttime="20191223 20:18:36.914" endtime="20191223 20:18:37.123"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:36.840" endtime="20191223 20:18:37.124"></status>
+</kw>
+<kw name="Click Element After It Is Visble">
+<arguments>
+<arg>//input[@name='login']</arg>
+<arg>error=login icon should be visible.</arg>
+</arguments>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>${locator}</arg>
+<arg>${error}</arg>
+<arg>${timeout}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:37.126" endtime="20191223 20:18:37.144"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:37.144" endtime="20191223 20:18:37.170"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:37.125" endtime="20191223 20:18:37.170"></status>
+</kw>
+<kw name="Click Element" library="util">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+</arguments>
+<msg timestamp="20191223 20:18:37.171" level="INFO">Clicking element '//input[@name='login']'.</msg>
+<status status="PASS" starttime="20191223 20:18:37.171" endtime="20191223 20:18:38.505"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:37.124" endtime="20191223 20:18:38.506"></status>
+</kw>
+<kw name="Select Window" library="util">
+<doc>Selects browser window matching ``locator``.</doc>
+<arguments>
+<arg>${windows[0]}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:38.507" endtime="20191223 20:18:38.573"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:35.184" endtime="20191223 20:18:38.574"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3s</arg>
+</arguments>
+<msg timestamp="20191223 20:18:41.575" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20191223 20:18:38.574" endtime="20191223 20:18:41.575"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:35.040" endtime="20191223 20:18:41.576"></status>
+</kw>
+<kw name="Go To Medical Shared Information">
+<kw name="Click Element After It Is Visble">
+<arguments>
+<arg>//a[normalize-space()='醫療資訊共享功能']</arg>
+<arg>error=醫療資訊共享功能 should be visible.</arg>
+</arguments>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>${locator}</arg>
+<arg>${error}</arg>
+<arg>${timeout}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:41.578" endtime="20191223 20:18:41.618"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:41.619" endtime="20191223 20:18:41.653"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:41.578" endtime="20191223 20:18:41.654"></status>
+</kw>
+<kw name="Click Element" library="util">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+</arguments>
+<msg timestamp="20191223 20:18:41.655" level="INFO">Clicking element '//a[normalize-space()='醫療資訊共享功能']'.</msg>
+<status status="PASS" starttime="20191223 20:18:41.654" endtime="20191223 20:18:41.753"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:41.577" endtime="20191223 20:18:41.754"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:41.576" endtime="20191223 20:18:41.754"></status>
+</kw>
+<kw name="Search For Patient Medical Record">
+<kw name="Input Text After It Is Visble">
+<arguments>
+<arg>//*[@name='patientId']</arg>
+<arg>SMIS-1788641876</arg>
+<arg>error=ID field should be visible.</arg>
+</arguments>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>${locator}</arg>
+<arg>${error}</arg>
+<arg>${timeout}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:41.757" endtime="20191223 20:18:41.777"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:41.777" endtime="20191223 20:18:41.805"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:41.757" endtime="20191223 20:18:41.805"></status>
+</kw>
+<kw name="Input Text" library="util">
+<doc>Types the given ``text`` into text field identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>${text}</arg>
+</arguments>
+<msg timestamp="20191223 20:18:41.806" level="INFO">Typing text 'SMIS-1788641876' into text field '//*[@name='patientId']'.</msg>
+<status status="PASS" starttime="20191223 20:18:41.806" endtime="20191223 20:18:41.986"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:41.756" endtime="20191223 20:18:41.986"></status>
+</kw>
+<kw name="Click Element After It Is Visble">
+<arguments>
+<arg>//*[@id='submit']</arg>
+<arg>error=送出 button should be visible.</arg>
+</arguments>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>${locator}</arg>
+<arg>${error}</arg>
+<arg>${timeout}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:41.990" endtime="20191223 20:18:42.006"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:42.007" endtime="20191223 20:18:42.039"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:41.988" endtime="20191223 20:18:42.040"></status>
+</kw>
+<kw name="Click Element" library="util">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+</arguments>
+<msg timestamp="20191223 20:18:42.041" level="INFO">Clicking element '//*[@id='submit']'.</msg>
+<status status="PASS" starttime="20191223 20:18:42.041" endtime="20191223 20:18:42.136"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:41.987" endtime="20191223 20:18:42.137"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20191223 20:18:47.139" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20191223 20:18:42.138" endtime="20191223 20:18:47.140"></status>
+</kw>
+<kw name="Insert Into Prompt" library="util">
+<arguments>
+<arg>5278</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.141" endtime="20191223 20:18:47.153"></status>
+</kw>
+<kw name="Confirm Action" library="util">
+<doc>Deprecated. Use `Handle Alert` instead.</doc>
+<status status="PASS" starttime="20191223 20:18:47.154" endtime="20191223 20:18:47.181"></status>
+</kw>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>//*[@id='subtitleText' and contains(normalize-space(),'Personal')]</arg>
+<arg>error=Personal Medical Record should be visble.</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.182" endtime="20191223 20:18:47.494"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.494" endtime="20191223 20:18:47.525"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:47.181" endtime="20191223 20:18:47.526"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:41.755" endtime="20191223 20:18:47.526"></status>
+</kw>
+<kw name="Input Patient Personal Record">
+<kw name="Execute Javascript" library="util">
+<doc>Executes the given JavaScript code.</doc>
+<arguments>
+<arg>document.getElementById("add").scrollIntoView({behavior:'smooth'});</arg>
+</arguments>
+<msg timestamp="20191223 20:18:47.528" level="INFO">Executing JavaScript:
+document.getElementById("add").scrollIntoView({behavior:'smooth'});</msg>
+<status status="PASS" starttime="20191223 20:18:47.527" endtime="20191223 20:18:47.536"></status>
+</kw>
+<kw name="Press Key" library="util">
+<doc>Simulates user pressing key on element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@placeholder='輸入開始時間']</arg>
+<arg>\\49</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.536" endtime="20191223 20:18:47.610"></status>
+</kw>
+<kw name="Press Key" library="util">
+<doc>Simulates user pressing key on element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@placeholder='輸入開始時間']</arg>
+<arg>\\09</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.611" endtime="20191223 20:18:47.658"></status>
+</kw>
+<kw name="Press Key" library="util">
+<doc>Simulates user pressing key on element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@placeholder='輸入開始時間']</arg>
+<arg>0922</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.658" endtime="20191223 20:18:47.724"></status>
+</kw>
+<kw name="Press Key" library="util">
+<doc>Simulates user pressing key on element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@placeholder='輸入結束時間']</arg>
+<arg>\\49</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.724" endtime="20191223 20:18:47.781"></status>
+</kw>
+<kw name="Press Key" library="util">
+<doc>Simulates user pressing key on element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@placeholder='輸入結束時間']</arg>
+<arg>\\09</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.781" endtime="20191223 20:18:47.824"></status>
+</kw>
+<kw name="Press Key" library="util">
+<doc>Simulates user pressing key on element identified by ``locator``.</doc>
+<arguments>
+<arg>//input[@placeholder='輸入結束時間']</arg>
+<arg>0925</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.825" endtime="20191223 20:18:47.882"></status>
+</kw>
+<kw name="Input Text After It Is Visble">
+<arguments>
+<arg>//input[@placeholder='輸入症狀']</arg>
+<arg>發燒</arg>
+<arg>error=輸入症狀 field should be visible.</arg>
+</arguments>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>${locator}</arg>
+<arg>${error}</arg>
+<arg>${timeout}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.884" endtime="20191223 20:18:47.904"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:47.904" endtime="20191223 20:18:47.935"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:47.883" endtime="20191223 20:18:47.936"></status>
+</kw>
+<kw name="Input Text" library="util">
+<doc>Types the given ``text`` into text field identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>${text}</arg>
+</arguments>
+<msg timestamp="20191223 20:18:47.937" level="INFO">Typing text '發燒' into text field '//input[@placeholder='輸入症狀']'.</msg>
+<status status="PASS" starttime="20191223 20:18:47.936" endtime="20191223 20:18:48.085"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:47.883" endtime="20191223 20:18:48.085"></status>
+</kw>
+<kw name="Click Element After It Is Visble">
+<arguments>
+<arg>//*[@id='submit' and normalize-space()='送出']</arg>
+<arg>error=送出 button should be visible.</arg>
+</arguments>
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>${locator}</arg>
+<arg>${error}</arg>
+<arg>${timeout}</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:48.089" endtime="20191223 20:18:48.117"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:48.118" endtime="20191223 20:18:48.146"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:48.087" endtime="20191223 20:18:48.146"></status>
+</kw>
+<kw name="Click Element" library="util">
+<doc>Click element identified by ``locator``.</doc>
+<arguments>
+<arg>${locator}</arg>
+</arguments>
+<msg timestamp="20191223 20:18:48.147" level="INFO">Clicking element '//*[@id='submit' and normalize-space()='送出']'.</msg>
+<status status="PASS" starttime="20191223 20:18:48.147" endtime="20191223 20:18:48.235"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:48.086" endtime="20191223 20:18:48.235"></status>
+</kw>
+<kw name="Confirm Action" library="util">
+<doc>Deprecated. Use `Handle Alert` instead.</doc>
+<status status="PASS" starttime="20191223 20:18:48.236" endtime="20191223 20:18:48.261"></status>
+</kw>
+<kw name="Confirm Action" library="util">
+<doc>Deprecated. Use `Handle Alert` instead.</doc>
+<status status="PASS" starttime="20191223 20:18:48.261" endtime="20191223 20:18:49.795"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:47.526" endtime="20191223 20:18:49.795"></status>
+</kw>
+<kw name="Verify Record Is Created">
+<kw name="Wait Until Element Is On Page">
+<arguments>
+<arg>//*[normalize-space()='發燒']</arg>
+<arg>error=page should contains 發燒</arg>
+</arguments>
+<kw name="Wait Until Page Contains Element" library="util">
+<doc>Waits until element ``locator`` appears on current page.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:49.797" endtime="20191223 20:18:49.899"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="util">
+<doc>Waits until element ``locator`` is visible.</doc>
+<arguments>
+<arg>${locator}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>error=${error}</arg>
+</arguments>
+<status status="PASS" starttime="20191223 20:18:49.900" endtime="20191223 20:18:49.930"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:49.797" endtime="20191223 20:18:49.931"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:49.796" endtime="20191223 20:18:49.932"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:35.039" endtime="20191223 20:18:49.932" critical="yes"></status>
+</test>
+<kw name="Close All Browsers" library="util" type="teardown">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" starttime="20191223 20:18:49.933" endtime="20191223 20:18:52.155"></status>
+</kw>
+<status status="PASS" starttime="20191223 20:18:24.800" endtime="20191223 20:18:52.156"></status>
+</suite>
+<status status="PASS" starttime="20191223 20:18:24.776" endtime="20191223 20:18:52.160"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0">Critical Tests</stat>
+<stat pass="1" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" id="s1" name="SE term project AT">SE term project AT</stat>
+<stat pass="1" fail="0" id="s1-s1" name="Term Project">SE term project AT.Term Project</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
