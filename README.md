@@ -69,7 +69,7 @@ Script In SE_Term_Project_AT Using `RobotFrameWoork`
 4. Installing Web Driver
    [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
 
-5. Run on [RED](https://github.com/nokia/RED)
+5. Run on [RED](https://github.com/nokia/RED) IDE 
 
 ## Further help
 
