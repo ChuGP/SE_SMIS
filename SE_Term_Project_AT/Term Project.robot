@@ -11,21 +11,25 @@ Suite Teardown    Close all Browsers
 ${threeSeconds} =    3s
 
 *** Test Cases ***
-Create User With Facebook Account
+ULAS-TC04 Create User With Facebook Account
     On Create Role Page
     Select Charactor    病患
     Input Information
     Use Role To Login
     [Teardown]    Back To Home Page
 
-Get Medical Institution Information
+ULAS-TC01 Login with Facebook Account
+    Use Patient Role To Login With Facebook
+    Verify Login Success With Patient Role
+
+MRIS-TC02 Get Medical Institution Information
     Use Patient Role To Login With Facebook
     Go To Medical Shared Information
     Select National Taiwan University Hospital
     Verify National Taiwan University Hospital Is Shown
     [Teardown]    Back To Home Page
 
-Filter Query Function
+MRIS-TC01 Filter Query Function
     Use Patient Role To Login With Facebook
     Go To Medical Institution Filter Function Page
     Input Filter Conditions
@@ -33,7 +37,7 @@ Filter Query Function
     Verify Filter Result On Page
     [Teardown]    Back To Home Page
 
-Manage Patient Information
+MRSS-TC02 Manage Patient Information
     Use Patient Role To Login With Facebook
     Click Element After It Is Visble    //a[normalize-space()='病人資訊管理功能']    error='病人資訊管理功能' should be visible.
     Input Text After It Is Visble    //*[@placeholder='輸入你的電話']    text=0900000000    error='輸入你的電話' should be visible.
@@ -42,7 +46,7 @@ Manage Patient Information
     Confirm Action
     [Teardown]    Close All Browsers
 
-Create Institution With Facebook Account
+ULAS-TC03 Create Institution With Facebook Account
     Open Browser    http://localhost:4200/login    browser=chrome
     Login With Medical Institution
     Click Element After It Is Visble    //a[normalize-space()='創建角色功能']    error=創建腳色功能 should be visible.
@@ -59,7 +63,7 @@ Create Institution With Facebook Account
     Login With Medical Institution
     [Teardown]    Close All Browsers
 
-Medical Institution Modify Patient Medical Record
+MRSS-TC01 Medical Institution Modify Patient Medical Record
     Open Browser    http://localhost:4200/login    browser=chrome
     Login With Medical Institution
     Go To Medical Shared Information
@@ -68,7 +72,18 @@ Medical Institution Modify Patient Medical Record
     Verify Record Is Created
     [Teardown]    Back To Home Page
 
-Manage Institution Information With Alias
+MRSS-TC05 Medical Institution Modify Patient Medical Record
+    Open Browser    http://localhost:4200/login    browser=chrome
+    Login With Medical Institution
+    Click Element After It Is Visble    //a[normalize-space()='醫療機構資訊管理功能']    error='醫療機構資訊管理功能' should be visible.
+    Click Element After It Is Visble    //*[normalize-space()='刪除別名']    error='刪除別名' button should be visible.
+    Click Element After It Is Visble    //*[@id='submit']    error=送出 button is not clickable.
+    Confirm Action
+    Confirm Action
+    [Teardown]    Close All Browsers
+
+MRSS-TC03 Manage Institution Information With Alias
+    Open Browser    http://localhost:4200/login    browser=chrome
     Login With Medical Institution
     Click Element After It Is Visble    //a[normalize-space()='醫療機構資訊管理功能']    error='醫療機構資訊管理功能' should be visible.
     Click Element After It Is Visble    //*[@id='add' and normalize-space()='新增別名']    error='新增別名' button should be visible.
@@ -76,9 +91,10 @@ Manage Institution Information With Alias
     Click Element After It Is Visble    //*[@id='submit']    error=送出 button is not clickable.
     Confirm Action
     Confirm Action
-    [Teardown]    Back To Home Page
+    [Teardown]    Close All Browsers
 
-Manage Institution Information With Service
+MRSS-TC04 Manage Institution Information With Service
+    Open Browser    http://localhost:4200/login    browser=chrome
     Login With Medical Institution
     Click Element After It Is Visble    //a[normalize-space()='醫療機構資訊管理功能']    error='醫療機構資訊管理功能' should be visible.
     Click Element After It Is Visble    //*[@id='add' and normalize-space()='新增服務']    error='新增服務' button should be visible.
@@ -87,12 +103,15 @@ Manage Institution Information With Service
     Click Element After It Is Visble    //*[@id='submit']    error=送出 button is not clickable.
     Confirm Action
     Confirm Action
-    [Teardown]    Back To Home Page
+    [Teardown]    Close All Browsers
 
 *** Keywords ***
+Verify Login Success With Patient Role
+    Wait Until Element Is On Page    //h3[contains(normalize-space(),'本系統希望提供一個醫療資源共享的平台')]    error=Login fail.
+
 Input Filter Conditions
     Input Text After It Is Visble    //*[@placeholder='the Institution Name']    國立台灣大學醫學院附設醫院    error='機構名稱或別名' should be visible.
-    Input Text After It Is Visble    //*[@placeholder='ex:台北市｜台北市大安區']    台北市中正區中山南路    error='機構位置' should be visible.
+    Input Text After It Is Visble    //*[@placeholder='ex:台北市｜台北市大安區']    台北市中正區徐州路2號    error='機構位置' should be visible.
     Input Text After It Is Visble    //*[@placeholder='the Medical service name']    心臟血管科    error='醫療服務' should be visible.
     Click Element After It Is Visble    //*[@id='submit']    error='submit' button should be visible.
 
@@ -184,10 +203,6 @@ On Create Role Page
     Click Element After It Is Visble    //input[@name='login']    error=login icon should be visible.
     Select Window    ${windows[0]}
     Click Element After It Is Visble    //a[normalize-space()='創建角色功能']    error=創建腳色功能 should be visible.
-    # ${url} =    Get Location
-    # @{urlList} =    Split String    ${url}    /
-    # ${urlLast} =    Get From List    ${urlList}    -1
-    # Evaluate    request.post('http://hapi.fhir.org/delete?serverId=home_r4&pretty=true&resource=Patient&resource-delete-id=%s' % ${urlLast})
 
 Login With Institution Role
     Click Element After It Is Visble    //img[contains(@src, 'facebook')]    timeout=${threeSeconds}    error=Facebook icon should be visible.

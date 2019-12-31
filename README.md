@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ```
 - demVideo
-  - 自動化測試影片 (要補)
+  - 自動化測試影片 (10部)
   - SMIS系統影片 (9部)
 - doc
   - Sequence Diagram (8張)
